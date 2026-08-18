@@ -21,6 +21,7 @@ import {
   X
 } from 'lucide-react';
 import { portfolioItems } from './data/portfolio';
+import { logoFolioItems } from './data/logo-folio';
 
 type Service = {
   slug: string;
@@ -166,7 +167,7 @@ function HomePage() {
     <section className="industry-strip"><span>Healthcare</span><span>Hospitality</span><span>Creative</span><span>Property</span><span>Professional Services</span></section>
     <section className="section section-light"><SectionHeading eyebrow="CORE CAPABILITIES" title="Build the parts that actually move the business." text="Start with one problem or connect multiple services into a complete digital system." /><ServiceGrid /></section>
     <section className="section home-process-section"><div className="split-heading"><div><span className="section-kicker">HOW WE THINK</span><h2>Start with the business problem. Then choose the technology.</h2></div><p>Good digital work is not about adding more software. It is about removing friction between your customer, your team and the next important action.</p></div><ProcessGrid /></section>
-    <section className="section section-white"><SectionHeading eyebrow="SELECTED CAPABILITIES" title="Solutions shaped around different customer journeys." text="These cards are now powered by a separate portfolio data file so your real work can replace them cleanly." align="left" /><PortfolioGrid /><div className="section-action"><Link className="primary-btn" to="/work">View Work <ArrowRight size={16} /></Link></div></section>
+    <section className="section section-white"><SectionHeading eyebrow="SELECTED WORK" title="Web experiences built around different customer journeys." text="A selection of website work across property, healthcare and professional services." align="left" /><PortfolioGrid /><div className="section-action"><Link className="primary-btn" to="/work">View All Work <ArrowRight size={16} /></Link></div></section>
     <ClientExperience compact />
     <CallToAction />
   </>;
@@ -181,7 +182,17 @@ function ServicePage({ service }: { service: Service }) {
 }
 
 function WorkPage() {
-  return <><SEO title="Work" description="Explore IDEA LAB portfolio and capability examples." /><PageHero eyebrow="WORK" title="Digital work shaped around the business, not a template." text="This portfolio area is structured so your real client work can be added project by project without changing the site layout." visual="work" /><section className="section section-white"><PortfolioGrid /></section><section className="section work-method-section"><div className="split-heading"><div><span className="section-kicker">OUR METHOD</span><h2>Strategy first. Build second.</h2></div><p>We define the problem, user journey and operating process before deciding what the website, CRM or automation needs to do.</p></div><ProcessGrid /></section><CallToAction /></>;
+  return <><SEO title="Work" description="Explore IDEA LAB web development and logo design work." /><PageHero eyebrow="WORK" title="Digital and brand work shaped around the business." text="Explore selected website builds and logo identity work created across property, healthcare, fashion and service businesses." visual="work" />
+    <section className="section section-white">
+      <SectionHeading eyebrow="WEB WORK" title="Web experiences built around the customer journey." text="Selected responsive website work across property, healthcare and professional services." align="left" />
+      <PortfolioGrid />
+    </section>
+    <section className="section section-light">
+      <SectionHeading eyebrow="LOGO FOLIO" title="Brand marks built to give each business its own visual identity." text="A collection of logo and identity work across fashion, healthcare, property and professional brands." align="left" />
+      <LogoFolioGrid />
+    </section>
+    <section className="section work-method-section"><div className="split-heading"><div><span className="section-kicker">OUR METHOD</span><h2>Strategy first. Build second.</h2></div><p>We define the problem, user journey and operating process before deciding what the website, CRM or automation needs to do.</p></div><ProcessGrid /></section><CallToAction />
+  </>;
 }
 
 function AboutPage() {
@@ -189,7 +200,7 @@ function AboutPage() {
 }
 
 function TestimonialsPage() {
-  return <><SEO title="Testimonials & Client Experience" description="IDEA LAB client experience and testimonials." /><PageHero eyebrow="CLIENT EXPERIENCE" title="Good work starts with a good working relationship." text="Real client testimonials can be added here as you provide them. Until then, this page explains the principles behind the IDEA LAB client experience without inventing reviews." visual="testimonials" /><ClientExperience compact={false} /><section className="section section-light"><SectionHeading eyebrow="HOW PROJECTS RUN" title="Clear expectations at every stage." text="The focus stays on what is being solved, what is being built and what happens next." /><ProcessGrid /></section><CallToAction /></>;
+  return <><SEO title="Client Experience" description="Learn about the IDEA LAB client experience and project process." /><PageHero eyebrow="CLIENT EXPERIENCE" title="Good work starts with a good working relationship." text="We keep projects focused, understandable and tied to the business goal from the first conversation through implementation." visual="testimonials" /><ClientExperience compact={false} /><section className="section section-light"><SectionHeading eyebrow="HOW PROJECTS RUN" title="Clear expectations at every stage." text="The focus stays on what is being solved, what is being built and what happens next." /><ProcessGrid /></section><CallToAction /></>;
 }
 
 function ContactPage() {
@@ -226,6 +237,20 @@ function PortfolioGrid() {
   return <div className="solution-grid">{portfolioItems.map((item, i) => <motion.article className="solution-card" key={item.id} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * .04 }}><div className="solution-image"><img src={item.image} alt={item.title} /><div className="solution-category">{item.category}</div></div><div className="solution-copy"><h3>{item.title}</h3><p>{item.description}</p></div></motion.article>)}</div>;
 }
 
+function LogoFolioGrid() {
+  return <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 230px), 1fr))', gap: '16px' }}>
+    {logoFolioItems.map((item, i) => <motion.article key={item.id} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * .035 }} style={{ overflow: 'hidden', border: '1px solid #dedfe2', borderRadius: '20px', background: '#fff', boxShadow: '0 14px 36px rgba(0,0,0,.04)' }}>
+      <div style={{ aspectRatio: '1 / 1', display: 'grid', placeItems: 'center', padding: '20px', overflow: 'hidden', background: '#f7f7f5' }}>
+        <img src={item.image} alt={`${item.title} logo`} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+      </div>
+      <div style={{ padding: '17px 18px 20px' }}>
+        <span style={{ color: '#ef2b2d', fontSize: '9px', fontWeight: 800, letterSpacing: '.14em', textTransform: 'uppercase' }}>{item.tag}</span>
+        <h3 style={{ margin: '7px 0 0', color: '#121318', fontSize: '17px' }}>{item.title}</h3>
+      </div>
+    </motion.article>)}
+  </div>;
+}
+
 function ProcessGrid() {
   const rows = [['Discover', 'Understand the business and customer first.'], ['Design', 'Shape the journey around the most important actions.'], ['Build', 'Develop a responsive, maintainable system.'], ['Refine', 'Test the real flow and remove friction.']];
   return <div className="process-grid">{rows.map(([title, text], i) => <article className="process-card" key={title}><span>{String(i + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{text}</p></article>)}</div>;
@@ -236,7 +261,7 @@ function FeatureTile({ number, title }: { number: number; title: string }) {
 }
 
 function ClientExperience({ compact }: { compact: boolean }) {
-  return <section className={`section client-experience-section ${compact ? 'client-experience-compact' : ''}`}><SectionHeading eyebrow="CLIENT EXPERIENCE" title="Professional digital work should feel clear from the client side too." text="Real testimonials can be inserted here when supplied; the current cards describe the way IDEA LAB works without fabricating client quotes." /><div className="testimonial-grid">{experienceCards.map(([title, text]) => <article className="testimonial-card" key={title}><MessageSquare size={23} /><h3>{title}</h3><p>{text}</p><div className="testimonial-signoff"><span>IDEA LAB</span><small>Client experience principle</small></div></article>)}</div>{compact && <div className="section-action centered"><Link className="text-link" to="/testimonials">View client experience <ArrowRight size={15} /></Link></div>}</section>;
+  return <section className={`section client-experience-section ${compact ? 'client-experience-compact' : ''}`}><SectionHeading eyebrow="CLIENT EXPERIENCE" title="Professional digital work should feel clear from the client side too." text="Our working style is built around clarity, useful communication and solutions that make sense for the business." /><div className="testimonial-grid">{experienceCards.map(([title, text]) => <article className="testimonial-card" key={title}><MessageSquare size={23} /><h3>{title}</h3><p>{text}</p><div className="testimonial-signoff"><span>IDEA LAB</span><small>Client experience principle</small></div></article>)}</div>{compact && <div className="section-action centered"><Link className="text-link" to="/testimonials">View client experience <ArrowRight size={15} /></Link></div>}</section>;
 }
 
 function ConnectedVisual() {
