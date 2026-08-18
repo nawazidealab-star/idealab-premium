@@ -1,125 +1,784 @@
-import { useMemo, useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Routes, Route, Link, NavLink } from 'react-router-dom';
 import {
-  ArrowRight, BarChart3, BriefcaseBusiness, CalendarDays, CheckCircle2, ChevronRight,
-  CircleDollarSign, Code2, Database, Gauge, Globe2, Instagram, LayoutDashboard, Mail,
-  Menu, MessageCircle, PanelsTopLeft, Rocket, Search, Settings, ShieldCheck, Sparkles,
-  Target, Users, Workflow, X, Zap, FileText, KanbanSquare, ReceiptText
+  ArrowRight,
+  BarChart3,
+  BriefcaseBusiness,
+  CalendarDays,
+  Camera,
+  CheckCircle2,
+  CircleDollarSign,
+  ClipboardList,
+  Code2,
+  Contact,
+  FileText,
+  Globe2,
+  LayoutDashboard,
+  Mail,
+  Menu,
+  MessageSquare,
+  MonitorSmartphone,
+  Search,
+  Settings,
+  ShieldCheck,
+  Sparkles,
+  Target,
+  Users,
+  Workflow,
+  X
 } from 'lucide-react';
-import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
 
-const works = [
-  { title:'Dental Clinic Growth System', type:'CRM + Website', image:'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80' },
-  { title:'Restaurant Brand & Booking Experience', type:'Web + Social', image:'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80' },
-  { title:'Real Estate Lead Funnel', type:'CRM + Automation', image:'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=80' },
-  { title:'Creative Studio Portfolio', type:'Brand + Website', image:'https://images.unsplash.com/photo-1520390138845-fd2d229dd553?auto=format&fit=crop&w=1200&q=80' },
-  { title:'Aesthetic Clinic Campaign', type:'Social + Conversion', image:'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1200&q=80' },
-  { title:'Premium Service Business Website', type:'Web + Conversion', image:'https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1200&q=80' },
+type Service = {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+};
+
+type Project = {
+  title: string;
+  category: string;
+  image: string;
+  description: string;
+};
+
+const services: Service[] = [
+  {
+    icon: <Code2 size={28} />,
+    title: 'Web Development',
+    description:
+      'Premium responsive websites designed to look modern, load fast and turn visitors into enquiries.'
+  },
+  {
+    icon: <LayoutDashboard size={28} />,
+    title: 'CRM Systems',
+    description:
+      'Custom dashboards for leads, clients, follow-ups, projects, tasks and internal business operations.'
+  },
+  {
+    icon: <Camera size={28} />,
+    title: 'Social Media',
+    description:
+      'Branded content, short-form video concepts, campaigns and creative systems built around real business goals.'
+  },
+  {
+    icon: <Workflow size={28} />,
+    title: 'Automation',
+    description:
+      'Automated lead routing, reminders, notifications and workflows that reduce repetitive manual work.'
+  },
+  {
+    icon: <Target size={28} />,
+    title: 'Conversion Growth',
+    description:
+      'Landing pages, enquiry journeys, booking flows and stronger calls-to-action built to improve conversion.'
+  },
+  {
+    icon: <Globe2 size={28} />,
+    title: 'Digital Strategy',
+    description:
+      'A connected approach across website, CRM, content and follow-up instead of disconnected marketing tools.'
+  }
 ];
 
-const services = [
-  ['Premium Web Development','Fast, responsive websites with modern animation, conversion UX and analytics.',<Code2/>],
-  ['Custom CRM Systems','Lead, client, pipeline, follow-up, task, invoice and reporting systems tailored to your workflow.',<Database/>],
-  ['Social Media Growth','Campaign strategy, branded content systems, Reels, carousels, CTAs and lead capture.',<Instagram/>],
-  ['Automation & Integrations','Connect forms, email, calendars and internal workflows to reduce manual work.',<Workflow/>],
-  ['SEO & Conversion','Technical SEO, landing page optimisation, funnels and reporting focused on commercial outcomes.',<Target/>],
-  ['AI-Ready Operations','Structured data, reusable workflows and systems designed to support AI-assisted operations.',<Sparkles/>],
+const projects: Project[] = [
+  {
+    title: 'Dental Clinic Growth System',
+    category: 'CRM + Website',
+    image:
+      'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'A patient enquiry journey combining treatment pages, lead capture, follow-up stages and appointment tracking.'
+  },
+  {
+    title: 'Restaurant Growth Platform',
+    category: 'CRM + Retention',
+    image:
+      'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Customer profiles, reservations, VIP tracking, feedback and repeat-customer campaign management.'
+  },
+  {
+    title: 'Creative Studio Digital Refresh',
+    category: 'Website + Social',
+    image:
+      'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'A premium visual direction for creative studios, photographers, printers, galleries and artists.'
+  },
+  {
+    title: 'Property Lead Funnel',
+    category: 'Lead Generation',
+    image:
+      'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=80',
+    description:
+      'Seller enquiry capture, appraisal CTA design, property lead tracking and follow-up workflow.'
+  }
 ];
 
-const chartData = [
-  {m:'Jan', v:22},{m:'Feb',v:28},{m:'Mar',v:25},{m:'Apr',v:42},{m:'May',v:38},{m:'Jun',v:58},{m:'Jul',v:54},{m:'Aug',v:76}
+const testimonials = [
+  {
+    quote:
+      'The system made it much easier to understand where enquiries were coming from and what needed follow-up.',
+    name: 'Sample Client',
+    role: 'Healthcare Business'
+  },
+  {
+    quote:
+      'The new digital direction looked much more premium and gave us a clearer way to present our services.',
+    name: 'Sample Client',
+    role: 'Creative Business'
+  },
+  {
+    quote:
+      'The dashboard concept brought leads, projects and follow-ups into one much simpler workflow.',
+    name: 'Sample Client',
+    role: 'Service Business'
+  }
 ];
 
-function Logo(){return <Link to="/" className="brand"><img src="/idealab-logo.jpg" alt="IDEA LAB"/><span>IDEA LAB</span></Link>}
+const adminMenu = [
+  { icon: <LayoutDashboard size={18} />, label: 'Dashboard' },
+  { icon: <Target size={18} />, label: 'Leads' },
+  { icon: <Users size={18} />, label: 'Clients' },
+  { icon: <BriefcaseBusiness size={18} />, label: 'Projects' },
+  { icon: <ClipboardList size={18} />, label: 'Tasks' },
+  { icon: <FileText size={18} />, label: 'Invoices' },
+  { icon: <CalendarDays size={18} />, label: 'Content' },
+  { icon: <BarChart3 size={18} />, label: 'Reports' },
+  { icon: <Settings size={18} />, label: 'Settings' }
+];
 
-function Navbar(){
-  const [open,setOpen]=useState(false);
-  return <>
-    <header className="nav"><div className="container nav-inner"><Logo/>
-      <nav className="nav-links"><a href="#services">Services</a><a href="#work">Work</a><a href="#testimonials">Testimonials</a><a href="#contact">Contact</a></nav>
-      <div className="nav-actions"><a className="btn primary" href="#contact">Let's Talk <ArrowRight size={16}/></a><button className="btn mobile-menu" onClick={()=>setOpen(true)}><Menu/></button></div>
-    </div></header>
-    {open && <div style={{position:'fixed',inset:0,zIndex:100,background:'#0a0b0e',padding:20}}><div className="container"><div style={{display:'flex',justifyContent:'space-between'}}><Logo/><button className="btn" onClick={()=>setOpen(false)}><X/></button></div><div style={{display:'grid',gap:18,marginTop:50,fontSize:30}}>{['Services','Work','Testimonials','Contact'].map(x=><a onClick={()=>setOpen(false)} key={x} href={'#'+x.toLowerCase()}>{x}</a>)}</div></div></div>}
-  </>
+function App() {
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  return (
+    <div className="site-shell">
+      <header className="topbar">
+        <a className="brand" href="#home">
+          <img src="/idealab-logo.jpg" alt="IDEA LAB" />
+        </a>
+
+        <nav className="desktop-nav">
+          <a href="#home">Home</a>
+          <a href="#services">Services</a>
+          <a href="#work">Work</a>
+          <a href="#about">About</a>
+          <a href="#testimonials">Testimonials</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <a className="nav-cta desktop-only" href="#contact">
+          Start a Project
+          <ArrowRight size={16} />
+        </a>
+
+        <button
+          className="mobile-toggle"
+          onClick={() => setMobileOpen((value) => !value)}
+          aria-label="Toggle navigation"
+        >
+          {mobileOpen ? <X /> : <Menu />}
+        </button>
+      </header>
+
+      {mobileOpen && (
+        <motion.div
+          className="mobile-menu"
+          initial={{ opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <a href="#home" onClick={() => setMobileOpen(false)}>
+            Home
+          </a>
+          <a href="#services" onClick={() => setMobileOpen(false)}>
+            Services
+          </a>
+          <a href="#work" onClick={() => setMobileOpen(false)}>
+            Work
+          </a>
+          <a href="#about" onClick={() => setMobileOpen(false)}>
+            About
+          </a>
+          <a href="#testimonials" onClick={() => setMobileOpen(false)}>
+            Testimonials
+          </a>
+          <a href="#contact" onClick={() => setMobileOpen(false)}>
+            Contact
+          </a>
+        </motion.div>
+      )}
+
+      <main>
+        <section id="home" className="hero section-dark">
+          <div className="hero-glow hero-glow-one" />
+          <div className="hero-glow hero-glow-two" />
+
+          <motion.div
+            className="hero-copy"
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            <div className="eyebrow">
+              <Sparkles size={16} />
+              Digital systems built for growth
+            </div>
+
+            <h1>
+              We build systems.
+              <span>You get results.</span>
+            </h1>
+
+            <p>
+              Premium websites, CRM systems, social media, automation and
+              conversion journeys — designed as one connected growth system.
+            </p>
+
+            <div className="hero-actions">
+              <a className="primary-btn" href="#work">
+                View Our Work
+                <ArrowRight size={18} />
+              </a>
+
+              <a className="secondary-btn" href="#contact">
+                Book a Strategy Call
+              </a>
+            </div>
+
+            <div className="hero-trust">
+              <div className="mini-avatar-group">
+                <span>IL</span>
+                <span>CRM</span>
+                <span>WEB</span>
+              </div>
+              <div>
+                <strong>Built for service businesses</strong>
+                <small>
+                  Healthcare · Restaurants · Creative · Property · Professional
+                  Services
+                </small>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="hero-visual"
+            initial={{ opacity: 0, scale: 0.94, x: 30 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 0.85 }}
+          >
+            <div className="browser-card">
+              <div className="browser-top">
+                <div className="browser-dots">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <span>idealab.digital</span>
+              </div>
+
+              <div className="browser-content">
+                <div className="browser-badge">Premium Website Systems</div>
+                <h3>
+                  Built to look better.
+                  <br />
+                  Built to convert.
+                </h3>
+                <p>
+                  Clean digital experiences backed by smarter internal systems.
+                </p>
+
+                <div className="browser-metrics">
+                  <div>
+                    <strong>Leads</strong>
+                    <span>248</span>
+                  </div>
+                  <div>
+                    <strong>Projects</strong>
+                    <span>32</span>
+                  </div>
+                  <div>
+                    <strong>Clients</strong>
+                    <span>126</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <motion.div
+              className="floating-dashboard"
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 4, repeat: Infinity }}
+            >
+              <div className="float-title">
+                <BarChart3 size={18} />
+                Growth overview
+              </div>
+              <div className="chart-bars">
+                {[45, 62, 52, 78, 66, 91, 100].map((height, index) => (
+                  <span key={index} style={{ height: `${height}%` }} />
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        </section>
+
+        <section className="stats-strip">
+          <div>
+            <strong>CRM</strong>
+            <span>Lead & client management</span>
+          </div>
+          <div>
+            <strong>WEB</strong>
+            <span>Premium responsive development</span>
+          </div>
+          <div>
+            <strong>SOCIAL</strong>
+            <span>Content that supports sales</span>
+          </div>
+          <div>
+            <strong>AUTOMATE</strong>
+            <span>Less manual admin</span>
+          </div>
+        </section>
+
+        <section id="services" className="section light-section">
+          <div className="section-heading">
+            <span>WHAT WE DO</span>
+            <h2>Complete digital solutions.</h2>
+            <p>
+              Not isolated services. We connect your customer-facing marketing
+              with the systems your team uses behind the scenes.
+            </p>
+          </div>
+
+          <div className="service-grid">
+            {services.map((service, index) => (
+              <motion.article
+                key={service.title}
+                className="service-card"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.07 }}
+                whileHover={{ y: -6 }}
+              >
+                <div className="service-icon">{service.icon}</div>
+                <h3>{service.title}</h3>
+                <p>{service.description}</p>
+                <a href="#contact">
+                  Discuss your project <ArrowRight size={15} />
+                </a>
+              </motion.article>
+            ))}
+          </div>
+        </section>
+
+        <section id="work" className="section work-section">
+          <div className="section-heading left-heading">
+            <span>SELECTED WORK</span>
+            <h2>Built around real business problems.</h2>
+            <p>
+              These project directions demonstrate the kind of work IDEA LAB
+              develops. Your real portfolio projects can replace these samples
+              as you provide them.
+            </p>
+          </div>
+
+          <div className="project-grid">
+            {projects.map((project, index) => (
+              <motion.article
+                key={project.title}
+                className="project-card"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.08 }}
+              >
+                <div className="project-image-wrap">
+                  <img src={project.image} alt={project.title} />
+                  <div className="project-overlay">
+                    <span>{project.category}</span>
+                    <ArrowRight />
+                  </div>
+                </div>
+
+                <div className="project-copy">
+                  <span>{project.category}</span>
+                  <h3>{project.title}</h3>
+                  <p>{project.description}</p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </section>
+
+        <section id="about" className="section about-section">
+          <div className="about-copy">
+            <span className="section-kicker">WHY IDEA LAB</span>
+
+            <h2>
+              Your website should not be separate from the way your business
+              actually works.
+            </h2>
+
+            <p>
+              IDEA LAB combines front-end design, development, CRM architecture,
+              social content and automation into systems that are easier for
+              customers to use and easier for your team to manage.
+            </p>
+
+            <div className="check-list">
+              {[
+                'Responsive websites built for modern devices',
+                'Custom CRM and lead management workflows',
+                'Conversion-focused landing and enquiry pages',
+                'Social media designed around customer actions',
+                'Automation and follow-up infrastructure',
+                'Secure internal operational dashboards'
+              ].map((item) => (
+                <div key={item}>
+                  <CheckCircle2 size={19} />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="about-panel">
+            <div className="about-panel-header">
+              <ShieldCheck size={25} />
+              <div>
+                <strong>Built with security in mind</strong>
+                <span>Cloudflare-ready architecture</span>
+              </div>
+            </div>
+
+            <div className="about-panel-grid">
+              <div>
+                <Search size={21} />
+                <strong>Clear</strong>
+                <span>Simple UX and information hierarchy</span>
+              </div>
+
+              <div>
+                <MonitorSmartphone size={21} />
+                <strong>Responsive</strong>
+                <span>Designed across desktop and mobile</span>
+              </div>
+
+              <div>
+                <Workflow size={21} />
+                <strong>Connected</strong>
+                <span>Marketing and operations working together</span>
+              </div>
+
+              <div>
+                <ShieldCheck size={21} />
+                <strong>Secure</strong>
+                <span>Protected admin and API architecture</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="internal-section section-dark">
+          <div className="internal-copy">
+            <span className="section-kicker red-kicker">
+              INTERNAL OPERATIONS
+            </span>
+
+            <h2>One private backend for IDEA LAB operations.</h2>
+
+            <p>
+              The agency backend is for internal staff only. It is not sold as
+              a client portal and is not exposed as a public website feature.
+            </p>
+
+            <div className="internal-list">
+              <div>
+                <Users />
+                <span>Clients and contacts</span>
+              </div>
+              <div>
+                <Target />
+                <span>Leads and pipeline</span>
+              </div>
+              <div>
+                <BriefcaseBusiness />
+                <span>Projects and delivery</span>
+              </div>
+              <div>
+                <ClipboardList />
+                <span>Tasks and deadlines</span>
+              </div>
+              <div>
+                <CircleDollarSign />
+                <span>Invoices and internal finance tracking</span>
+              </div>
+              <div>
+                <FileText />
+                <span>Content planning and records</span>
+              </div>
+            </div>
+          </div>
+
+          <motion.div
+            className="admin-demo"
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <aside className="admin-sidebar">
+              <img src="/idealab-logo.jpg" alt="IDEA LAB" />
+
+              <div className="admin-nav">
+                {adminMenu.map((item, index) => (
+                  <div
+                    key={item.label}
+                    className={index === 0 ? 'admin-nav-active' : ''}
+                  >
+                    {item.icon}
+                    <span>{item.label}</span>
+                  </div>
+                ))}
+              </div>
+            </aside>
+
+            <div className="admin-main">
+              <div className="admin-top">
+                <div>
+                  <span>Private agency dashboard</span>
+                  <h3>Good afternoon.</h3>
+                </div>
+
+                <div className="admin-profile">IL</div>
+              </div>
+
+              <div className="admin-metrics">
+                <div>
+                  <span>Total leads</span>
+                  <strong>248</strong>
+                  <small>+12% this month</small>
+                </div>
+
+                <div>
+                  <span>Active clients</span>
+                  <strong>26</strong>
+                  <small>4 new this month</small>
+                </div>
+
+                <div>
+                  <span>Projects</span>
+                  <strong>32</strong>
+                  <small>11 currently active</small>
+                </div>
+
+                <div>
+                  <span>Tasks due</span>
+                  <strong>14</strong>
+                  <small>5 due today</small>
+                </div>
+              </div>
+
+              <div className="admin-bottom-grid">
+                <div className="pipeline-card">
+                  <div className="card-header">
+                    <strong>Lead pipeline</strong>
+                    <span>This month</span>
+                  </div>
+
+                  <div className="pipeline-bars">
+                    <div>
+                      <span>New</span>
+                      <b style={{ width: '82%' }} />
+                      <strong>67</strong>
+                    </div>
+                    <div>
+                      <span>Contacted</span>
+                      <b style={{ width: '66%' }} />
+                      <strong>49</strong>
+                    </div>
+                    <div>
+                      <span>Qualified</span>
+                      <b style={{ width: '48%' }} />
+                      <strong>34</strong>
+                    </div>
+                    <div>
+                      <span>Won</span>
+                      <b style={{ width: '28%' }} />
+                      <strong>18</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="activity-card">
+                  <div className="card-header">
+                    <strong>Recent activity</strong>
+                  </div>
+
+                  {[
+                    ['New lead added', '2 min ago'],
+                    ['Project updated', '1 hour ago'],
+                    ['Invoice created', '3 hours ago'],
+                    ['Task completed', '5 hours ago']
+                  ].map(([label, time]) => (
+                    <div className="activity-row" key={label}>
+                      <span className="activity-dot" />
+                      <div>
+                        <strong>{label}</strong>
+                        <small>{time}</small>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </section>
+
+        <section id="testimonials" className="section testimonial-section">
+          <div className="section-heading">
+            <span>TESTIMONIALS</span>
+            <h2>Proof will live here.</h2>
+            <p>
+              These are clearly marked placeholders until genuine IDEA LAB
+              testimonials and client results are supplied.
+            </p>
+          </div>
+
+          <div className="testimonial-grid">
+            {testimonials.map((testimonial) => (
+              <article className="testimonial-card" key={testimonial.quote}>
+                <div className="sample-label">SAMPLE PLACEHOLDER</div>
+
+                <div className="testimonial-stars">★★★★★</div>
+
+                <blockquote>“{testimonial.quote}”</blockquote>
+
+                <div>
+                  <strong>{testimonial.name}</strong>
+                  <span>{testimonial.role}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="contact" className="section contact-section">
+          <motion.div
+            className="contact-panel"
+            initial={{ opacity: 0, scale: 0.97 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+          >
+            <div>
+              <span className="section-kicker red-kicker">
+                START A PROJECT
+              </span>
+
+              <h2>Tell us what your business needs to improve.</h2>
+
+              <p>
+                Website, CRM, social content or a complete connected system —
+                start with the problem and we will recommend the simplest useful
+                solution.
+              </p>
+
+              <div className="contact-details">
+                <a href="mailto:nawazidealab@gmail.com">
+                  <Mail size={18} />
+                  nawazidealab@gmail.com
+                </a>
+
+                <div>
+                  <MessageSquare size={18} />
+                  WhatsApp details can be added when ready
+                </div>
+              </div>
+            </div>
+
+            <form
+              className="contact-form"
+              onSubmit={(event) => event.preventDefault()}
+            >
+              <label>
+                Name
+                <input type="text" placeholder="Your name" />
+              </label>
+
+              <label>
+                Email
+                <input type="email" placeholder="you@company.com" />
+              </label>
+
+              <label>
+                Business
+                <input type="text" placeholder="Business name" />
+              </label>
+
+              <label>
+                What do you need?
+                <select defaultValue="">
+                  <option value="" disabled>
+                    Select a service
+                  </option>
+                  <option>Website Development</option>
+                  <option>CRM System</option>
+                  <option>Social Media</option>
+                  <option>Automation</option>
+                  <option>Complete Digital System</option>
+                </select>
+              </label>
+
+              <label className="full-field">
+                Project details
+                <textarea placeholder="Tell us what you want to improve..." />
+              </label>
+
+              <button type="submit" className="primary-btn form-button">
+                Send Enquiry
+                <ArrowRight size={17} />
+              </button>
+            </form>
+          </motion.div>
+        </section>
+      </main>
+
+      <footer>
+        <div className="footer-brand">
+          <img src="/idealab-logo.jpg" alt="IDEA LAB" />
+          <p>
+            Websites, CRM systems, social content and automation designed to
+            help businesses operate and grow more effectively.
+          </p>
+        </div>
+
+        <div className="footer-links">
+          <div>
+            <strong>Services</strong>
+            <a href="#services">Web Development</a>
+            <a href="#services">CRM Systems</a>
+            <a href="#services">Social Media</a>
+            <a href="#services">Automation</a>
+          </div>
+
+          <div>
+            <strong>IDEA LAB</strong>
+            <a href="#about">About</a>
+            <a href="#work">Work</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          <span>© 2026 IDEA LAB. All rights reserved.</span>
+          <span>Private agency systems are not public client portals.</span>
+        </div>
+      </footer>
+    </div>
+  );
 }
 
-const reveal = { initial:{opacity:0,y:28}, whileInView:{opacity:1,y:0}, viewport:{once:true,margin:'-80px'}, transition:{duration:.65,ease:[.2,.8,.2,1] as any} };
-
-function Home(){
-  return <div><Navbar/>
-    <section className="hero"><div className="container hero-grid">
-      <motion.div {...reveal}>
-        <div className="eyebrow">Digital systems that grow businesses</div>
-        <h1 className="h1">We build systems.<br/>You get <span className="red">results.</span></h1>
-        <p className="lead">Premium websites, CRM systems, social media and automation — designed as one connected growth engine.</p>
-        <div style={{display:'flex',gap:12,flexWrap:'wrap',marginTop:28}}><a href="#work" className="btn primary">View Our Work <ArrowRight size={17}/></a><a href="#contact" className="btn">Book a Strategy Call</a></div>
-        <div className="trust-row"><div className="avatars">{[1,2,3,4,5].map(i=><div className="avatar" key={i}/>)}</div><span>Built for ambitious service businesses</span></div>
-      </motion.div>
-      <motion.div {...reveal} transition={{duration:.8,delay:.1}} className="hero-card glass">
-        <div className="browser"><div className="browser-top"><span className="dot red"/><span className="dot"/><span className="dot"/></div><div className="browser-main"><div className="side-mini"><div className="active"/><div/><div/><div/><div/></div><div className="dashboard-mini"><div className="mini-stats"><div className="mini-stat"><small>Leads</small><b>248</b></div><div className="mini-stat"><small>Clients</small><b>126</b></div><div className="mini-stat"><small>Projects</small><b>32</b></div></div><div className="mini-chart"/></div></div></div>
-      </motion.div>
-    </div></section>
-    <div className="metrics"><div className="metric"><b>100%</b><span>Custom-built systems</span></div><div className="metric"><b>24/7</b><span>Online lead capture</span></div><div className="metric"><b>1</b><span>Connected business ecosystem</span></div><div className="metric"><b>∞</b><span>Room to scale</span></div></div>
-
-    <section className="section" id="work"><div className="container"><motion.div {...reveal}><div className="eyebrow">Selected work</div><h2 className="h2">Portfolio built around business outcomes.</h2><p className="lead">A premium visual direction across clinics, restaurants, real estate, creative studios and service businesses.</p></motion.div><div className="grid cards-3" style={{marginTop:34}}>{works.map((w,i)=><motion.article {...reveal} transition={{duration:.55,delay:i*.04}} className="work-card glass" key={w.title}><div className="thumb"><img src={w.image} alt={w.title}/></div><div className="work-meta"><span>{w.type}</span><h3>{w.title}</h3><p>Strategy, UX, visual system and conversion flow.</p></div></motion.article>)}</div></div></section>
-
-    <section className="section" id="services"><div className="container"><motion.div {...reveal} style={{textAlign:'center'}}><div className="eyebrow">What we do</div><h2 className="h2">Complete digital solutions.</h2><p className="lead" style={{margin:'0 auto'}}>Not isolated services. One connected system across website, CRM, social and operations.</p></motion.div><div className="grid cards-3" style={{marginTop:34}}>{services.map(([t,d,icon],i)=><motion.div {...reveal} transition={{duration:.55,delay:i*.04}} className="service-card glass" key={t as string}><div className="iconbox">{icon}</div><h3>{t}</h3><p>{d}</p><div style={{display:'flex',alignItems:'center',gap:8,fontSize:13,color:'#ff6666',marginTop:18}}>Explore capability <ChevronRight size={15}/></div></motion.div>)}</div></div></section>
-
-    <section className="section" id="testimonials"><div className="container"><motion.div {...reveal}><div className="eyebrow">Testimonials</div><h2 className="h2">Proof should be real.</h2><p className="lead">The cards below are clearly marked demo placeholders. Replace them with verified client feedback before publishing.</p></motion.div><div className="grid cards-3" style={{marginTop:30}}>{[
-      ['“The system is simple to use and keeps our enquiries organised.”','Sample testimonial — replace with verified client quote','Clinic CRM'],
-      ['“The new site finally feels as premium as our business.”','Sample testimonial — replace with verified client quote','Website'],
-      ['“Everything from content to follow-up now feels connected.”','Sample testimonial — replace with verified client quote','Growth System']
-    ].map((t,i)=><motion.div {...reveal} transition={{duration:.55,delay:i*.05}} className="testimonial glass" key={i}><div className="stars">★★★★★</div><p>{t[0]}</p><div className="person"><div className="avatar"/><div><b>{t[1]}</b><br/><small>{t[2]}</small></div></div></motion.div>)}</div></div></section>
-
-    <section className="section" id="contact"><div className="container"><motion.div {...reveal} className="cta glass"><div><div className="eyebrow">Start a project</div><h2 className="h2" style={{marginBottom:10}}>Tell us what you want to build.</h2><p className="lead" style={{margin:0}}>Website, CRM, social growth, automation or a complete digital growth system.</p></div><a className="btn primary" href="mailto:nawazidealab@gmail.com">Email IDEA LAB <Mail size={16}/></a></motion.div></div></section>
-
-    <footer className="footer"><div className="container footer-grid"><div><Logo/><p style={{color:'#8f9299',lineHeight:1.7,maxWidth:420}}>Premium digital systems for businesses that want a stronger brand, cleaner operations and more organised growth.</p></div><div><h4>Services</h4><a href="#services">Web Development</a><a href="#services">CRM Systems</a><a href="#services">Social Media</a><a href="#services">Automation</a></div><div><h4>Company</h4><a href="#work">Work</a><a href="#testimonials">Testimonials</a><a href="#contact">Contact</a></div><div><h4>Contact</h4><a href="mailto:nawazidealab@gmail.com">nawazidealab@gmail.com</a><span style={{color:'#8f9299'}}>Pakistan · Remote worldwide</span></div></div><div className="container" style={{borderTop:'1px solid var(--line)',paddingTop:20,marginTop:30,color:'#74777f',fontSize:12}}>© 2026 IDEA LAB. All rights reserved.</div></footer>
-  </div>
-}
-
-const portalNav = [
-  ['/admin', 'Dashboard', <LayoutDashboard size={17}/>],
-  ['/admin/leads', 'Leads', <Target size={17}/>],
-  ['/admin/clients', 'Clients', <Users size={17}/>],
-  ['/admin/projects', 'Projects', <BriefcaseBusiness size={17}/>],
-  ['/admin/tasks', 'Tasks', <KanbanSquare size={17}/>],
-  ['/admin/invoices', 'Invoices', <ReceiptText size={17}/>],
-  ['/admin/content', 'Content Planner', <CalendarDays size={17}/>],
-  ['/admin/reports', 'Reports', <BarChart3 size={17}/>],
-  ['/admin/users', 'Team & Roles', <ShieldCheck size={17}/>],
-  ['/admin/settings', 'Settings', <Settings size={17}/>],
-];
-
-const demoLeads = [
-  {name:'Dental Avenue', company:'Dental Avenue', service:'Dental CRM', status:'Warm', value:'PKR 29,900', next:'Follow up tomorrow'},
-  {name:'Bea', company:'Artsy Image Studios', service:'Social + Website', status:'Proposal sent', value:'£299+', next:'Await reply'},
-  {name:'Kinz Owners', company:'Kinz London', service:'Restaurant CRM', status:'Referred', value:'£399+', next:'Follow up in 3 days'},
-  {name:'Flux Framing', company:'Flux Framing', service:'Social Content', status:'New', value:'£299', next:'Sample offer'},
-  {name:'Prism Imaging', company:'Prism Imaging', service:'Content + Enquiry', status:'New', value:'A$499', next:'Sample offer'},
-];
-
-function PortalLayout({title,children}:{title:string,children:React.ReactNode}){
-  return <div className="portal-page"><aside className="portal-nav"><Logo/><nav>{portalNav.map(([to,label,icon])=><NavLink end={to==='/admin'} to={to as string} key={to as string}>{icon}{label}</NavLink>)}</nav></aside><main className="portal-content"><div className="topbar"><div><div className="kicker">IDEA LAB OPERATIONS</div><h1>{title}</h1></div><div style={{display:'flex',gap:10,alignItems:'center'}}><button className="btn portal-mobile-toggle" style={{color:'#111',borderColor:'#ddd'}}><Menu/></button><button className="btn" style={{color:'#111',borderColor:'#ddd',background:'white'}}><Search size={16}/> Search</button><div style={{width:38,height:38,borderRadius:12,background:'#111',color:'#fff',display:'grid',placeItems:'center'}}>AS</div></div></div>{children}</main></div>
-}
-
-function Dashboard(){return <PortalLayout title="Dashboard"><div className="portal-grid-cards">{[['Total Leads','248','+22%'],['Active Clients','42','+8%'],['Open Projects','16','+5%'],['Pipeline Value','$38,420','+17%']].map(x=><div className="portal-card" key={x[0]}><small>{x[0]}</small><b>{x[1]}</b><span style={{color:'#2d7a3a',fontSize:12}}>{x[2]} this month</span></div>)}</div><div className="portal-columns"><div className="panel"><h3>Lead activity</h3><div style={{height:280}}><ResponsiveContainer width="100%" height="100%"><AreaChart data={chartData}><defs><linearGradient id="fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#ff2d2d" stopOpacity={.25}/><stop offset="100%" stopColor="#ff2d2d" stopOpacity={0}/></linearGradient></defs><XAxis dataKey="m" axisLine={false} tickLine={false}/><Tooltip/><Area type="monotone" dataKey="v" stroke="#ff2d2d" strokeWidth={3} fill="url(#fill)"/></AreaChart></ResponsiveContainer></div></div><div className="panel"><h3>Recent activity</h3><div className="activity">{['New website enquiry received','Proposal sent to Artsy Image','Follow-up due for Dental Avenue','Invoice marked paid','New project created'].map((x,i)=><div className="activity-item" key={x}><div className="activity-dot"/><div><b style={{fontSize:13}}>{x}</b><br/><small>{i+1}h ago</small></div></div>)}</div></div></div><div className="panel" style={{marginTop:16}}><h3>Hot opportunities</h3><table className="table"><thead><tr><th>Lead</th><th>Company</th><th>Service</th><th>Status</th><th>Value</th><th>Next Action</th></tr></thead><tbody>{demoLeads.map(l=><tr key={l.company}><td>{l.name}</td><td>{l.company}</td><td>{l.service}</td><td><span className={'status '+(l.status==='Warm'?'hot':'')}>{l.status}</span></td><td>{l.value}</td><td>{l.next}</td></tr>)}</tbody></table></div></PortalLayout>}
-
-function Leads(){const [q,setQ]=useState('');const rows=useMemo(()=>demoLeads.filter(x=>Object.values(x).join(' ').toLowerCase().includes(q.toLowerCase())),[q]);return <PortalLayout title="Leads"><div className="panel"><div style={{display:'flex',justifyContent:'space-between',gap:12,marginBottom:14,flexWrap:'wrap'}}><input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search leads..." style={{padding:'11px 13px',border:'1px solid #ddd',borderRadius:10,minWidth:260}}/><button className="btn primary">+ Add Lead</button></div><table className="table"><thead><tr><th>Name</th><th>Company</th><th>Service</th><th>Status</th><th>Value</th><th>Next action</th></tr></thead><tbody>{rows.map(l=><tr key={l.company}><td>{l.name}</td><td>{l.company}</td><td>{l.service}</td><td><span className="status">{l.status}</span></td><td>{l.value}</td><td>{l.next}</td></tr>)}</tbody></table></div></PortalLayout>}
-
-
-const teamRoles = [
-  ['Super Admin','Full control, including team profiles and permissions. Keep this role to 1–2 trusted owners.'],
-  ['Admin','Full operational access without the ability to create or change Super Admin accounts.'],
-  ['Sales','Leads, pipeline, client contacts and follow-ups only. No invoices or settings.'],
-  ['Project Manager','Clients, projects, tasks and content delivery. No financial controls.'],
-  ['Finance','Invoices, payments and financial reporting only.'],
-  ['Content','Content planner and client-facing content workflow only.'],
-];
-
-function TeamRoles(){return <PortalLayout title="Team & Roles"><div className="panel" style={{marginBottom:16}}><div className="eyebrow">SECURITY MODEL</div><h3 style={{fontSize:24,margin:'8px 0'}}>Internal staff profiles only</h3><p style={{color:'#666',lineHeight:1.7,maxWidth:850}}>Each person signs in through Cloudflare Access first, then the API checks their IDEA LAB role again before returning any data. No shared passwords, no public registration and no client accounts.</p><div style={{display:'flex',gap:10,flexWrap:'wrap',marginTop:16}}><span className="status hot">Recommended now: 3–5 profiles</span><span className="status">Free-tier friendly</span><span className="status">MFA through Cloudflare Access</span></div></div><div className="grid cards-3">{teamRoles.map(([role,desc])=><div className="portal-card" key={role}><div style={{display:'flex',justifyContent:'space-between',gap:10,alignItems:'center'}}><b style={{fontSize:18,margin:0}}>{role}</b><ShieldCheck size={18}/></div><p style={{color:'#777',lineHeight:1.65}}>{desc}</p></div>)}</div></PortalLayout>}
-
-function GenericPortal({title,items}:{title:string,items:string[]}){return <PortalLayout title={title}><div className="grid cards-3">{items.map((x,i)=><div className="portal-card" key={x}><div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}><b style={{fontSize:18,margin:0}}>{x}</b><span className="status">Active</span></div><p style={{color:'#777',lineHeight:1.6}}>Professional module ready for API-backed data, permissions, filters, exports and activity history.</p><button className="btn" style={{color:'#111',borderColor:'#ddd',background:'white'}}>Open <ArrowRight size={14}/></button></div>)}</div></PortalLayout>}
-
-function App(){return <Routes><Route path="/" element={<Home/>}/><Route path="/admin" element={<Dashboard/>}/><Route path="/admin/leads" element={<Leads/>}/><Route path="/admin/clients" element={<GenericPortal title="Clients" items={['Client Directory','Contacts & Notes','Contracts & Files']}/>}/><Route path="/admin/projects" element={<GenericPortal title="Projects" items={['Active Projects','Milestones','Deliverables']}/>}/><Route path="/admin/tasks" element={<GenericPortal title="Tasks" items={['My Tasks','Team Board','Deadlines']}/>}/><Route path="/admin/invoices" element={<GenericPortal title="Invoices" items={['Draft Invoices','Sent & Due','Payments']}/>}/><Route path="/admin/content" element={<GenericPortal title="Content Planner" items={['Calendar','Campaigns','Asset Library']}/>}/><Route path="/admin/reports" element={<GenericPortal title="Reports" items={['Sales Funnel','Revenue','Campaign Performance']}/>}/><Route path="/admin/users" element={<TeamRoles/>}/><Route path="/admin/settings" element={<GenericPortal title="Settings" items={['Security & Access','Integrations','Brand & Agency']}/>}/></Routes>}
 export default App;
