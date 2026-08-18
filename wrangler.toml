@@ -1,4 +1,4 @@
-name = "idealab-premium-api"
+name = "idealab-premium"
 main = "worker/index.ts"
 compatibility_date = "2026-08-01"
 
