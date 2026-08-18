@@ -2,10 +2,15 @@ name = "idealab-premium-api"
 main = "worker/index.ts"
 compatibility_date = "2026-08-01"
 
+[assets]
+directory = "./dist"
+not_found_handling = "single-page-application"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "idealab-crm"
 database_id = "023c6004-fb3a-41d4-8c4f-bccf51409fae"
+
 [vars]
 # Example: idealab.cloudflareaccess.com (do not include https://)
 CF_ACCESS_TEAM_DOMAIN = "REPLACE_WITH_TEAM.cloudflareaccess.com"
