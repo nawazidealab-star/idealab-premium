@@ -3,15 +3,9 @@ import { motion } from 'framer-motion';
 import {
   ArrowRight,
   BarChart3,
-  BriefcaseBusiness,
-  CalendarDays,
   Camera,
   CheckCircle2,
-  CircleDollarSign,
-  ClipboardList,
   Code2,
-  Contact,
-  FileText,
   Globe2,
   LayoutDashboard,
   Mail,
@@ -19,11 +13,9 @@ import {
   MessageSquare,
   MonitorSmartphone,
   Search,
-  Settings,
   ShieldCheck,
   Sparkles,
   Target,
-  Users,
   Workflow,
   X
 } from 'lucide-react';
@@ -52,7 +44,7 @@ const services: Service[] = [
     icon: <LayoutDashboard size={28} />,
     title: 'CRM Systems',
     description:
-      'Custom dashboards for leads, clients, follow-ups, projects, tasks and internal business operations.'
+      'Custom CRM platforms for leads, customers, follow-ups, projects, workflows and business operations.'
   },
   {
     icon: <Camera size={28} />,
@@ -136,25 +128,15 @@ const testimonials = [
   }
 ];
 
-const adminMenu = [
-  { icon: <LayoutDashboard size={18} />, label: 'Dashboard' },
-  { icon: <Target size={18} />, label: 'Leads' },
-  { icon: <Users size={18} />, label: 'Clients' },
-  { icon: <BriefcaseBusiness size={18} />, label: 'Projects' },
-  { icon: <ClipboardList size={18} />, label: 'Tasks' },
-  { icon: <FileText size={18} />, label: 'Invoices' },
-  { icon: <CalendarDays size={18} />, label: 'Content' },
-  { icon: <BarChart3 size={18} />, label: 'Reports' },
-  { icon: <Settings size={18} />, label: 'Settings' }
-];
-
 function App() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const navItems = ['home', 'services', 'work', 'about', 'testimonials', 'contact'];
 
   return (
     <div className="site-shell">
       <header className="topbar">
-        <a className="brand" href="#home">
+        <a className="brand" href="#home" aria-label="IDEA LAB home">
           <img src="/idealab-logo.jpg" alt="IDEA LAB" />
         </a>
 
@@ -168,8 +150,7 @@ function App() {
         </nav>
 
         <a className="nav-cta desktop-only" href="#contact">
-          Start a Project
-          <ArrowRight size={16} />
+          Start a Project <ArrowRight size={16} />
         </a>
 
         <button
@@ -187,24 +168,11 @@ function App() {
           initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <a href="#home" onClick={() => setMobileOpen(false)}>
-            Home
-          </a>
-          <a href="#services" onClick={() => setMobileOpen(false)}>
-            Services
-          </a>
-          <a href="#work" onClick={() => setMobileOpen(false)}>
-            Work
-          </a>
-          <a href="#about" onClick={() => setMobileOpen(false)}>
-            About
-          </a>
-          <a href="#testimonials" onClick={() => setMobileOpen(false)}>
-            Testimonials
-          </a>
-          <a href="#contact" onClick={() => setMobileOpen(false)}>
-            Contact
-          </a>
+          {navItems.map((item) => (
+            <a key={item} href={`#${item}`} onClick={() => setMobileOpen(false)}>
+              {item.charAt(0).toUpperCase() + item.slice(1)}
+            </a>
+          ))}
         </motion.div>
       )}
 
@@ -230,33 +198,23 @@ function App() {
             </h1>
 
             <p>
-              Premium websites, CRM systems, social media, automation and
-              conversion journeys — designed as one connected growth system.
+              Premium websites, CRM systems, social media, automation and conversion journeys — designed as one connected growth system.
             </p>
 
             <div className="hero-actions">
               <a className="primary-btn" href="#work">
-                View Our Work
-                <ArrowRight size={18} />
+                View Our Work <ArrowRight size={18} />
               </a>
-
-              <a className="secondary-btn" href="#contact">
-                Book a Strategy Call
-              </a>
+              <a className="secondary-btn" href="#contact">Book a Strategy Call</a>
             </div>
 
             <div className="hero-trust">
               <div className="mini-avatar-group">
-                <span>IL</span>
-                <span>CRM</span>
-                <span>WEB</span>
+                <span>IL</span><span>CRM</span><span>WEB</span>
               </div>
               <div>
                 <strong>Built for service businesses</strong>
-                <small>
-                  Healthcare · Restaurants · Creative · Property · Professional
-                  Services
-                </small>
+                <small>Healthcare · Restaurants · Creative · Property · Professional Services</small>
               </div>
             </div>
           </motion.div>
@@ -269,38 +227,17 @@ function App() {
           >
             <div className="browser-card">
               <div className="browser-top">
-                <div className="browser-dots">
-                  <span />
-                  <span />
-                  <span />
-                </div>
+                <div className="browser-dots"><span /><span /><span /></div>
                 <span>idealab.digital</span>
               </div>
-
               <div className="browser-content">
                 <div className="browser-badge">Premium Website Systems</div>
-                <h3>
-                  Built to look better.
-                  <br />
-                  Built to convert.
-                </h3>
-                <p>
-                  Clean digital experiences backed by smarter internal systems.
-                </p>
-
+                <h3>Built to look better.<br />Built to convert.</h3>
+                <p>Clean digital experiences backed by smarter systems.</p>
                 <div className="browser-metrics">
-                  <div>
-                    <strong>Leads</strong>
-                    <span>248</span>
-                  </div>
-                  <div>
-                    <strong>Projects</strong>
-                    <span>32</span>
-                  </div>
-                  <div>
-                    <strong>Clients</strong>
-                    <span>126</span>
-                  </div>
+                  <div><strong>Leads</strong><span>248</span></div>
+                  <div><strong>Projects</strong><span>32</span></div>
+                  <div><strong>Clients</strong><span>126</span></div>
                 </div>
               </div>
             </div>
@@ -310,10 +247,7 @@ function App() {
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
             >
-              <div className="float-title">
-                <BarChart3 size={18} />
-                Growth overview
-              </div>
+              <div className="float-title"><BarChart3 size={18} />Growth overview</div>
               <div className="chart-bars">
                 {[45, 62, 52, 78, 66, 91, 100].map((height, index) => (
                   <span key={index} style={{ height: `${height}%` }} />
@@ -324,34 +258,18 @@ function App() {
         </section>
 
         <section className="stats-strip">
-          <div>
-            <strong>CRM</strong>
-            <span>Lead & client management</span>
-          </div>
-          <div>
-            <strong>WEB</strong>
-            <span>Premium responsive development</span>
-          </div>
-          <div>
-            <strong>SOCIAL</strong>
-            <span>Content that supports sales</span>
-          </div>
-          <div>
-            <strong>AUTOMATE</strong>
-            <span>Less manual admin</span>
-          </div>
+          <div><strong>CRM</strong><span>Lead & customer management</span></div>
+          <div><strong>WEB</strong><span>Premium responsive development</span></div>
+          <div><strong>SOCIAL</strong><span>Content that supports sales</span></div>
+          <div><strong>AUTOMATE</strong><span>Less manual admin</span></div>
         </section>
 
         <section id="services" className="section light-section">
           <div className="section-heading">
             <span>WHAT WE DO</span>
             <h2>Complete digital solutions.</h2>
-            <p>
-              Not isolated services. We connect your customer-facing marketing
-              with the systems your team uses behind the scenes.
-            </p>
+            <p>We connect customer-facing marketing with the systems businesses use to capture, follow up and convert opportunities.</p>
           </div>
-
           <div className="service-grid">
             {services.map((service, index) => (
               <motion.article
@@ -366,9 +284,7 @@ function App() {
                 <div className="service-icon">{service.icon}</div>
                 <h3>{service.title}</h3>
                 <p>{service.description}</p>
-                <a href="#contact">
-                  Discuss your project <ArrowRight size={15} />
-                </a>
+                <a href="#contact">Discuss your project <ArrowRight size={15} /></a>
               </motion.article>
             ))}
           </div>
@@ -378,13 +294,8 @@ function App() {
           <div className="section-heading left-heading">
             <span>SELECTED WORK</span>
             <h2>Built around real business problems.</h2>
-            <p>
-              These project directions demonstrate the kind of work IDEA LAB
-              develops. Your real portfolio projects can replace these samples
-              as you provide them.
-            </p>
+            <p>These sample project directions will be replaced with your genuine IDEA LAB work as you provide it.</p>
           </div>
-
           <div className="project-grid">
             {projects.map((project, index) => (
               <motion.article
@@ -397,12 +308,8 @@ function App() {
               >
                 <div className="project-image-wrap">
                   <img src={project.image} alt={project.title} />
-                  <div className="project-overlay">
-                    <span>{project.category}</span>
-                    <ArrowRight />
-                  </div>
+                  <div className="project-overlay"><span>{project.category}</span><ArrowRight /></div>
                 </div>
-
                 <div className="project-copy">
                   <span>{project.category}</span>
                   <h3>{project.title}</h3>
@@ -416,18 +323,8 @@ function App() {
         <section id="about" className="section about-section">
           <div className="about-copy">
             <span className="section-kicker">WHY IDEA LAB</span>
-
-            <h2>
-              Your website should not be separate from the way your business
-              actually works.
-            </h2>
-
-            <p>
-              IDEA LAB combines front-end design, development, CRM architecture,
-              social content and automation into systems that are easier for
-              customers to use and easier for your team to manage.
-            </p>
-
+            <h2>Your website should connect to the way your business actually grows.</h2>
+            <p>IDEA LAB combines design, development, CRM architecture, social content and automation into practical systems built around customer acquisition and business operations.</p>
             <div className="check-list">
               {[
                 'Responsive websites built for modern devices',
@@ -435,12 +332,9 @@ function App() {
                 'Conversion-focused landing and enquiry pages',
                 'Social media designed around customer actions',
                 'Automation and follow-up infrastructure',
-                'Secure internal operational dashboards'
+                'Secure business systems and integrations'
               ].map((item) => (
-                <div key={item}>
-                  <CheckCircle2 size={19} />
-                  <span>{item}</span>
-                </div>
+                <div key={item}><CheckCircle2 size={19} /><span>{item}</span></div>
               ))}
             </div>
           </div>
@@ -448,218 +342,30 @@ function App() {
           <div className="about-panel">
             <div className="about-panel-header">
               <ShieldCheck size={25} />
-              <div>
-                <strong>Built with security in mind</strong>
-                <span>Cloudflare-ready architecture</span>
-              </div>
+              <div><strong>Built with security in mind</strong><span>Modern Cloudflare-ready architecture</span></div>
             </div>
-
             <div className="about-panel-grid">
-              <div>
-                <Search size={21} />
-                <strong>Clear</strong>
-                <span>Simple UX and information hierarchy</span>
-              </div>
-
-              <div>
-                <MonitorSmartphone size={21} />
-                <strong>Responsive</strong>
-                <span>Designed across desktop and mobile</span>
-              </div>
-
-              <div>
-                <Workflow size={21} />
-                <strong>Connected</strong>
-                <span>Marketing and operations working together</span>
-              </div>
-
-              <div>
-                <ShieldCheck size={21} />
-                <strong>Secure</strong>
-                <span>Protected admin and API architecture</span>
-              </div>
+              <div><Search size={21} /><strong>Clear</strong><span>Simple UX and information hierarchy</span></div>
+              <div><MonitorSmartphone size={21} /><strong>Responsive</strong><span>Designed across desktop and mobile</span></div>
+              <div><Workflow size={21} /><strong>Connected</strong><span>Marketing and operations working together</span></div>
+              <div><ShieldCheck size={21} /><strong>Secure</strong><span>Protected modern application architecture</span></div>
             </div>
           </div>
-        </section>
-
-        <section className="internal-section section-dark">
-          <div className="internal-copy">
-            <span className="section-kicker red-kicker">
-              INTERNAL OPERATIONS
-            </span>
-
-            <h2>One private backend for IDEA LAB operations.</h2>
-
-            <p>
-              The agency backend is for internal staff only. It is not sold as
-              a client portal and is not exposed as a public website feature.
-            </p>
-
-            <div className="internal-list">
-              <div>
-                <Users />
-                <span>Clients and contacts</span>
-              </div>
-              <div>
-                <Target />
-                <span>Leads and pipeline</span>
-              </div>
-              <div>
-                <BriefcaseBusiness />
-                <span>Projects and delivery</span>
-              </div>
-              <div>
-                <ClipboardList />
-                <span>Tasks and deadlines</span>
-              </div>
-              <div>
-                <CircleDollarSign />
-                <span>Invoices and internal finance tracking</span>
-              </div>
-              <div>
-                <FileText />
-                <span>Content planning and records</span>
-              </div>
-            </div>
-          </div>
-
-          <motion.div
-            className="admin-demo"
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
-            <aside className="admin-sidebar">
-              <img src="/idealab-logo.jpg" alt="IDEA LAB" />
-
-              <div className="admin-nav">
-                {adminMenu.map((item, index) => (
-                  <div
-                    key={item.label}
-                    className={index === 0 ? 'admin-nav-active' : ''}
-                  >
-                    {item.icon}
-                    <span>{item.label}</span>
-                  </div>
-                ))}
-              </div>
-            </aside>
-
-            <div className="admin-main">
-              <div className="admin-top">
-                <div>
-                  <span>Private agency dashboard</span>
-                  <h3>Good afternoon.</h3>
-                </div>
-
-                <div className="admin-profile">IL</div>
-              </div>
-
-              <div className="admin-metrics">
-                <div>
-                  <span>Total leads</span>
-                  <strong>248</strong>
-                  <small>+12% this month</small>
-                </div>
-
-                <div>
-                  <span>Active clients</span>
-                  <strong>26</strong>
-                  <small>4 new this month</small>
-                </div>
-
-                <div>
-                  <span>Projects</span>
-                  <strong>32</strong>
-                  <small>11 currently active</small>
-                </div>
-
-                <div>
-                  <span>Tasks due</span>
-                  <strong>14</strong>
-                  <small>5 due today</small>
-                </div>
-              </div>
-
-              <div className="admin-bottom-grid">
-                <div className="pipeline-card">
-                  <div className="card-header">
-                    <strong>Lead pipeline</strong>
-                    <span>This month</span>
-                  </div>
-
-                  <div className="pipeline-bars">
-                    <div>
-                      <span>New</span>
-                      <b style={{ width: '82%' }} />
-                      <strong>67</strong>
-                    </div>
-                    <div>
-                      <span>Contacted</span>
-                      <b style={{ width: '66%' }} />
-                      <strong>49</strong>
-                    </div>
-                    <div>
-                      <span>Qualified</span>
-                      <b style={{ width: '48%' }} />
-                      <strong>34</strong>
-                    </div>
-                    <div>
-                      <span>Won</span>
-                      <b style={{ width: '28%' }} />
-                      <strong>18</strong>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="activity-card">
-                  <div className="card-header">
-                    <strong>Recent activity</strong>
-                  </div>
-
-                  {[
-                    ['New lead added', '2 min ago'],
-                    ['Project updated', '1 hour ago'],
-                    ['Invoice created', '3 hours ago'],
-                    ['Task completed', '5 hours ago']
-                  ].map(([label, time]) => (
-                    <div className="activity-row" key={label}>
-                      <span className="activity-dot" />
-                      <div>
-                        <strong>{label}</strong>
-                        <small>{time}</small>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
         </section>
 
         <section id="testimonials" className="section testimonial-section">
           <div className="section-heading">
             <span>TESTIMONIALS</span>
-            <h2>Proof will live here.</h2>
-            <p>
-              These are clearly marked placeholders until genuine IDEA LAB
-              testimonials and client results are supplied.
-            </p>
+            <h2>Client proof belongs here.</h2>
+            <p>These remain clearly marked placeholders until you send your genuine client reviews and results.</p>
           </div>
-
           <div className="testimonial-grid">
             {testimonials.map((testimonial) => (
               <article className="testimonial-card" key={testimonial.quote}>
                 <div className="sample-label">SAMPLE PLACEHOLDER</div>
-
                 <div className="testimonial-stars">★★★★★</div>
-
                 <blockquote>“{testimonial.quote}”</blockquote>
-
-                <div>
-                  <strong>{testimonial.name}</strong>
-                  <span>{testimonial.role}</span>
-                </div>
+                <div><strong>{testimonial.name}</strong><span>{testimonial.role}</span></div>
               </article>
             ))}
           </div>
@@ -673,56 +379,23 @@ function App() {
             viewport={{ once: true }}
           >
             <div>
-              <span className="section-kicker red-kicker">
-                START A PROJECT
-              </span>
-
+              <span className="section-kicker red-kicker">START A PROJECT</span>
               <h2>Tell us what your business needs to improve.</h2>
-
-              <p>
-                Website, CRM, social content or a complete connected system —
-                start with the problem and we will recommend the simplest useful
-                solution.
-              </p>
-
+              <p>Website, CRM, social content or a complete connected system — start with the problem and we will recommend the simplest useful solution.</p>
               <div className="contact-details">
-                <a href="mailto:nawazidealab@gmail.com">
-                  <Mail size={18} />
-                  nawazidealab@gmail.com
-                </a>
-
-                <div>
-                  <MessageSquare size={18} />
-                  WhatsApp details can be added when ready
-                </div>
+                <a href="mailto:nawazidealab@gmail.com"><Mail size={18} />nawazidealab@gmail.com</a>
+                <div><MessageSquare size={18} />WhatsApp details can be added when ready</div>
               </div>
             </div>
 
-            <form
-              className="contact-form"
-              onSubmit={(event) => event.preventDefault()}
-            >
-              <label>
-                Name
-                <input type="text" placeholder="Your name" />
-              </label>
-
-              <label>
-                Email
-                <input type="email" placeholder="you@company.com" />
-              </label>
-
-              <label>
-                Business
-                <input type="text" placeholder="Business name" />
-              </label>
-
+            <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
+              <label>Name<input type="text" placeholder="Your name" /></label>
+              <label>Email<input type="email" placeholder="you@company.com" /></label>
+              <label>Business<input type="text" placeholder="Business name" /></label>
               <label>
                 What do you need?
                 <select defaultValue="">
-                  <option value="" disabled>
-                    Select a service
-                  </option>
+                  <option value="" disabled>Select a service</option>
                   <option>Website Development</option>
                   <option>CRM System</option>
                   <option>Social Media</option>
@@ -730,16 +403,8 @@ function App() {
                   <option>Complete Digital System</option>
                 </select>
               </label>
-
-              <label className="full-field">
-                Project details
-                <textarea placeholder="Tell us what you want to improve..." />
-              </label>
-
-              <button type="submit" className="primary-btn form-button">
-                Send Enquiry
-                <ArrowRight size={17} />
-              </button>
+              <label className="full-field">Project details<textarea placeholder="Tell us what you want to improve..." /></label>
+              <button type="submit" className="primary-btn form-button">Send Enquiry <ArrowRight size={17} /></button>
             </form>
           </motion.div>
         </section>
@@ -748,12 +413,8 @@ function App() {
       <footer>
         <div className="footer-brand">
           <img src="/idealab-logo.jpg" alt="IDEA LAB" />
-          <p>
-            Websites, CRM systems, social content and automation designed to
-            help businesses operate and grow more effectively.
-          </p>
+          <p>Websites, CRM systems, social content and automation designed to help businesses operate and grow more effectively.</p>
         </div>
-
         <div className="footer-links">
           <div>
             <strong>Services</strong>
@@ -762,7 +423,6 @@ function App() {
             <a href="#services">Social Media</a>
             <a href="#services">Automation</a>
           </div>
-
           <div>
             <strong>IDEA LAB</strong>
             <a href="#about">About</a>
@@ -771,10 +431,9 @@ function App() {
             <a href="#contact">Contact</a>
           </div>
         </div>
-
         <div className="footer-bottom">
           <span>© 2026 IDEA LAB. All rights reserved.</span>
-          <span>Private agency systems are not public client portals.</span>
+          <span>Digital systems built for growth.</span>
         </div>
       </footer>
     </div>
