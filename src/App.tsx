@@ -10,7 +10,6 @@ import {
   LayoutDashboard,
   Mail,
   Menu,
-  MessageSquare,
   MonitorSmartphone,
   Search,
   ShieldCheck,
@@ -37,38 +36,32 @@ const services: Service[] = [
   {
     icon: <Code2 size={28} />,
     title: 'Web Development',
-    description:
-      'Premium responsive websites designed to look modern, load fast and turn visitors into enquiries.'
+    description: 'Premium responsive websites engineered for speed, clarity, credibility and conversion.'
   },
   {
     icon: <LayoutDashboard size={28} />,
     title: 'CRM Systems',
-    description:
-      'Custom CRM platforms for leads, customers, follow-ups, projects, workflows and business operations.'
+    description: 'Custom CRM platforms for leads, customers, follow-ups, workflows, projects and operations.'
   },
   {
     icon: <Camera size={28} />,
     title: 'Social Media',
-    description:
-      'Branded content, short-form video concepts, campaigns and creative systems built around real business goals.'
+    description: 'Branded content systems, short-form creative and campaigns designed around business goals.'
   },
   {
     icon: <Workflow size={28} />,
     title: 'Automation',
-    description:
-      'Automated lead routing, reminders, notifications and workflows that reduce repetitive manual work.'
+    description: 'Connected workflows, reminders and smart handoffs that reduce repetitive admin work.'
   },
   {
     icon: <Target size={28} />,
     title: 'Conversion Growth',
-    description:
-      'Landing pages, enquiry journeys, booking flows and stronger calls-to-action built to improve conversion.'
+    description: 'Landing pages, enquiry journeys and stronger calls-to-action built to move prospects forward.'
   },
   {
     icon: <Globe2 size={28} />,
     title: 'Digital Strategy',
-    description:
-      'A connected approach across website, CRM, content and follow-up instead of disconnected marketing tools.'
+    description: 'A joined-up approach across web, CRM, content and follow-up instead of disconnected tools.'
   }
 ];
 
@@ -76,62 +69,32 @@ const projects: Project[] = [
   {
     title: 'Dental Clinic Growth System',
     category: 'CRM + Website',
-    image:
-      'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80',
-    description:
-      'A patient enquiry journey combining treatment pages, lead capture, follow-up stages and appointment tracking.'
+    image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80',
+    description: 'Treatment-focused pages, lead capture, follow-up stages and appointment-oriented workflows.'
   },
   {
-    title: 'Restaurant Growth Platform',
+    title: 'Restaurant Customer Platform',
     category: 'CRM + Retention',
-    image:
-      'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80',
-    description:
-      'Customer profiles, reservations, VIP tracking, feedback and repeat-customer campaign management.'
+    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80',
+    description: 'Customer profiles, reservations, VIP tracking, feedback and repeat-customer campaign structure.'
   },
   {
-    title: 'Creative Studio Digital Refresh',
+    title: 'Creative Studio Digital Experience',
     category: 'Website + Social',
-    image:
-      'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1200&q=80',
-    description:
-      'A premium visual direction for creative studios, photographers, printers, galleries and artists.'
+    image: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1200&q=80',
+    description: 'A premium web and content direction for studios, photographers, printers, galleries and artists.'
   },
   {
     title: 'Property Lead Funnel',
     category: 'Lead Generation',
-    image:
-      'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=80',
-    description:
-      'Seller enquiry capture, appraisal CTA design, property lead tracking and follow-up workflow.'
-  }
-];
-
-const testimonials = [
-  {
-    quote:
-      'The system made it much easier to understand where enquiries were coming from and what needed follow-up.',
-    name: 'Sample Client',
-    role: 'Healthcare Business'
-  },
-  {
-    quote:
-      'The new digital direction looked much more premium and gave us a clearer way to present our services.',
-    name: 'Sample Client',
-    role: 'Creative Business'
-  },
-  {
-    quote:
-      'The dashboard concept brought leads, projects and follow-ups into one much simpler workflow.',
-    name: 'Sample Client',
-    role: 'Service Business'
+    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=80',
+    description: 'Seller enquiry capture, appraisal calls-to-action, lead qualification and follow-up workflow.'
   }
 ];
 
 function App() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
-  const navItems = ['home', 'services', 'work', 'about', 'testimonials', 'contact'];
+  const navItems = ['home', 'services', 'work', 'about', 'contact'];
 
   return (
     <div className="site-shell">
@@ -145,7 +108,6 @@ function App() {
           <a href="#services">Services</a>
           <a href="#work">Work</a>
           <a href="#about">About</a>
-          <a href="#testimonials">Testimonials</a>
           <a href="#contact">Contact</a>
         </nav>
 
@@ -198,14 +160,14 @@ function App() {
             </h1>
 
             <p>
-              Premium websites, CRM systems, social media, automation and conversion journeys — designed as one connected growth system.
+              Premium websites, CRM systems, social media and automation — designed as one connected digital growth system.
             </p>
 
             <div className="hero-actions">
               <a className="primary-btn" href="#work">
-                View Our Work <ArrowRight size={18} />
+                Explore Our Capabilities <ArrowRight size={18} />
               </a>
-              <a className="secondary-btn" href="#contact">Book a Strategy Call</a>
+              <a className="secondary-btn" href="#contact">Start a Conversation</a>
             </div>
 
             <div className="hero-trust">
@@ -213,8 +175,8 @@ function App() {
                 <span>IL</span><span>CRM</span><span>WEB</span>
               </div>
               <div>
-                <strong>Built for service businesses</strong>
-                <small>Healthcare · Restaurants · Creative · Property · Professional Services</small>
+                <strong>Built for ambitious service businesses</strong>
+                <small>Healthcare · Hospitality · Creative · Property · Professional Services</small>
               </div>
             </div>
           </motion.div>
@@ -228,16 +190,16 @@ function App() {
             <div className="browser-card">
               <div className="browser-top">
                 <div className="browser-dots"><span /><span /><span /></div>
-                <span>idealab.digital</span>
+                <span>IDEA LAB digital experience</span>
               </div>
               <div className="browser-content">
-                <div className="browser-badge">Premium Website Systems</div>
-                <h3>Built to look better.<br />Built to convert.</h3>
-                <p>Clean digital experiences backed by smarter systems.</p>
+                <div className="browser-badge">Digital Growth Systems</div>
+                <h3>Built to look better.<br />Built to work smarter.</h3>
+                <p>High-end customer experiences backed by practical business systems.</p>
                 <div className="browser-metrics">
-                  <div><strong>Leads</strong><span>248</span></div>
-                  <div><strong>Projects</strong><span>32</span></div>
-                  <div><strong>Clients</strong><span>126</span></div>
+                  <div><strong>Web</strong><span>Fast</span></div>
+                  <div><strong>CRM</strong><span>Custom</span></div>
+                  <div><strong>Build</strong><span>Secure</span></div>
                 </div>
               </div>
             </div>
@@ -247,7 +209,7 @@ function App() {
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
             >
-              <div className="float-title"><BarChart3 size={18} />Growth overview</div>
+              <div className="float-title"><BarChart3 size={18} />Connected growth</div>
               <div className="chart-bars">
                 {[45, 62, 52, 78, 66, 91, 100].map((height, index) => (
                   <span key={index} style={{ height: `${height}%` }} />
@@ -260,16 +222,17 @@ function App() {
         <section className="stats-strip">
           <div><strong>CRM</strong><span>Lead & customer management</span></div>
           <div><strong>WEB</strong><span>Premium responsive development</span></div>
-          <div><strong>SOCIAL</strong><span>Content that supports sales</span></div>
-          <div><strong>AUTOMATE</strong><span>Less manual admin</span></div>
+          <div><strong>SOCIAL</strong><span>Content that supports growth</span></div>
+          <div><strong>AUTOMATE</strong><span>Smarter business workflows</span></div>
         </section>
 
         <section id="services" className="section light-section">
           <div className="section-heading">
             <span>WHAT WE DO</span>
-            <h2>Complete digital solutions.</h2>
-            <p>We connect customer-facing marketing with the systems businesses use to capture, follow up and convert opportunities.</p>
+            <h2>One partner. Connected digital solutions.</h2>
+            <p>We combine customer-facing design with the systems that capture, organise and move opportunities forward.</p>
           </div>
+
           <div className="service-grid">
             {services.map((service, index) => (
               <motion.article
@@ -292,10 +255,11 @@ function App() {
 
         <section id="work" className="section work-section">
           <div className="section-heading left-heading">
-            <span>SELECTED WORK</span>
-            <h2>Built around real business problems.</h2>
-            <p>These sample project directions will be replaced with your genuine IDEA LAB work as you provide it.</p>
+            <span>SOLUTIONS IN ACTION</span>
+            <h2>Built around real business needs.</h2>
+            <p>Explore the types of digital experiences and systems we design across high-value service industries.</p>
           </div>
+
           <div className="project-grid">
             {projects.map((project, index) => (
               <motion.article
@@ -323,14 +287,15 @@ function App() {
         <section id="about" className="section about-section">
           <div className="about-copy">
             <span className="section-kicker">WHY IDEA LAB</span>
-            <h2>Your website should connect to the way your business actually grows.</h2>
-            <p>IDEA LAB combines design, development, CRM architecture, social content and automation into practical systems built around customer acquisition and business operations.</p>
+            <h2>Technology should make growth simpler, not more complicated.</h2>
+            <p>IDEA LAB combines design, development, CRM architecture, social content and automation into practical systems built around how modern businesses attract and manage customers.</p>
+
             <div className="check-list">
               {[
                 'Responsive websites built for modern devices',
                 'Custom CRM and lead management workflows',
                 'Conversion-focused landing and enquiry pages',
-                'Social media designed around customer actions',
+                'Social content designed around business goals',
                 'Automation and follow-up infrastructure',
                 'Secure business systems and integrations'
               ].map((item) => (
@@ -342,32 +307,14 @@ function App() {
           <div className="about-panel">
             <div className="about-panel-header">
               <ShieldCheck size={25} />
-              <div><strong>Built with security in mind</strong><span>Modern Cloudflare-ready architecture</span></div>
+              <div><strong>Modern by design</strong><span>Performance, usability and security considered from the start</span></div>
             </div>
             <div className="about-panel-grid">
-              <div><Search size={21} /><strong>Clear</strong><span>Simple UX and information hierarchy</span></div>
-              <div><MonitorSmartphone size={21} /><strong>Responsive</strong><span>Designed across desktop and mobile</span></div>
+              <div><Search size={21} /><strong>Clear</strong><span>Focused user journeys and information hierarchy</span></div>
+              <div><MonitorSmartphone size={21} /><strong>Responsive</strong><span>Designed across desktop, tablet and mobile</span></div>
               <div><Workflow size={21} /><strong>Connected</strong><span>Marketing and operations working together</span></div>
-              <div><ShieldCheck size={21} /><strong>Secure</strong><span>Protected modern application architecture</span></div>
+              <div><ShieldCheck size={21} /><strong>Secure</strong><span>Modern architecture with protected business systems</span></div>
             </div>
-          </div>
-        </section>
-
-        <section id="testimonials" className="section testimonial-section">
-          <div className="section-heading">
-            <span>TESTIMONIALS</span>
-            <h2>Client proof belongs here.</h2>
-            <p>These remain clearly marked placeholders until you send your genuine client reviews and results.</p>
-          </div>
-          <div className="testimonial-grid">
-            {testimonials.map((testimonial) => (
-              <article className="testimonial-card" key={testimonial.quote}>
-                <div className="sample-label">SAMPLE PLACEHOLDER</div>
-                <div className="testimonial-stars">★★★★★</div>
-                <blockquote>“{testimonial.quote}”</blockquote>
-                <div><strong>{testimonial.name}</strong><span>{testimonial.role}</span></div>
-              </article>
-            ))}
           </div>
         </section>
 
@@ -380,32 +327,25 @@ function App() {
           >
             <div>
               <span className="section-kicker red-kicker">START A PROJECT</span>
-              <h2>Tell us what your business needs to improve.</h2>
-              <p>Website, CRM, social content or a complete connected system — start with the problem and we will recommend the simplest useful solution.</p>
+              <h2>Tell us what you want your business to do better.</h2>
+              <p>Whether you need a stronger website, a custom CRM, better content or a connected digital system, we can shape the right solution around your workflow.</p>
               <div className="contact-details">
                 <a href="mailto:nawazidealab@gmail.com"><Mail size={18} />nawazidealab@gmail.com</a>
-                <div><MessageSquare size={18} />WhatsApp details can be added when ready</div>
               </div>
             </div>
 
-            <form className="contact-form" onSubmit={(event) => event.preventDefault()}>
-              <label>Name<input type="text" placeholder="Your name" /></label>
-              <label>Email<input type="email" placeholder="you@company.com" /></label>
-              <label>Business<input type="text" placeholder="Business name" /></label>
-              <label>
-                What do you need?
-                <select defaultValue="">
-                  <option value="" disabled>Select a service</option>
-                  <option>Website Development</option>
-                  <option>CRM System</option>
-                  <option>Social Media</option>
-                  <option>Automation</option>
-                  <option>Complete Digital System</option>
-                </select>
-              </label>
-              <label className="full-field">Project details<textarea placeholder="Tell us what you want to improve..." /></label>
-              <button type="submit" className="primary-btn form-button">Send Enquiry <ArrowRight size={17} /></button>
-            </form>
+            <div className="contact-form">
+              <div className="full-field">
+                <span className="section-kicker">READY WHEN YOU ARE</span>
+                <h3 style={{ margin: '14px 0 10px', fontSize: '28px', color: '#fff' }}>Start with a simple conversation.</h3>
+                <p style={{ margin: '0 0 24px', color: '#9a9da5', lineHeight: 1.7 }}>
+                  Send us your website, current process or the problem you want to solve. We’ll recommend a focused next step.
+                </p>
+                <a className="primary-btn" href="mailto:nawazidealab@gmail.com?subject=IDEA%20LAB%20Project%20Enquiry">
+                  Email IDEA LAB <ArrowRight size={17} />
+                </a>
+              </div>
+            </div>
           </motion.div>
         </section>
       </main>
@@ -426,8 +366,7 @@ function App() {
           <div>
             <strong>IDEA LAB</strong>
             <a href="#about">About</a>
-            <a href="#work">Work</a>
-            <a href="#testimonials">Testimonials</a>
+            <a href="#work">Capabilities</a>
             <a href="#contact">Contact</a>
           </div>
         </div>
