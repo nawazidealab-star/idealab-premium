@@ -47,17 +47,19 @@ jobs:
         env:
           CI: '1'
 
-      - name: Build installable debug APK
-        run: ./gradlew assembleDebug
+      - name: Build standalone release APK
+        run: ./gradlew assembleRelease --no-daemon
         working-directory: mobile/android
+        env:
+          CI: '1'
 
-      - name: Copy APK
-        run: cp android/app/build/outputs/apk/debug/app-debug.apk IDEA-LAB-Admin.apk
+      - name: Copy standalone APK
+        run: cp android/app/build/outputs/apk/release/app-release.apk IDEA-LAB-Admin-Standalone.apk
 
-      - name: Upload APK artifact
+      - name: Upload standalone APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: IDEA-LAB-Admin-Android
-          path: mobile/IDEA-LAB-Admin.apk
+          name: IDEA-LAB-Admin-Standalone-Android
+          path: mobile/IDEA-LAB-Admin-Standalone.apk
           if-no-files-found: error
           retention-days: 30
