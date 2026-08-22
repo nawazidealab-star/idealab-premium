@@ -1,5 +1,5 @@
 name = "idealab-premium"
-main = "worker/index-free-auth.ts"
+main = "worker/index-free-auth-bootstrap.ts"
 compatibility_date = "2026-08-01"
 
 [assets]
