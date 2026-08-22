@@ -1,5 +1,5 @@
 name = "idealab-premium"
-main = "worker/index-free-auth-bootstrap.ts"
+main = "worker/index-free-auth-lite.ts"
 compatibility_date = "2026-08-01"
 
 [assets]
@@ -16,5 +16,5 @@ database_id = "023c6004-fb3a-41d4-8c4f-bccf51409fae"
 [vars]
 SUPER_ADMIN_EMAIL = "nawazidealab@gmail.com"
 ADMIN_PASSWORD_SALT = "75a94442822c89d67fb99355bfd2bb5c"
-ADMIN_PASSWORD_HASH = "02a88e9b4e3d576c18abc4e77b7dc3e846e05551b5eaed2053d803d1b3e60ec0"
+ADMIN_PASSWORD_HASH = "0a0ffbd92d502c682063a13929827200d698be8f2dde6b8685bd9def6b643bb2"
 ALLOWED_ORIGINS = ""
