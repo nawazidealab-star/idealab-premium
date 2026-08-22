@@ -16,8 +16,8 @@ export type Lead = {
   source: string | null;
   service: string | null;
   status: string;
-  value?: number;
-  currency?: string;
+  value: number;
+  currency: string;
   next_action: string | null;
   next_action_at: string | null;
   owner_user_id: number | null;
