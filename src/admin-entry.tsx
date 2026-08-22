@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import AdminApp from './admin-app-complete';
+import AdminApp from './admin-app-premium';
 import { ApiError, adminApi, loginAdmin, type AppUser } from './admin-api';
 import './admin.css';
 import './admin-modules.css';
+import './admin-premium.css';
 
 const ADMIN_EMAIL = 'nawazidealab@gmail.com';
 
@@ -53,11 +54,11 @@ export default function AdminEntry() {
 
   if (checking) {
     return (
-      <div className="il-admin-state">
+      <div className="il-admin-state il-premium-state">
         <div className="il-admin-state-card">
           <div className="il-admin-spinner" />
-          <h2>Checking admin session...</h2>
-          <p>One moment.</p>
+          <h2>Opening IDEA LAB Admin...</h2>
+          <p>Checking your secure session.</p>
         </div>
       </div>
     );
@@ -66,37 +67,22 @@ export default function AdminEntry() {
   if (authenticated) return <AdminApp />;
 
   return (
-    <div className="il-admin-state">
+    <div className="il-admin-state il-premium-state">
       <div className="il-admin-state-card">
-        <h2>IDEA LAB Admin</h2>
-        <p>Private backend access. No paid login service required.</p>
+        <div className="il-admin-kicker">IDEA LAB OPERATIONS</div>
+        <h2>Admin command center</h2>
+        <p>Secure private backend access using the zero-cost D1 session system.</p>
         <form onSubmit={submit} style={{ display: 'grid', gap: 12, marginTop: 22, textAlign: 'left' }}>
           <label style={{ display: 'grid', gap: 6, fontSize: 12, fontWeight: 700, color: '#5e636b' }}>
             Email
-            <input
-              type="email"
-              required
-              autoComplete="username"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              style={{ width: '100%', padding: '12px', border: '1px solid #dfe2e6', borderRadius: 10, font: 'inherit' }}
-            />
+            <input type="email" required autoComplete="username" value={email} onChange={(event) => setEmail(event.target.value)} style={{ width: '100%', padding: '12px', border: '1px solid #dfe2e6', borderRadius: 10, font: 'inherit' }} />
           </label>
           <label style={{ display: 'grid', gap: 6, fontSize: 12, fontWeight: 700, color: '#5e636b' }}>
             Password
-            <input
-              type="password"
-              required
-              autoComplete="current-password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              style={{ width: '100%', padding: '12px', border: '1px solid #dfe2e6', borderRadius: 10, font: 'inherit' }}
-            />
+            <input type="password" required autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} style={{ width: '100%', padding: '12px', border: '1px solid #dfe2e6', borderRadius: 10, font: 'inherit' }} />
           </label>
           {error && <div className="il-admin-inline-error">{error}</div>}
-          <button className="il-admin-button il-admin-primary" disabled={submitting}>
-            {submitting ? 'Signing in...' : 'Sign in'}
-          </button>
+          <button className="il-admin-button il-admin-primary" disabled={submitting}>{submitting ? 'Signing in...' : 'Sign in'}</button>
         </form>
         <Link className="il-admin-home-link" to="/">Return to public website</Link>
       </div>
