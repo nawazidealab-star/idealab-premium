@@ -19,7 +19,7 @@ CF_ACCESS_TEAM_DOMAIN = "REPLACE_WITH_TEAM.cloudflareaccess.com"
 # Cloudflare Access application AUD tag for the protected admin/API application.
 CF_ACCESS_AUD = "REPLACE_WITH_ACCESS_AUD_TAG"
 # Your own authenticated email. On first successful Access login this account is bootstrapped as super_admin.
-SUPER_ADMIN_EMAIL = "REPLACE_WITH_YOUR_EMAIL"
+SUPER_ADMIN_EMAIL = "nawazidealab@gmail.com"
 # Comma-separated exact frontend origins if API is on another hostname.
 # Example: https://idealab.pages.dev,https://idealab.example.com
 ALLOWED_ORIGINS = ""
