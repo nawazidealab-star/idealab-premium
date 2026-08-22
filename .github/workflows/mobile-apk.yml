@@ -1,0 +1,58 @@
+name: Build IDEA LAB Android APK
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/mobile-apk.yml'
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: mobile/package.json
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Generate Android project
+        run: npx expo prebuild --platform android --non-interactive
+        env:
+          CI: '1'
+
+      - name: Build installable debug APK
+        run: ./gradlew assembleDebug
+        working-directory: mobile/android
+
+      - name: Copy APK
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk IDEA-LAB-Admin.apk
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: IDEA-LAB-Admin-Android
+          path: mobile/IDEA-LAB-Admin.apk
+          if-no-files-found: error
+          retention-days: 30
