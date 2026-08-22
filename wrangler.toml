@@ -1,5 +1,5 @@
 name = "idealab-premium"
-main = "worker/index-all-access.ts"
+main = "worker/index-mobile.ts"
 compatibility_date = "2026-08-01"
 
 [assets]
