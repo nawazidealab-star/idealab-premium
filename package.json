@@ -13,18 +13,19 @@
   "dependencies": {
     "@vitejs/plugin-react": "latest",
     "framer-motion": "latest",
+    "jspdf": "latest",
     "lucide-react": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-router-dom": "latest",
     "recharts": "latest"
   },
-"devDependencies": {
-  "@cloudflare/workers-types": "latest",
-  "@types/react": "^18.3.3",
-  "@types/react-dom": "^18.3.0",
-  "typescript": "latest",
-  "vite": "latest",
+  "devDependencies": {
+    "@cloudflare/workers-types": "latest",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "latest",
+    "vite": "latest",
     "wrangler": "latest"
-}
+  }
 }
