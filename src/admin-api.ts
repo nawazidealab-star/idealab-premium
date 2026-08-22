@@ -16,8 +16,8 @@ export type Lead = {
   source: string | null;
   service: string | null;
   status: string;
-  value: number;
-  currency: string;
+  value?: number;
+  currency?: string;
   next_action: string | null;
   next_action_at: string | null;
   owner_user_id: number | null;
@@ -69,10 +69,7 @@ export async function adminApi<T>(path: string, init: RequestInit = {}): Promise
 
   const contentType = response.headers.get('content-type') || '';
   if (!contentType.includes('application/json')) {
-    throw new ApiError(
-      response.status,
-      'Secure API session required. Sign in through Cloudflare Access and try again.',
-    );
+    throw new ApiError(response.status, 'Admin API returned an unexpected response.');
   }
 
   const payload = await response.json().catch(() => null);
@@ -84,4 +81,18 @@ export async function adminApi<T>(path: string, init: RequestInit = {}): Promise
   }
 
   return payload as T;
+}
+
+export function loginAdmin(email: string, password: string) {
+  return adminApi<{ user: AppUser }>('/api/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({ email, password }),
+  });
+}
+
+export function logoutAdmin() {
+  return adminApi<{ ok: true }>('/api/auth/logout', {
+    method: 'POST',
+    body: JSON.stringify({}),
+  });
 }
