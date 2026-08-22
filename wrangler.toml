@@ -1,5 +1,5 @@
 name = "idealab-premium"
-main = "worker/index-crm-complete.ts"
+main = "worker/index-all-access.ts"
 compatibility_date = "2026-08-01"
 
 [assets]
