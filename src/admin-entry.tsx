@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import AdminApp from './admin-app-complete';
 import { ApiError, adminApi, loginAdmin, type AppUser } from './admin-api';
 import './admin.css';
+import './admin-modules.css';
 
 const ADMIN_EMAIL = 'nawazidealab@gmail.com';
 
