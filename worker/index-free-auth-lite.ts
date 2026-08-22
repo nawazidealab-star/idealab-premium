@@ -12,6 +12,7 @@ type Identity = { id: number; email: string; name: string; role: 'super_admin' }
 
 const SESSION_COOKIE = 'idealab_admin_session';
 const SESSION_TTL_SECONDS = 7 * 24 * 60 * 60;
+const SESSION_COLUMNS = ['id', 'session_hash', 'user_id', 'expires_at', 'created_at', 'ip_address', 'user_agent'];
 
 function json(data: unknown, status = 200, headers?: HeadersInit) {
   const h = new Headers(headers);
@@ -53,6 +54,19 @@ function sessionCookie(token: string) {
   return `${SESSION_COOKIE}=${encodeURIComponent(token)}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${SESSION_TTL_SECONDS}`;
 }
 
+async function createSessionTable(env: Env) {
+  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS admin_sessions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    session_hash TEXT NOT NULL UNIQUE,
+    user_id INTEGER NOT NULL,
+    expires_at INTEGER NOT NULL,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    ip_address TEXT,
+    user_agent TEXT
+  )`).run();
+  await env.DB.prepare('CREATE INDEX IF NOT EXISTS idx_admin_sessions_expires ON admin_sessions(expires_at)').run();
+}
+
 async function ensureLoginTables(env: Env) {
   await env.DB.prepare(`CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -72,15 +86,15 @@ async function ensureLoginTables(env: Env) {
     count INTEGER NOT NULL DEFAULT 0
   )`).run();
 
-  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS admin_sessions (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    session_hash TEXT NOT NULL UNIQUE,
-    user_id INTEGER NOT NULL,
-    expires_at INTEGER NOT NULL,
-    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    ip_address TEXT,
-    user_agent TEXT
-  )`).run();
+  await createSessionTable(env);
+
+  const tableInfo = await env.DB.prepare('PRAGMA table_info(admin_sessions)').all<{ name: string }>();
+  const columns = new Set((tableInfo.results || []).map(row => String(row.name)));
+  const compatible = SESSION_COLUMNS.every(column => columns.has(column));
+  if (!compatible) {
+    await env.DB.prepare('DROP TABLE IF EXISTS admin_sessions').run();
+    await createSessionTable(env);
+  }
 }
 
 async function rateLimit(req: Request, env: Env) {
@@ -116,6 +130,20 @@ async function ensureSuperAdmin(env: Env, email: string): Promise<Identity> {
 
   if (!row) throw new Error('admin-profile');
   return { id: Number(row.id), email: String(row.email), name: String(row.name), role: 'super_admin' };
+}
+
+async function repairSessionTable(env: Env) {
+  await env.DB.prepare('DROP TABLE IF EXISTS admin_sessions').run();
+  await createSessionTable(env);
+}
+
+async function saveSession(env: Env, identity: Identity, token: string) {
+  const sessionHash = await sha256Hex(token);
+  const expiresAt = Math.floor(Date.now() / 1000) + SESSION_TTL_SECONDS;
+  await env.DB.prepare('DELETE FROM admin_sessions WHERE expires_at <= ?')
+    .bind(Math.floor(Date.now() / 1000)).run();
+  await env.DB.prepare('INSERT INTO admin_sessions(session_hash,user_id,expires_at) VALUES(?,?,?)')
+    .bind(sessionHash, identity.id, expiresAt).run();
 }
 
 async function handleLiteLogin(req: Request, env: Env) {
@@ -167,24 +195,22 @@ async function handleLiteLogin(req: Request, env: Env) {
     return stageError('admin profile');
   }
 
+  const random = new Uint8Array(32);
+  crypto.getRandomValues(random);
+  const token = bytesToBase64Url(random);
+
   try {
-    const random = new Uint8Array(32);
-    crypto.getRandomValues(random);
-    const token = bytesToBase64Url(random);
-    const sessionHash = await sha256Hex(token);
-    const expiresAt = Math.floor(Date.now() / 1000) + SESSION_TTL_SECONDS;
-    const ip = req.headers.get('cf-connecting-ip') || null;
-    const ua = req.headers.get('user-agent')?.slice(0, 250) || null;
-
-    await env.DB.prepare('DELETE FROM admin_sessions WHERE expires_at <= ?')
-      .bind(Math.floor(Date.now() / 1000)).run();
-    await env.DB.prepare('INSERT INTO admin_sessions(session_hash,user_id,expires_at,ip_address,user_agent) VALUES(?,?,?,?,?)')
-      .bind(sessionHash, identity.id, expiresAt, ip, ua).run();
-
-    return json({ user: identity }, 200, { 'set-cookie': sessionCookie(token) });
+    await saveSession(env, identity, token);
   } catch {
-    return stageError('session creation');
+    try {
+      await repairSessionTable(env);
+      await saveSession(env, identity, token);
+    } catch {
+      return stageError('session creation');
+    }
   }
+
+  return json({ user: identity }, 200, { 'set-cookie': sessionCookie(token) });
 }
 
 export default {
