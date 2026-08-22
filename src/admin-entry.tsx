@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AdminApp from './admin-app-premium';
+import CurrencySupport from './currency-support';
 import { ApiError, adminApi, loginAdmin, type AppUser } from './admin-api';
 import './admin.css';
 import './admin-modules.css';
@@ -64,7 +65,14 @@ export default function AdminEntry() {
     );
   }
 
-  if (authenticated) return <AdminApp />;
+  if (authenticated) {
+    return (
+      <>
+        <CurrencySupport />
+        <AdminApp />
+      </>
+    );
+  }
 
   return (
     <div className="il-admin-state il-premium-state">
