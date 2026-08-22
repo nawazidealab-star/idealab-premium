@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AdminApp from './admin-app-premium';
 import CurrencySupport from './currency-support';
+import InvoicePdfSupport from './invoice-pdf-support';
 import { ApiError, adminApi, loginAdmin, type AppUser } from './admin-api';
 import './admin.css';
 import './admin-modules.css';
@@ -69,6 +70,7 @@ export default function AdminEntry() {
     return (
       <>
         <CurrencySupport />
+        <InvoicePdfSupport />
         <AdminApp />
       </>
     );
