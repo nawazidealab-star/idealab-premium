@@ -1,6 +1,11 @@
 name: Build IDEA LAB Android APK
 
 on:
+  push:
+    branches: [native-mobile-admin-mvp]
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/mobile-apk.yml'
   pull_request:
     branches: [main]
     paths:
