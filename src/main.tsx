@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './styles.css';
 import './work-polish.css';
+import './mobile.css';
 
 const AdminEntry = React.lazy(() => import('./admin-entry'));
 const isAdminRoute = window.location.pathname === '/admin' || window.location.pathname.startsWith('/admin/');
