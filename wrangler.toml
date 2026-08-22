@@ -1,5 +1,5 @@
 name = "idealab-premium"
-main = "worker/index.ts"
+main = "worker/index-free-auth.ts"
 compatibility_date = "2026-08-01"
 
 [assets]
@@ -14,12 +14,7 @@ database_name = "idealab-crm"
 database_id = "023c6004-fb3a-41d4-8c4f-bccf51409fae"
 
 [vars]
-# Example: idealab.cloudflareaccess.com (do not include https://)
-CF_ACCESS_TEAM_DOMAIN = "REPLACE_WITH_TEAM.cloudflareaccess.com"
-# Cloudflare Access application AUD tag for the protected admin/API application.
-CF_ACCESS_AUD = "REPLACE_WITH_ACCESS_AUD_TAG"
-# Your own authenticated email. On first successful Access login this account is bootstrapped as super_admin.
 SUPER_ADMIN_EMAIL = "nawazidealab@gmail.com"
-# Comma-separated exact frontend origins if API is on another hostname.
-# Example: https://idealab.pages.dev,https://idealab.example.com
+ADMIN_PASSWORD_SALT = "75a94442822c89d67fb99355bfd2bb5c"
+ADMIN_PASSWORD_HASH = "02a88e9b4e3d576c18abc4e77b7dc3e846e05551b5eaed2053d803d1b3e60ec0"
 ALLOWED_ORIGINS = ""

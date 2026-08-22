@@ -1,0 +1,104 @@
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import AdminApp from './admin-app';
+import { ApiError, adminApi, loginAdmin, type AppUser } from './admin-api';
+import './admin.css';
+
+const ADMIN_EMAIL = 'nawazidealab@gmail.com';
+
+export default function AdminEntry() {
+  const [checking, setChecking] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
+  const [email, setEmail] = useState(ADMIN_EMAIL);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    adminApi<{ user: AppUser }>('/api/me')
+      .then(() => {
+        if (active) setAuthenticated(true);
+      })
+      .catch((err) => {
+        if (!active) return;
+        if (err instanceof ApiError && (err.status === 401 || err.status === 403)) {
+          setAuthenticated(false);
+          setError(null);
+        } else {
+          setError(err instanceof Error ? err.message : 'Unable to check admin session.');
+        }
+      })
+      .finally(() => {
+        if (active) setChecking(false);
+      });
+    return () => { active = false; };
+  }, []);
+
+  const submit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setSubmitting(true);
+    setError(null);
+    try {
+      await loginAdmin(email, password);
+      setAuthenticated(true);
+      setPassword('');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unable to sign in.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (checking) {
+    return (
+      <div className="il-admin-state">
+        <div className="il-admin-state-card">
+          <div className="il-admin-spinner" />
+          <h2>Checking admin session...</h2>
+          <p>One moment.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (authenticated) return <AdminApp />;
+
+  return (
+    <div className="il-admin-state">
+      <div className="il-admin-state-card">
+        <h2>IDEA LAB Admin</h2>
+        <p>Private backend access. No paid login service required.</p>
+        <form onSubmit={submit} style={{ display: 'grid', gap: 12, marginTop: 22, textAlign: 'left' }}>
+          <label style={{ display: 'grid', gap: 6, fontSize: 12, fontWeight: 700, color: '#5e636b' }}>
+            Email
+            <input
+              type="email"
+              required
+              autoComplete="username"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              style={{ width: '100%', padding: '12px', border: '1px solid #dfe2e6', borderRadius: 10, font: 'inherit' }}
+            />
+          </label>
+          <label style={{ display: 'grid', gap: 6, fontSize: 12, fontWeight: 700, color: '#5e636b' }}>
+            Password
+            <input
+              type="password"
+              required
+              autoComplete="current-password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              style={{ width: '100%', padding: '12px', border: '1px solid #dfe2e6', borderRadius: 10, font: 'inherit' }}
+            />
+          </label>
+          {error && <div className="il-admin-inline-error">{error}</div>}
+          <button className="il-admin-button il-admin-primary" disabled={submitting}>
+            {submitting ? 'Signing in...' : 'Sign in'}
+          </button>
+        </form>
+        <Link className="il-admin-home-link" to="/">Return to public website</Link>
+      </div>
+    </div>
+  );
+}

@@ -5,7 +5,7 @@ import App from './App';
 import './styles.css';
 import './work-polish.css';
 
-const AdminApp = React.lazy(() => import('./admin-app'));
+const AdminEntry = React.lazy(() => import('./admin-entry'));
 const isAdminRoute = window.location.pathname === '/admin' || window.location.pathname.startsWith('/admin/');
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       {isAdminRoute ? (
         <Suspense fallback={<div style={{ minHeight: '100vh', display: 'grid', placeItems: 'center' }}>Loading secure admin...</div>}>
-          <AdminApp />
+          <AdminEntry />
         </Suspense>
       ) : (
         <App />
