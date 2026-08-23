@@ -1,0 +1,69 @@
+/* IDEA LAB Admin Experience V10 — portal-wide visual and interaction polish */
+
+.il-v4-shell{--il-radius-lg:16px;--il-radius-md:11px;--il-control-h:40px}
+.il-premium-content{padding:22px 26px 36px!important}
+.il-premium-topbar{margin:-22px -26px 22px!important;padding:15px 26px!important;min-height:76px!important;position:sticky!important;top:0!important;z-index:80!important;backdrop-filter:blur(18px)!important}
+.il-premium-title h1{font-size:23px!important;letter-spacing:-.03em!important;line-height:1.1!important;margin-top:3px!important}
+.il-admin-kicker{font-size:8px!important;letter-spacing:.17em!important;color:var(--il-muted)!important;font-weight:900!important}
+.il-premium-top-actions{gap:7px!important}
+
+/* Sidebar hierarchy */
+.il-premium-sidebar{padding:12px 9px!important}
+.il-sidebar-head{padding:2px 2px 13px!important;margin-bottom:5px!important;border-bottom:1px solid var(--il-border)!important}
+.il-admin-brand{gap:9px!important}.il-admin-brand img{width:34px!important;height:34px!important;border-radius:10px!important;border:1px solid var(--il-border)!important}.il-admin-brand span{font-size:11px!important;letter-spacing:.1em!important}
+.il-admin-label{margin:13px 8px 7px!important;font-size:7px!important;letter-spacing:.15em!important}
+.il-premium-sidebar nav{display:grid!important;gap:3px!important}
+.il-premium-sidebar nav a{min-height:39px!important;padding:0 10px!important;border-radius:10px!important;gap:9px!important;font-size:10px!important;font-weight:750!important;border:1px solid transparent!important;transition:background .14s ease,border-color .14s ease,color .14s ease,transform .14s ease!important}
+.il-premium-sidebar nav a:hover{transform:translateX(1px)!important}
+.il-premium-sidebar nav a.active{box-shadow:inset 3px 0 0 var(--il-red)!important}
+.il-v4-scope-card{margin-top:auto!important;border-radius:11px!important}
+
+/* Inputs + buttons */
+.il-admin-button{min-height:38px!important;padding:0 12px!important;border-radius:9px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;font-size:9px!important;font-weight:850!important;letter-spacing:.005em!important;transition:transform .14s ease,box-shadow .14s ease,background .14s ease,border-color .14s ease!important}
+.il-admin-button:hover:not(:disabled){transform:translateY(-1px)!important}
+.il-admin-button:active:not(:disabled){transform:translateY(0)!important}
+.il-admin-button:disabled{opacity:.5!important;cursor:not-allowed!important}
+.il-admin-primary{box-shadow:0 8px 20px color-mix(in srgb,var(--il-red) 18%,transparent)!important}
+.il-v4-shell input,.il-v4-shell select,.il-v4-shell textarea{transition:border-color .14s ease,box-shadow .14s ease,background .14s ease!important}
+.il-v4-shell button:focus-visible,.il-v4-shell a:focus-visible,.il-v4-shell input:focus-visible,.il-v4-shell select:focus-visible,.il-v4-shell textarea:focus-visible{outline:2px solid color-mix(in srgb,var(--il-red) 55%,transparent)!important;outline-offset:2px!important}
+
+/* Global panels and page headings */
+.il-admin-panel{border-radius:var(--il-radius-lg)!important;padding:16px!important}
+.il-v4-page-head,.il-v2-page-head{margin:2px 0 16px!important;align-items:flex-end!important}
+.il-v4-page-head h2,.il-v2-page-head h2{font-size:24px!important;letter-spacing:-.03em!important;margin:5px 0 4px!important}
+.il-v4-page-head p,.il-v2-page-head p{font-size:11px!important;line-height:1.55!important;max-width:720px!important}
+.il-v4-page-head>div>span,.il-v2-page-head>div>span{font-size:8px!important;letter-spacing:.16em!important}
+
+/* KPI cards */
+.il-v4-kpi-grid{gap:9px!important;margin-bottom:15px!important}.il-v4-kpi{min-height:92px!important;padding:14px!important;border-radius:14px!important;box-shadow:var(--il-shadow)!important;transition:transform .14s ease,border-color .14s ease!important}.il-v4-kpi:hover{transform:translateY(-1px)!important;border-color:var(--il-border-strong)!important}.il-v4-kpi small{font-size:9px!important}.il-v4-kpi b{font-size:24px!important;letter-spacing:-.03em!important}.il-v4-kpi span{font-size:9px!important}
+
+/* Client cards */
+.il-v4-client-grid,.il-v4-workspace-grid{gap:9px!important}.il-v4-client-card,.il-v4-workspace{border-radius:14px!important;padding:14px!important;box-shadow:var(--il-shadow)!important}.il-v4-client-card:hover,.il-v4-workspace:hover{transform:translateY(-2px)!important}.il-v4-client-card-head b,.il-v4-workspace-title b{font-size:12px!important}.il-v4-client-card-head small,.il-v4-workspace-title small{font-size:9px!important}.il-v4-client-metrics,.il-v4-workspace-stats{margin-top:12px!important;padding-top:10px!important}
+
+/* Search/filter bars */
+.il-v4-filterbar{padding:8px!important;border:1px solid var(--il-border)!important;border-radius:13px!important;background:var(--il-panel)!important;box-shadow:var(--il-shadow)!important;margin-bottom:10px!important}.il-v4-search{height:38px!important;border-radius:9px!important}.il-v4-filterbar>select{min-height:38px!important;border-radius:9px!important;font-size:9px!important}.il-v4-search input{font-size:10px!important}.il-v4-search svg{width:14px!important;height:14px!important}
+
+/* Generic list/table hierarchy */
+.il-v4-table-list{gap:6px!important}.il-v4-table-list article{min-height:58px!important;padding:10px 12px!important;border-radius:10px!important;transition:background .14s ease,border-color .14s ease,transform .14s ease!important}.il-v4-table-list article:hover{background:var(--il-hover)!important;border-color:var(--il-border-strong)!important;transform:translateY(-1px)!important}.il-v4-table-list b{font-size:10px!important}.il-v4-table-list small{font-size:8px!important}.il-v4-badge{font-size:7px!important;font-weight:850!important;padding:4px 6px!important}
+
+/* Empty states */
+.il-admin-empty{min-height:120px!important;display:grid!important;place-items:center!important;text-align:center!important;border:1px dashed var(--il-border)!important;border-radius:12px!important;background:var(--il-panel-2)!important;color:var(--il-muted)!important;font-size:9px!important;padding:18px!important}
+
+/* Modals */
+.il-v4-modal{border-radius:17px!important;box-shadow:0 34px 100px color-mix(in srgb,var(--il-text) 18%,transparent)!important}.il-v4-modal>header{padding:14px 16px!important}.il-v4-modal>header h3{font-size:16px!important}.il-v4-form{gap:10px!important;padding:16px!important}.il-v4-form label{font-size:9px!important}.il-v4-form input,.il-v4-form select,.il-v4-form textarea{border-radius:9px!important;padding:10px!important;font-size:10px!important}.il-v4-modal-actions{gap:7px!important}
+
+/* Topbar controls */
+.il-top-search,.il-top-icon,.il-premium-user-chip,.il-v4-currency-chip{min-height:38px!important;border-radius:10px!important}.il-top-search{padding-inline:10px!important;gap:7px!important}.il-top-search span{font-size:9px!important}.il-top-search kbd{font-size:7px!important}.il-premium-user-chip{padding:5px 7px!important}.il-premium-user-chip b{font-size:9px!important}.il-premium-user-chip small{font-size:7px!important}.il-admin-avatar{width:29px!important;height:29px!important;border-radius:8px!important;font-size:9px!important}
+
+/* Chat button/panel */
+.il-chat-trigger{box-shadow:0 12px 30px color-mix(in srgb,var(--il-red) 23%,transparent)!important;border-radius:11px!important}.il-chat-panel{border-radius:16px!important;overflow:hidden!important}
+
+/* Scrollbars */
+.il-v4-shell *{scrollbar-width:thin;scrollbar-color:var(--il-border-strong) transparent}
+.il-v4-shell *::-webkit-scrollbar{width:7px;height:7px}.il-v4-shell *::-webkit-scrollbar-track{background:transparent}.il-v4-shell *::-webkit-scrollbar-thumb{background:var(--il-border-strong);border-radius:999px}
+
+/* Subtle transitions only, no distracting animation */
+@media(prefers-reduced-motion:no-preference){.il-admin-panel,.il-v4-client-card,.il-v4-workspace,.il-v4-table-list article{transition:background-color .16s ease,border-color .16s ease,transform .16s ease,box-shadow .16s ease!important}}
+
+@media(max-width:980px){.il-premium-content{padding:18px 16px 30px!important}.il-premium-topbar{margin:-18px -16px 18px!important;padding:13px 16px!important}.il-premium-title h1{font-size:20px!important}.il-premium-top-actions{gap:5px!important}.il-v4-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:650px){.il-premium-content{padding:14px 12px 92px!important}.il-premium-topbar{margin:-14px -12px 14px!important;padding:11px 12px!important;min-height:62px!important}.il-premium-title h1{font-size:18px!important}.il-admin-kicker{font-size:7px!important}.il-top-search span,.il-top-search kbd,.il-premium-user-chip>div:nth-child(2){display:none!important}.il-top-search,.il-top-icon,.il-v4-currency-chip{min-height:34px!important}.il-admin-panel{padding:12px!important;border-radius:13px!important}.il-v4-page-head,.il-v2-page-head{align-items:flex-start!important;flex-direction:column!important}.il-v4-kpi-grid{grid-template-columns:1fr 1fr!important}.il-v4-client-grid,.il-v4-workspace-grid{grid-template-columns:1fr!important}}
