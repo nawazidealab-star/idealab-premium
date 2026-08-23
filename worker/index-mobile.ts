@@ -1,4 +1,4 @@
-import app from './index-all-access';
+import app from './index-workflow-v2';
 
 interface Env {
   DB: D1Database;
