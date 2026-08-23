@@ -1,0 +1,7 @@
+/* IDEA LAB V14 team modal stability polish */
+.il-team-modal-v12>header,.il-team-access-modal-v12>header{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:16px!important}
+.il-team-modal-v12>header>div,.il-team-access-modal-v12>header>div{min-width:0!important;flex:1 1 auto!important}
+.il-team-modal-v12>header>button,.il-team-access-modal-v12>header>button{flex:0 0 42px!important;margin:0!important;align-self:center!important}
+.il-team-modal-v12 .il-team-api-error,.il-team-access-modal-v12 .il-team-api-error{display:flex!important;align-items:center!important;min-height:50px!important}
+@media(min-width:721px){.il-team-modal-v12{width:min(860px,calc(100vw - 48px))!important}.il-team-access-modal-v12{width:min(940px,calc(100vw - 48px))!important}}
+@media(max-width:720px){.il-team-modal-v12>header,.il-team-access-modal-v12>header{display:flex!important}.il-team-modal-v12>header h3,.il-team-access-modal-v12>header h3{font-size:19px!important}.il-password-tools{flex-wrap:wrap!important}.il-team-modal-v12 .il-v4-modal-actions{display:grid!important;grid-template-columns:1fr 1.3fr!important}.il-team-modal-v12 .il-v4-modal-actions .il-admin-button{width:100%!important;min-width:0!important}}
