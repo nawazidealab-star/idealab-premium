@@ -10,6 +10,7 @@ import { ApiError, adminApi, loginAdmin, type AppUser } from './admin-api';
 import './admin.css';
 import './admin-modules.css';
 import './admin-premium.css';
+import './admin-theme-v7.css';
 
 const ADMIN_EMAIL = 'nawazidealab@gmail.com';
 
