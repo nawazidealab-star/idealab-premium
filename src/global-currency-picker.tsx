@@ -4,24 +4,29 @@ import { WalletCards } from 'lucide-react';
 import { CURRENCIES, getDefaultCurrency, setDefaultCurrency } from './currencies';
 import './global-currency-picker.css';
 
-function applyDefaultToNewCurrencyFields(code: string) {
+function setReactInputValue(input: HTMLInputElement, value: string) {
+  const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')?.set;
+  if (setter) setter.call(input, value);
+  else input.value = value;
+  input.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText', data: value }));
+  input.dispatchEvent(new Event('change', { bubbles: true }));
+}
+
+function applyDefaultToCurrencyFields(code: string) {
   const labels = Array.from(document.querySelectorAll<HTMLLabelElement>('.il-admin-form label'));
   for (const label of labels) {
-    const text = (label.childNodes[0]?.textContent || '').trim().toLowerCase();
-    if (text !== 'currency') continue;
     const input = label.querySelector<HTMLInputElement>('input');
     if (!input) continue;
+    const labelText = (label.textContent || '').trim().toLowerCase();
+    if (!labelText.startsWith('currency')) continue;
 
-    const container = input.closest('.il-admin-modal, .il-admin-lead-form');
-    const heading = container?.querySelector('h3')?.textContent?.toLowerCase() || '';
+    const modal = input.closest('.il-admin-modal, .il-admin-lead-form');
+    const heading = modal?.querySelector('h3')?.textContent?.toLowerCase() || '';
     if (heading.includes('edit')) continue;
-    if (input.value && input.value !== 'USD') continue;
 
-    const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')?.set;
-    if (setter) setter.call(input, code);
-    else input.value = code;
-    input.dispatchEvent(new Event('input', { bubbles: true }));
-    input.dispatchEvent(new Event('change', { bubbles: true }));
+    if (!input.value || input.value.toUpperCase() === 'USD') {
+      setReactInputValue(input, code);
+    }
   }
 }
 
@@ -39,8 +44,10 @@ export default function GlobalCurrencyPicker() {
 
   useEffect(() => {
     setDefaultCurrency(currency);
-    applyDefaultToNewCurrencyFields(currency);
-    const observer = new MutationObserver(() => applyDefaultToNewCurrencyFields(currency));
+    applyDefaultToCurrencyFields(currency);
+    window.dispatchEvent(new CustomEvent('idealab:currency-change', { detail: { currency } }));
+
+    const observer = new MutationObserver(() => applyDefaultToCurrencyFields(currency));
     observer.observe(document.body, { childList: true, subtree: true });
     return () => observer.disconnect();
   }, [currency]);
@@ -48,7 +55,7 @@ export default function GlobalCurrencyPicker() {
   if (!target) return null;
 
   return createPortal(
-    <label className="il-global-currency" title="Default currency for new financial records">
+    <label className="il-global-currency" title="Default currency for new leads, projects and invoices">
       <WalletCards size={15} />
       <span>Currency</span>
       <select value={currency} onChange={(event) => setCurrency(event.target.value)}>
