@@ -1,8 +1,4 @@
-export type CurrencyOption = {
-  code: string;
-  name: string;
-  symbol: string;
-};
+export type CurrencyOption = { code: string; name: string; symbol: string };
 
 export const CURRENCIES: CurrencyOption[] = [
   { code: 'USD', name: 'US Dollar', symbol: '$' },
@@ -26,6 +22,7 @@ export const CURRENCIES: CurrencyOption[] = [
 ];
 
 export const DEFAULT_CURRENCY = 'USD';
+export const CURRENCY_EVENT = 'idealab:currency-change';
 
 export function getDefaultCurrency() {
   if (typeof window === 'undefined') return DEFAULT_CURRENCY;
@@ -35,8 +32,10 @@ export function getDefaultCurrency() {
 
 export function setDefaultCurrency(code: string) {
   if (typeof window === 'undefined') return;
-  if (CURRENCIES.some((currency) => currency.code === code)) {
-    window.localStorage.setItem('idealab-default-currency', code);
+  const normalized = code.toUpperCase();
+  if (CURRENCIES.some((currency) => currency.code === normalized)) {
+    window.localStorage.setItem('idealab-default-currency', normalized);
+    window.dispatchEvent(new CustomEvent(CURRENCY_EVENT, { detail: normalized }));
   }
 }
 
@@ -47,11 +46,7 @@ export function currencyLabel(code: string) {
 
 export function formatMoney(value: number, currency = DEFAULT_CURRENCY) {
   try {
-    return new Intl.NumberFormat('en', {
-      style: 'currency',
-      currency,
-      maximumFractionDigits: 2,
-    }).format(Number(value || 0));
+    return new Intl.NumberFormat('en', { style: 'currency', currency, maximumFractionDigits: 2 }).format(Number(value || 0));
   } catch {
     return `${currency} ${Number(value || 0).toLocaleString()}`;
   }
@@ -63,12 +58,19 @@ export function groupCurrencyTotals<T>(rows: T[], amount: (row: T) => number, cu
     const code = (currency(row) || DEFAULT_CURRENCY).toUpperCase();
     totals.set(code, (totals.get(code) || 0) + Number(amount(row) || 0));
   }
-  return Array.from(totals.entries())
-    .map(([code, total]) => ({ code, total }))
-    .sort((a, b) => b.total - a.total);
+  return Array.from(totals.entries()).map(([code, total]) => ({ code, total })).sort((a, b) => b.total - a.total);
 }
 
 export function formatCurrencyTotals(totals: Array<{ code: string; total: number }>, empty = '—') {
   if (!totals.length) return empty;
   return totals.map(({ code, total }) => formatMoney(total, code)).join(' · ');
+}
+
+export type FxRates = Record<string, number>;
+export function convertMoney(amount: number, from: string, to: string, rates?: FxRates | null) {
+  const source = (from || DEFAULT_CURRENCY).toUpperCase();
+  const target = (to || DEFAULT_CURRENCY).toUpperCase();
+  if (source === target) return Number(amount || 0);
+  if (!rates?.[source] || !rates?.[target]) return null;
+  return Number(amount || 0) / rates[source] * rates[target];
 }
