@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: '#0b0d11' },
   statusSafe: { height: Platform.OS === 'android' ? Math.max(0, androidTop - 1) : 0, backgroundColor: '#0b0d11' },
   web: { flex: 1, backgroundColor: '#f4f6f8' },
-  loader: { ...StyleSheet.absoluteFillObject, alignItems: 'center', justifyContent: 'center', gap: 13, padding: 28, backgroundColor: '#0b0d11' },
+  loader: { ...StyleSheet.absoluteFill, alignItems: 'center', justifyContent: 'center', gap: 13, padding: 28, backgroundColor: '#0b0d11' },
   logo: { width: 58, height: 58, borderRadius: 16, backgroundColor: '#fff', marginBottom: 5 },
   loaderTitle: { color: '#fff', fontSize: 22, fontWeight: '900', letterSpacing: -0.5 },
   loaderSub: { color: '#858c98', fontSize: 12, fontWeight: '600' },
