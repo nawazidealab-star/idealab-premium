@@ -1,4 +1,4 @@
-import app from './index-collaboration-v5';
+import app from './index-admin-controls-v7';
 
 interface Env {
   DB: D1Database;
