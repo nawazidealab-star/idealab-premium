@@ -1,0 +1,222 @@
+/* IDEA LAB Admin V7 — complete theme coverage.
+   Loaded after V4/V6 styles so legacy hard-coded dark colors no longer win. */
+
+:root,
+:root[data-admin-theme='light']{
+  --il-page:#f4f6f8;
+  --il-page-2:#eef1f4;
+  --il-panel:#ffffff;
+  --il-panel-2:#f8f9fb;
+  --il-panel-3:#f1f3f6;
+  --il-text:#12151a;
+  --il-text-2:#303640;
+  --il-muted:#747c88;
+  --il-muted-2:#969da7;
+  --il-border:#dfe3e8;
+  --il-border-strong:#cfd5dc;
+  --il-sidebar:#ffffff;
+  --il-sidebar-2:#f7f8fa;
+  --il-input:#ffffff;
+  --il-hover:#f2f4f7;
+  --il-overlay:rgba(19,24,31,.30);
+  --il-shadow:0 14px 38px rgba(18,24,32,.08);
+  --il-red:#ef4444;
+  --il-red-soft:#fff0f0;
+  --il-green:#2c8553;
+  --il-green-soft:#e9f7ef;
+  --il-blue:#466bd8;
+  --il-blue-soft:#eef2ff;
+  --il-purple:#7867d9;
+  --il-purple-soft:#f1efff;
+}
+
+:root[data-admin-theme='dark']{
+  --il-page:#0f1115;
+  --il-page-2:#12151a;
+  --il-panel:#171a20;
+  --il-panel-2:#14171c;
+  --il-panel-3:#1b1f26;
+  --il-text:#f6f7f9;
+  --il-text-2:#d9dde3;
+  --il-muted:#9198a4;
+  --il-muted-2:#747c88;
+  --il-border:#292e37;
+  --il-border-strong:#343a45;
+  --il-sidebar:#080a0d;
+  --il-sidebar-2:#0d1016;
+  --il-input:#101318;
+  --il-hover:#1d2128;
+  --il-overlay:rgba(4,6,9,.72);
+  --il-shadow:0 18px 48px rgba(0,0,0,.26);
+  --il-red:#ef5558;
+  --il-red-soft:#2b191d;
+  --il-green:#65b780;
+  --il-green-soft:#1d3024;
+  --il-blue:#9fb7ff;
+  --il-blue-soft:#1c2438;
+  --il-purple:#9b8cf2;
+  --il-purple-soft:#24203a;
+}
+
+html,body,#root{background:var(--il-page)!important;color:var(--il-text)!important;color-scheme:light}
+:root[data-admin-theme='dark']{color-scheme:dark}
+
+/* Shell + global premium primitives */
+.il-v4-shell,
+.il-premium-shell{background:var(--il-page)!important;color:var(--il-text)!important}
+.il-v4-shell .il-premium-content,
+.il-premium-content,
+.il-admin-content{background:var(--il-page)!important;color:var(--il-text)!important}
+.il-v4-shell .il-premium-topbar,
+.il-premium-topbar,
+.il-admin-topbar{background:color-mix(in srgb,var(--il-page) 94%,transparent)!important;border-color:var(--il-border)!important;color:var(--il-text)!important}
+.il-premium-title h1,.il-admin-kicker,.il-v4-shell h1,.il-v4-shell h2,.il-v4-shell h3,.il-v4-shell h4,.il-v4-shell b,.il-v4-shell strong{color:var(--il-text)}
+.il-v4-shell p,.il-v4-shell small,.il-v4-shell time{color:var(--il-muted)}
+
+.il-v4-shell .il-admin-panel,
+.il-v4-shell .il-admin-card,
+.il-v4-shell .il-admin-content-card,
+.il-v4-shell .il-admin-user-chip,
+.il-v4-shell .il-admin-modal,
+.il-admin-panel,.il-admin-card,.il-admin-content-card{background:var(--il-panel)!important;border-color:var(--il-border)!important;color:var(--il-text)!important;box-shadow:var(--il-shadow)}
+
+/* Sidebar is fully themed too */
+.il-premium-sidebar,.il-admin-sidebar{background:linear-gradient(180deg,var(--il-sidebar),var(--il-sidebar-2))!important;border-color:var(--il-border)!important}
+:root[data-admin-theme='light'] .il-premium-sidebar .il-admin-brand,
+:root[data-admin-theme='light'] .il-premium-sidebar .il-admin-brand span,
+:root[data-admin-theme='light'] .il-premium-sidebar nav a,
+:root[data-admin-theme='light'] .il-premium-sidebar .il-admin-label{color:var(--il-text)!important}
+.il-premium-sidebar nav a{color:var(--il-muted)!important}
+.il-premium-sidebar nav a:hover{background:var(--il-hover)!important;color:var(--il-text)!important}
+.il-premium-sidebar nav a.active{background:var(--il-panel-3)!important;border-color:var(--il-border)!important;color:var(--il-text)!important}
+.il-sidebar-collapse{background:var(--il-panel-2)!important;border-color:var(--il-border)!important;color:var(--il-muted)!important}
+.il-v4-scope-card{background:var(--il-panel-2)!important;border-color:var(--il-border)!important;color:var(--il-muted)!important}
+.il-v4-scope-card b{color:var(--il-text)!important}
+.il-v4-scope-card small{color:var(--il-muted)!important}
+
+/* Top actions */
+.il-top-search,.il-top-icon,.il-premium-user-chip,.il-v4-currency-chip{background:var(--il-panel)!important;border-color:var(--il-border)!important;color:var(--il-muted)!important;box-shadow:none!important}
+.il-top-search:hover,.il-top-icon:hover,.il-v4-currency-chip:hover{background:var(--il-hover)!important;color:var(--il-text)!important}
+.il-v4-currency-chip select{background:transparent!important;color:var(--il-text)!important}
+.il-v4-currency-chip option{background:var(--il-panel)!important;color:var(--il-text)!important}
+.il-admin-avatar{background:var(--il-panel-3)!important;color:var(--il-text)!important}
+.il-user-logout{color:var(--il-muted)!important}
+
+/* Hero */
+.il-v4-hero{background:linear-gradient(135deg,color-mix(in srgb,var(--il-red) 6%,var(--il-panel)),var(--il-panel))!important;border-color:color-mix(in srgb,var(--il-red) 18%,var(--il-border))!important;box-shadow:var(--il-shadow)}
+.il-v4-hero h2{color:var(--il-text)!important}
+.il-v4-hero p,.il-v4-page-head p,.il-v4-section-head p{color:var(--il-muted)!important}
+.il-v4-section-head a{color:var(--il-blue)!important}
+
+/* KPI + client/workspace cards */
+.il-v4-kpi,
+.il-v4-client-card,
+.il-v4-workspace{background:var(--il-panel)!important;border-color:var(--il-border)!important;color:var(--il-text)!important;box-shadow:var(--il-shadow)}
+.il-v4-client-card:hover,.il-v4-workspace:hover,.il-v4-workspace.active{background:var(--il-hover)!important;border-color:var(--il-border-strong)!important}
+.il-v4-kpi small,.il-v4-client-card-head small,.il-v4-workspace-title small,.il-v4-client-metrics small,.il-v4-workspace-stats span{color:var(--il-muted)!important}
+.il-v4-client-card-head b,.il-v4-workspace-title b,.il-v4-workspace-stats span b{color:var(--il-text)!important}
+.il-v4-client-avatar,.il-v4-user-avatar{background:var(--il-panel-3)!important;color:var(--il-text)!important}
+.il-v4-client-metrics,.il-v4-workspace-stats,.il-v4-focus-row{border-color:var(--il-border)!important}
+.il-v4-client-card-head>span,.il-v4-workspace-title>span{background:var(--il-green-soft)!important;color:var(--il-green)!important}
+.il-v4-focus-row small,.il-v4-focus-row>span{color:var(--il-muted)!important}
+
+/* Search, filters and form controls */
+.il-v4-search,.il-v4-filterbar>select,.il-v4-company-setting select,
+.il-v4-form input,.il-v4-form select,.il-v4-form textarea,
+.il-v4-shell input,.il-v4-shell select,.il-v4-shell textarea{background:var(--il-input)!important;border-color:var(--il-border)!important;color:var(--il-text)!important}
+.il-v4-search input{background:transparent!important;border:0!important;color:var(--il-text)!important}
+.il-v4-search input::placeholder,.il-v4-form input::placeholder,.il-v4-form textarea::placeholder{color:var(--il-muted-2)!important}
+.il-v4-form label{color:var(--il-muted)!important}
+.il-v4-form input:focus,.il-v4-form select:focus,.il-v4-form textarea:focus,.il-v4-search:focus-within{border-color:color-mix(in srgb,var(--il-red) 45%,var(--il-border))!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--il-red) 10%,transparent)!important}
+
+/* Lead/list rows */
+.il-v4-table-list article,.il-v4-service-list article,.il-v4-user-grid article{background:var(--il-panel-2)!important;border-color:var(--il-border)!important;color:var(--il-text)!important}
+.il-v4-table-list small,.il-v4-service-list small,.il-v4-user-head small,.il-v4-company-setting small{color:var(--il-muted)!important}
+.il-v4-badge{background:var(--il-panel-3)!important;color:var(--il-text-2)!important}
+.il-v4-badge.status-won,.il-v4-badge.status-active{background:var(--il-green-soft)!important;color:var(--il-green)!important}
+.il-v4-badge.status-lost{background:var(--il-red-soft)!important;color:var(--il-red)!important}
+
+/* Task + content kanban */
+.il-v4-task-board>div,.il-v4-content-board>div{background:var(--il-panel-2)!important;border-color:var(--il-border)!important}
+.il-v4-task-board h3,.il-v4-content-board h3{color:var(--il-text-2)!important}
+.il-v4-task-board h3 span,.il-v4-content-board h3 span{background:var(--il-panel-3)!important;color:var(--il-muted)!important}
+.il-v4-task-board article,.il-v4-content-board article{background:var(--il-panel)!important;border-color:var(--il-border)!important;color:var(--il-text)!important;box-shadow:0 5px 16px color-mix(in srgb,var(--il-text) 5%,transparent)}
+.il-v4-task-board article:hover,.il-v4-content-board article:hover{background:var(--il-hover)!important;border-color:var(--il-border-strong)!important}
+.il-v4-task-board article p,.il-v4-task-top small,.il-v4-task-board article footer,.il-v4-content-board article footer{color:var(--il-muted)!important;border-color:var(--il-border)!important}
+.il-v4-task-top>span{background:var(--il-panel-3)!important;color:var(--il-text-2)!important}
+.il-v4-task-top>span.priority-urgent{background:var(--il-red-soft)!important;color:var(--il-red)!important}
+.il-v4-task-top>span.priority-high{background:color-mix(in srgb,#f59e0b 13%,var(--il-panel))!important;color:#b76b11!important}
+:root[data-admin-theme='dark'] .il-v4-task-top>span.priority-high{color:#e7a36c!important}
+.il-v4-content-client{color:var(--il-red)!important}
+.il-v4-campaign{color:var(--il-text-2)!important}
+.il-v4-content-tags span{background:var(--il-panel-3)!important;color:var(--il-muted)!important}
+
+/* Settings */
+.il-v4-settings-tabs button{background:var(--il-panel)!important;border-color:var(--il-border)!important;color:var(--il-muted)!important}
+.il-v4-settings-tabs button:hover{background:var(--il-hover)!important;color:var(--il-text)!important}
+.il-v4-settings-tabs button.active{background:var(--il-text)!important;border-color:var(--il-text)!important;color:var(--il-page)!important}
+.il-v4-access-summary span{background:var(--il-panel-3)!important;color:var(--il-muted)!important}
+.il-v4-company-setting{border-color:var(--il-border)!important}
+.il-v4-company-setting strong{color:var(--il-green)!important}
+
+/* Modals + client drawer */
+.il-v4-modal-backdrop,.il-v4-drawer-backdrop{background:var(--il-overlay)!important;backdrop-filter:blur(7px)}
+.il-v4-modal,.il-v4-client-drawer{background:var(--il-panel)!important;border-color:var(--il-border)!important;color:var(--il-text)!important;box-shadow:0 28px 90px color-mix(in srgb,var(--il-text) 18%,transparent)!important}
+.il-v4-modal>header,.il-v4-client-drawer>header{background:var(--il-panel)!important;border-color:var(--il-border)!important}
+.il-v4-modal>header button,.il-v4-client-drawer>header button{background:var(--il-panel-3)!important;color:var(--il-text)!important;border:1px solid var(--il-border)!important}
+.il-v4-drawer-section{border-color:var(--il-border)!important}
+.il-v4-drawer-section>div{border-color:var(--il-border)!important}
+
+/* General buttons */
+.il-v4-shell .il-admin-button:not(.il-admin-primary),
+.il-admin-button:not(.il-admin-primary){background:var(--il-panel)!important;border-color:var(--il-border)!important;color:var(--il-text)!important}
+.il-v4-shell .il-admin-button:not(.il-admin-primary):hover,
+.il-admin-button:not(.il-admin-primary):hover{background:var(--il-hover)!important;border-color:var(--il-border-strong)!important}
+.il-admin-primary{background:var(--il-red)!important;border-color:var(--il-red)!important;color:#fff!important}
+
+/* Bulk manager */
+.il-v6-backdrop{background:var(--il-overlay)!important}
+.il-v6-modal{background:var(--il-panel)!important;color:var(--il-text)!important;border-color:var(--il-border)!important;box-shadow:0 30px 100px color-mix(in srgb,var(--il-text) 20%,transparent)!important}
+.il-v6-modal>header,.il-v6-tools,.il-v6-modal>footer{border-color:var(--il-border)!important}
+.il-v6-modal>header>button,.il-v6-search input,.il-v6-actions select{background:var(--il-input)!important;color:var(--il-text)!important;border-color:var(--il-border)!important}
+.il-v6-list>label{background:var(--il-panel-2)!important;border-color:var(--il-border)!important;color:var(--il-text)!important}
+.il-v6-list>label:hover{background:var(--il-hover)!important}
+.il-v6-modal>footer{background:var(--il-panel-2)!important}
+.il-v6-list small,.il-v6-selection span,.il-v6-note,.il-v6-modal>header p,.il-v6-empty{color:var(--il-muted)!important}
+.il-v6-delete{background:var(--il-red-soft)!important;border-color:color-mix(in srgb,var(--il-red) 35%,var(--il-border))!important;color:var(--il-red)!important}
+.il-v6-delete:hover{background:color-mix(in srgb,var(--il-red) 16%,var(--il-panel))!important}
+
+/* Team chat */
+.il-chat-panel{background:var(--il-panel)!important;border-color:var(--il-border)!important;color:var(--il-text)!important;box-shadow:0 30px 90px color-mix(in srgb,var(--il-text) 20%,transparent)!important}
+.il-chat-panel>header,.il-chat-panel>form{border-color:var(--il-border)!important}
+.il-chat-panel>header button{background:var(--il-panel-3)!important;color:var(--il-text)!important}
+.il-chat-scope{background:var(--il-panel-2)!important;border-color:var(--il-border)!important;color:var(--il-muted)!important}
+.il-chat-scope select{color:var(--il-text)!important}
+.il-chat-scope option{background:var(--il-panel)!important;color:var(--il-text)!important}
+.il-chat-message{background:var(--il-panel-3)!important;border-color:var(--il-border)!important;color:var(--il-text)!important}
+.il-chat-message.mine{background:color-mix(in srgb,var(--il-red) 9%,var(--il-panel))!important;border-color:color-mix(in srgb,var(--il-red) 25%,var(--il-border))!important}
+.il-chat-message span,.il-chat-message time,.il-chat-empty{color:var(--il-muted)!important}
+.il-chat-panel textarea{background:var(--il-input)!important;border-color:var(--il-border)!important;color:var(--il-text)!important}
+
+/* Legacy project/invoice/report modules inside the new shell */
+.il-v4-shell .il-v2-page-head,
+.il-v4-shell .il-v2-summary-card,
+.il-v4-shell .il-v2-card,
+.il-v4-shell .il-module-card,
+.il-v4-shell .il-admin-table-wrap,
+.il-v4-shell table{background:var(--il-panel)!important;color:var(--il-text)!important;border-color:var(--il-border)!important}
+.il-v4-shell table th,.il-v4-shell table td{border-color:var(--il-border)!important;color:var(--il-text)!important}
+.il-v4-shell table th{background:var(--il-panel-2)!important;color:var(--il-muted)!important}
+.il-v4-shell table tr:hover td{background:var(--il-hover)!important}
+.il-v4-shell .il-admin-empty,.il-v4-shell .il-admin-caption-preview{background:var(--il-panel-2)!important;border-color:var(--il-border)!important;color:var(--il-muted)!important}
+
+/* Native browser affordances */
+:root[data-admin-theme='light'] input[type='date'],
+:root[data-admin-theme='light'] input[type='datetime-local'],
+:root[data-admin-theme='light'] select{color-scheme:light}
+:root[data-admin-theme='dark'] input[type='date'],
+:root[data-admin-theme='dark'] input[type='datetime-local'],
+:root[data-admin-theme='dark'] select{color-scheme:dark}
+
+/* Smooth but subtle theme transition */
+.il-v4-shell,.il-premium-sidebar,.il-premium-content,.il-premium-topbar,.il-admin-panel,.il-v4-kpi,.il-v4-client-card,.il-v4-workspace,.il-v4-task-board article,.il-v4-content-board article,.il-v4-modal,.il-v4-client-drawer,.il-chat-panel,.il-v6-modal{transition:background-color .18s ease,border-color .18s ease,color .18s ease,box-shadow .18s ease}
