@@ -10,6 +10,7 @@ import InvoiceBuilderSupport from './invoice-builder-support';
 import InvoicePdfSupport from './invoice-pdf-support';
 import TasksWorkspaceV10 from './tasks-workspace-v10';
 import TeamExperienceV12 from './team-experience-v12';
+import ChatCenterV12 from './chat-center-v12';
 import { ApiError, adminApi, loginAdmin, type AppUser } from './admin-api';
 import './admin.css';
 import './admin-modules.css';
@@ -28,6 +29,7 @@ export default function AdminEntry() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const chatRoute = window.location.pathname === '/admin/chat' || window.location.pathname.startsWith('/admin/chat/');
 
   useEffect(() => {
     let active = true;
@@ -50,6 +52,8 @@ export default function AdminEntry() {
   };
 
   if (checking) return <div className="il-admin-state il-premium-state"><div className="il-admin-state-card"><div className="il-admin-spinner"/><h2>Opening IDEA LAB Admin...</h2><p>Checking your secure session.</p></div></div>;
+
+  if (authenticated && chatRoute) return <ChatCenterV12/>;
 
   if (authenticated) return <><InvoiceBuilderSupport/><InvoicePdfSupport/><ContentExcelAutomation/><AdminChatV11/><AdminControlsV6/><ContentPlannerV8/><TasksWorkspaceV10/><ClientsWorkspaceV11/><TeamExperienceV12/><AdminAppV4/></>;
 
