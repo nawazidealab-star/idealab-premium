@@ -1,4 +1,4 @@
-import app from './index-invoicing-v3';
+import app from './index-collaboration-v4';
 
 interface Env {
   DB: D1Database;
