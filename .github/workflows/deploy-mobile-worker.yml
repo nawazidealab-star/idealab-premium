@@ -12,22 +12,10 @@ on:
       - 'vite.config.*'
       - 'wrangler.toml'
       - '.github/workflows/deploy-mobile-worker.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'src/**'
-      - 'worker/**'
-      - 'public/**'
-      - 'index.html'
-      - 'package.json'
-      - 'vite.config.*'
-      - 'wrangler.toml'
-      - '.github/workflows/deploy-mobile-worker.yml'
   workflow_dispatch:
 
 jobs:
   deploy:
-    if: github.event_name != 'pull_request' || github.head_ref == 'native-mobile-admin-mvp'
     runs-on: ubuntu-latest
     permissions:
       contents: read
