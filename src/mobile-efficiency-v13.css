@@ -1,0 +1,66 @@
+/* IDEA LAB V13 — mobile-first cleanup and efficiency */
+@media(max-width:760px){
+  html,body,#root{max-width:100%;overflow-x:hidden!important}
+  .il-admin-shell,.il-premium-content,.il-admin-content{max-width:100vw!important;overflow-x:hidden!important}
+  .il-premium-content{padding:10px 10px 86px!important}
+  .il-premium-topbar{margin:-10px -10px 12px!important;padding:8px 10px!important;min-height:58px!important;display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:8px!important;align-items:center!important}
+  .il-premium-title{min-width:0!important;padding-left:38px!important}
+  .il-premium-title h1{font-size:18px!important;line-height:1.05!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;margin:2px 0 0!important}
+  .il-admin-kicker{font-size:6px!important;letter-spacing:.14em!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  .il-premium-top-actions{display:flex!important;align-items:center!important;gap:5px!important;min-width:0!important}
+  .il-top-search{width:36px!important;min-width:36px!important;padding:0!important;justify-content:center!important}
+  .il-v4-currency-chip{min-width:78px!important;max-width:92px!important;padding:0 8px!important}
+  .il-v4-currency-chip select{font-size:12px!important;padding-right:18px!important}
+  .il-premium-user-chip{width:38px!important;min-width:38px!important;padding:4px!important;justify-content:center!important}
+  .il-premium-user-chip>.il-admin-avatar{width:29px!important;height:29px!important;margin:0!important}
+  .il-premium-user-chip>.il-user-logout{display:none!important}
+  .il-v6-theme{display:none!important}
+  .il-v6-bulk-launch{display:none!important}
+  .il-mobile-menu{top:10px!important;left:10px!important;width:36px!important;height:36px!important;border-radius:11px!important;z-index:210!important}
+  .il-premium-sidebar{width:min(86vw,310px)!important;padding:14px 12px!important}
+  .il-sidebar-head{padding-top:42px!important}
+  .il-sidebar-collapse{display:none!important}
+  .il-v4-scope-card{margin-top:14px!important}
+
+  .il-v4-hero{padding:20px 18px!important;border-radius:20px!important;margin-bottom:12px!important}
+  .il-v4-hero>div:first-child>span{font-size:8px!important;letter-spacing:.15em!important}
+  .il-v4-hero h2{font-size:28px!important;line-height:1.12!important;letter-spacing:-.035em!important;margin:10px 0 10px!important}
+  .il-v4-hero p{font-size:14px!important;line-height:1.55!important;margin:0!important}
+  .il-v4-hero-actions{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;margin-top:18px!important}
+  .il-v4-hero-actions .il-admin-button{width:100%!important;min-height:44px!important;font-size:10px!important}
+  .il-v4-kpi-grid{grid-template-columns:1fr 1fr!important;gap:8px!important;margin-bottom:18px!important}
+  .il-v4-kpi{min-height:106px!important;padding:13px!important;border-radius:15px!important}
+  .il-v4-kpi small{font-size:9px!important}.il-v4-kpi b{font-size:28px!important}.il-v4-kpi span{font-size:8px!important;line-height:1.35!important}
+  .il-v4-section{margin-top:18px!important}
+  .il-v4-section-head{display:grid!important;grid-template-columns:1fr!important;gap:8px!important;align-items:start!important}
+  .il-v4-section-head h3{font-size:20px!important;margin:5px 0 0!important}.il-v4-section-head a{justify-self:start!important;font-size:11px!important}
+  .il-v4-client-card,.il-v4-workspace{padding:13px!important;border-radius:15px!important}
+  .il-v4-client-metrics,.il-v4-workspace-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+  .il-v4-two-col{grid-template-columns:1fr!important;gap:10px!important}
+  .il-v4-focus-row{grid-template-columns:auto minmax(0,1fr)!important;gap:8px!important;padding:9px 0!important}
+  .il-v4-focus-row>span{grid-column:2!important;justify-self:start!important;font-size:8px!important}
+
+  .il-chatv11-launch{display:none!important}
+  .il-chatv11-panel{display:none!important}
+  .il-mobile-bottom-v13{position:fixed;left:8px;right:8px;bottom:calc(8px + env(safe-area-inset-bottom));z-index:9990;height:64px;padding:6px;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;border:1px solid color-mix(in srgb,var(--il-border,#2b3038) 92%,transparent);border-radius:18px;background:color-mix(in srgb,var(--il-panel,#11141a) 94%,transparent);backdrop-filter:blur(20px);box-shadow:0 18px 44px rgba(0,0,0,.28)}
+  .il-mobile-bottom-v13 button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;border-radius:12px;background:transparent;color:var(--il-muted,#8c94a3);font:inherit;padding:0;min-width:0}
+  .il-mobile-bottom-v13 button span{font-size:7px;font-weight:800;white-space:nowrap}
+  .il-mobile-bottom-v13 button svg{width:19px;height:19px}
+  .il-mobile-bottom-v13 button.active{background:color-mix(in srgb,var(--il-red,#f34850) 12%,transparent);color:var(--il-red,#f34850)}
+  .il-mobile-bottom-v13 button b{position:absolute;top:5px;right:16%;min-width:16px;height:16px;padding:0 4px;display:grid;place-items:center;border-radius:999px;background:var(--il-red,#f34850);color:#fff;border:2px solid var(--il-panel,#11141a);font-size:7px}
+  .il-mobile-more-scrim{position:fixed;inset:0;z-index:9988;border:0;background:rgba(2,6,23,.48);backdrop-filter:blur(5px)}
+  .il-mobile-more-v13{position:fixed;left:10px;right:10px;bottom:calc(82px + env(safe-area-inset-bottom));z-index:9989;padding:15px;border:1px solid var(--il-border,#2b3038);border-radius:20px;background:var(--il-panel,#11141a);box-shadow:0 26px 70px rgba(0,0,0,.34)}
+  .il-mobile-more-v13>header{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}.il-mobile-more-v13>header small{font-size:7px;letter-spacing:.14em;color:var(--il-red,#f34850);font-weight:900}.il-mobile-more-v13>header h3{margin:3px 0 0;font-size:16px}.il-mobile-more-v13>header button{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--il-border,#2b3038);border-radius:10px;background:var(--il-panel-2,#171b22);color:var(--il-text,#fff)}
+  .il-mobile-more-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.il-mobile-more-grid button{min-height:76px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;border:1px solid var(--il-border,#2b3038);border-radius:14px;background:var(--il-panel-2,#171b22);color:var(--il-text,#fff);font:inherit}.il-mobile-more-grid button span{font-size:9px;font-weight:800}.il-mobile-more-grid button.active{border-color:color-mix(in srgb,var(--il-red,#f34850) 38%,var(--il-border,#2b3038));background:color-mix(in srgb,var(--il-red,#f34850) 9%,var(--il-panel-2,#171b22));color:var(--il-red,#f34850)}
+  .il-mobile-theme-v13{width:100%;height:44px;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--il-border,#2b3038);border-radius:12px;background:transparent;color:var(--il-text,#fff);font:inherit;font-size:10px;font-weight:800}
+
+  .il-v4-filterbar{display:grid!important;grid-template-columns:1fr!important;gap:7px!important}.il-v4-filterbar>*{width:100%!important;min-width:0!important}
+  .il-cpv8-root,.il-taskv10-root,.il-clientv11-root{max-width:100%!important;overflow-x:hidden!important}
+  .il-cpv8-board,.il-taskv10-board{overflow-x:auto!important;overscroll-behavior-x:contain!important;scroll-snap-type:x proximity!important;padding-bottom:6px!important}
+  .il-cpv8-column,.il-taskv10-column{scroll-snap-align:start!important}
+  .il-v4-modal-backdrop{padding:8px!important;align-items:flex-end!important}
+  .il-v4-modal{width:100%!important;max-height:92vh!important;border-radius:20px 20px 8px 8px!important;overflow:auto!important}
+  .il-v4-form{grid-template-columns:1fr!important}.il-v4-form>.wide{grid-column:1!important}
+  .il-v4-modal-actions{position:sticky!important;bottom:0!important;background:var(--il-panel,#11141a)!important;padding-top:10px!important}
+}
+@media(min-width:761px){.il-mobile-bottom-v13,.il-mobile-more-v13,.il-mobile-more-scrim{display:none!important}}
