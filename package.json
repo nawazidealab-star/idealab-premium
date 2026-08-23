@@ -18,7 +18,8 @@
     "react": "latest",
     "react-dom": "latest",
     "react-router-dom": "latest",
-    "recharts": "latest"
+    "recharts": "latest",
+    "xlsx": "latest"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "latest",
