@@ -91,7 +91,7 @@ async function generateInvoicePdf(invoice: InvoiceRow, client?: ClientRow) {
 
   const logo = await loadLogoDataUrl();
   if (logo) {
-    try { doc.addImage(logo, 'JPEG', margin, 10, 23, 23, undefined, 'FAST'); } catch { /* keep text fallback */ }
+    try { doc.addImage(logo, 'JPEG', margin, 10, 23, 23, undefined, 'FAST'); } catch { /* text fallback */ }
   }
 
   doc.setTextColor('#FFFFFF');
@@ -215,31 +215,50 @@ async function generateInvoicePdf(invoice: InvoiceRow, client?: ClientRow) {
   doc.save(`${safeFilename(invoice.invoice_no || `invoice-${invoice.id}`)}.pdf`);
 }
 
+function mountTarget(container: HTMLElement, invoice: InvoiceRow, targets: PortalTarget[]) {
+  let mount = container.querySelector<HTMLElement>('[data-invoice-pdf-mount]');
+  if (!mount) {
+    mount = document.createElement('span');
+    mount.dataset.invoicePdfMount = 'true';
+    mount.className = 'il-invoice-pdf-mount';
+    container.appendChild(mount);
+  }
+  targets.push({ invoice, element: mount });
+}
+
 function findInvoiceTargets(invoices: InvoiceRow[]) {
   const byNumber = new Map(invoices.map((invoice) => [invoice.invoice_no.trim(), invoice]));
   const targets: PortalTarget[] = [];
-  const rows = Array.from(document.querySelectorAll<HTMLTableRowElement>('.il-admin-table tbody tr'));
+  const seen = new Set<number>();
 
-  for (const row of rows) {
-    const firstCell = row.querySelector<HTMLTableCellElement>('td:first-child');
-    const invoiceNo = firstCell?.innerText.trim().split('\n')[0]?.trim();
+  // Current v2 invoice UI: card list.
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('.il-v2-card-list article'));
+  for (const card of cards) {
+    const invoiceNo = card.querySelector('b')?.textContent?.trim();
     if (!invoiceNo) continue;
     const invoice = byNumber.get(invoiceNo);
-    if (!invoice) continue;
+    if (!invoice || seen.has(invoice.id)) continue;
+    const directChildren = Array.from(card.children).filter((node): node is HTMLElement => node instanceof HTMLElement);
+    const actions = directChildren[directChildren.length - 1];
+    if (!actions) continue;
+    mountTarget(actions, invoice, targets);
+    seen.add(invoice.id);
+  }
 
+  // Legacy table UI kept for backwards compatibility.
+  const rows = Array.from(document.querySelectorAll<HTMLTableRowElement>('.il-admin-table tbody tr'));
+  for (const row of rows) {
+    const invoiceNo = row.querySelector<HTMLTableCellElement>('td:first-child')?.innerText.trim().split('\n')[0]?.trim();
+    if (!invoiceNo) continue;
+    const invoice = byNumber.get(invoiceNo);
+    if (!invoice || seen.has(invoice.id)) continue;
     const cells = row.querySelectorAll<HTMLTableCellElement>('td');
     const actionCell = cells[cells.length - 1];
     if (!actionCell) continue;
-
-    let mount = actionCell.querySelector<HTMLElement>('[data-invoice-pdf-mount]');
-    if (!mount) {
-      mount = document.createElement('span');
-      mount.dataset.invoicePdfMount = 'true';
-      mount.className = 'il-invoice-pdf-mount';
-      actionCell.appendChild(mount);
-    }
-    targets.push({ invoice, element: mount });
+    mountTarget(actionCell, invoice, targets);
+    seen.add(invoice.id);
   }
+
   return targets;
 }
 
@@ -261,7 +280,7 @@ export default function InvoicePdfSupport() {
     }
 
     let active = true;
-    Promise.all([
+    const load = () => Promise.all([
       adminApi<D1Result<InvoiceRow>>('/api/invoices'),
       adminApi<D1Result<ClientRow>>('/api/clients'),
     ]).then(([invoiceResult, clientResult]) => {
@@ -273,13 +292,20 @@ export default function InvoicePdfSupport() {
       setInvoices([]);
       setClients([]);
     });
-    return () => { active = false; };
+
+    void load();
+    const refresh = () => { void load(); };
+    window.addEventListener('idealab:invoice-saved', refresh);
+    return () => {
+      active = false;
+      window.removeEventListener('idealab:invoice-saved', refresh);
+    };
   }, [location.pathname]);
 
   useEffect(() => {
-    if (location.pathname !== '/admin/invoices' || !invoices.length) return;
+    if (location.pathname !== '/admin/invoices') return;
     const sync = () => setTargets(findInvoiceTargets(invoices));
-    const timer = window.setTimeout(sync, 40);
+    const timer = window.setTimeout(sync, 50);
     const observer = new MutationObserver(sync);
     observer.observe(document.body, { childList: true, subtree: true });
     return () => {
@@ -293,6 +319,9 @@ export default function InvoicePdfSupport() {
     setGeneratingId(invoice.id);
     try {
       await generateInvoicePdf(invoice, clientMap.get(invoice.client_id));
+    } catch (error) {
+      console.error('Invoice PDF generation failed', error);
+      window.alert('PDF generation failed. Please try again.');
     } finally {
       setGeneratingId(null);
     }
@@ -304,13 +333,14 @@ export default function InvoicePdfSupport() {
         <button
           key={invoice.id}
           type="button"
-          className="il-admin-icon-button il-invoice-pdf-button"
+          className="il-admin-button il-invoice-pdf-button"
           onClick={() => void download(invoice)}
           disabled={generatingId === invoice.id}
           title={generatingId === invoice.id ? 'Generating PDF...' : 'Download PDF invoice'}
           aria-label={`Download ${invoice.invoice_no} PDF`}
         >
           <FileDown size={15} />
+          <span>{generatingId === invoice.id ? 'Generating…' : 'PDF'}</span>
         </button>,
         element,
       ))}
