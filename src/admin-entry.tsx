@@ -11,6 +11,7 @@ import InvoicePdfSupport from './invoice-pdf-support';
 import TasksWorkspaceV10 from './tasks-workspace-v10';
 import TeamExperienceV12 from './team-experience-v12';
 import ChatCenterV12 from './chat-center-v12';
+import MobileAdminV13 from './mobile-admin-v13';
 import { ApiError, adminApi, loginAdmin, type AppUser } from './admin-api';
 import './admin.css';
 import './admin-modules.css';
@@ -53,9 +54,9 @@ export default function AdminEntry() {
 
   if (checking) return <div className="il-admin-state il-premium-state"><div className="il-admin-state-card"><div className="il-admin-spinner"/><h2>Opening IDEA LAB Admin...</h2><p>Checking your secure session.</p></div></div>;
 
-  if (authenticated && chatRoute) return <ChatCenterV12/>;
+  if (authenticated && chatRoute) return <><ChatCenterV12/><MobileAdminV13/></>;
 
-  if (authenticated) return <><InvoiceBuilderSupport/><InvoicePdfSupport/><ContentExcelAutomation/><AdminChatV11/><AdminControlsV6/><ContentPlannerV8/><TasksWorkspaceV10/><ClientsWorkspaceV11/><TeamExperienceV12/><AdminAppV4/></>;
+  if (authenticated) return <><InvoiceBuilderSupport/><InvoicePdfSupport/><ContentExcelAutomation/><AdminChatV11/><AdminControlsV6/><ContentPlannerV8/><TasksWorkspaceV10/><ClientsWorkspaceV11/><TeamExperienceV12/><AdminAppV4/><MobileAdminV13/></>;
 
   return <div className="il-admin-state il-premium-state"><div className="il-admin-state-card"><div className="il-admin-kicker">IDEA LAB OPERATIONS</div><h2>Admin command center</h2><p>Sign in with your own IDEA LAB team account.</p><form onSubmit={submit} style={{display:'grid',gap:12,marginTop:22,textAlign:'left'}}><label style={{display:'grid',gap:6,fontSize:12,fontWeight:700,color:'#5e636b'}}>Email<input type="email" required autoComplete="username" value={email} onChange={e=>setEmail(e.target.value)} style={{width:'100%',padding:'12px',border:'1px solid #dfe2e6',borderRadius:10,font:'inherit'}}/></label><label style={{display:'grid',gap:6,fontSize:12,fontWeight:700,color:'#5e636b'}}>Password<input type="password" required autoComplete="current-password" value={password} onChange={e=>setPassword(e.target.value)} style={{width:'100%',padding:'12px',border:'1px solid #dfe2e6',borderRadius:10,font:'inherit'}}/></label>{error&&<div className="il-admin-inline-error">{error}</div>}<button className="il-admin-button il-admin-primary" disabled={submitting}>{submitting?'Signing in...':'Sign in'}</button></form><Link className="il-admin-home-link" to="/">Return to public website</Link></div></div>;
 }
