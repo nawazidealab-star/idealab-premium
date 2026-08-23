@@ -1,13 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Check, Copy, Eye, EyeOff, KeyRound, Search, ShieldCheck, Sparkles, Users, X } from 'lucide-react';
+import { Check, Copy, Eye, EyeOff, Sparkles, X } from 'lucide-react';
 import { adminApi, type Role } from './admin-api';
 import './team-experience-v12.css';
+import './team-fixes-v14.css';
 
 type ModuleKey='leads'|'clients'|'projects'|'tasks'|'invoices'|'content'|'reports'|'settings'|'chat';
 type AccessMap=Record<ModuleKey,boolean>&{all_clients:boolean};
 type AccessUser={id:number;name:string;email:string;role:Role;active:number;access:AccessMap;client_ids:number[]};
 type ClientRow={id:number;name:string;company?:string|null};
-
 type Toast={id:number;text:string;error?:boolean};
 
 const ROLE_HINTS:Record<Exclude<Role,'super_admin'>,string>={
@@ -20,65 +20,24 @@ const ROLE_HINTS:Record<Exclude<Role,'super_admin'>,string>={
 const MODULE_LABELS:Record<ModuleKey,string>={leads:'Leads',clients:'Clients',projects:'Projects',tasks:'Tasks',invoices:'Invoices',content:'Content',reports:'Reports',settings:'Settings',chat:'Team chat'};
 const MODULES:(Exclude<ModuleKey,'settings'>)[]=['leads','clients','projects','tasks','invoices','content','reports','chat'];
 
-function passwordValue(){
-  const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%';
-  const bytes=crypto.getRandomValues(new Uint8Array(14));
-  return Array.from(bytes,b=>alphabet[b%alphabet.length]).join('');
-}
-
-function Modal({children,onClose,access=false}:{children:React.ReactNode;onClose:()=>void;access?:boolean}){
-  useEffect(()=>{const h=(e:KeyboardEvent)=>{if(e.key==='Escape')onClose()};document.addEventListener('keydown',h);return()=>document.removeEventListener('keydown',h)},[onClose]);
-  return <div className="il-v4-modal-backdrop" onMouseDown={onClose} role="presentation"><div className={access?'il-team-access-modal-v12':'il-team-modal-v12'} onMouseDown={e=>e.stopPropagation()} role="dialog" aria-modal="true">{children}</div></div>
-}
-
+function passwordValue(){const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%';const bytes=crypto.getRandomValues(new Uint8Array(14));return Array.from(bytes,b=>alphabet[b%alphabet.length]).join('')}
+function Modal({children,onClose,access=false}:{children:React.ReactNode;onClose:()=>void;access?:boolean}){useEffect(()=>{const h=(e:KeyboardEvent)=>{if(e.key==='Escape')onClose()};document.addEventListener('keydown',h);return()=>document.removeEventListener('keydown',h)},[onClose]);return <div className="il-v4-modal-backdrop" onMouseDown={onClose} role="presentation"><div className={access?'il-team-access-modal-v12':'il-team-modal-v12'} onMouseDown={e=>e.stopPropagation()} role="dialog" aria-modal="true">{children}</div></div>}
 function ModalHead({title,onClose}:{title:string;onClose:()=>void}){return <header><div><span>TEAM CONTROL</span><h3>{title}</h3></div><button type="button" aria-label="Close" onClick={onClose}><X size={19}/></button></header>}
 
 export default function TeamExperienceV12(){
-  const[createOpen,setCreateOpen]=useState(false);
-  const[accessUser,setAccessUser]=useState<AccessUser|null>(null);
-  const[toasts,setToasts]=useState<Toast[]>([]);
-
+  const[createOpen,setCreateOpen]=useState(false);const[accessUser,setAccessUser]=useState<AccessUser|null>(null);const[toasts,setToasts]=useState<Toast[]>([]);
   const toast=(text:string,error=false)=>{const id=Date.now()+Math.random();setToasts(v=>[...v,{id,text,error}]);window.setTimeout(()=>setToasts(v=>v.filter(x=>x.id!==id)),3600)};
-
-  useEffect(()=>{
-    const capture=(event:MouseEvent)=>{
-      const target=event.target as HTMLElement|null;const button=target?.closest('button');if(!button)return;
-      const text=(button.textContent||'').trim().toLowerCase();
-      if(text==='add user'||text==='add team member'){
-        event.preventDefault();event.stopPropagation();setCreateOpen(true);return;
-      }
-      if(text.includes('manage access')){
-        const card=button.closest('article');const email=(card?.querySelector('.il-v4-user-head small')?.textContent||'').trim().toLowerCase();
-        if(!email)return;
-        event.preventDefault();event.stopPropagation();
-        void adminApi<{results:AccessUser[]}>('/api/access/users').then(r=>{const user=(r.results||[]).find(x=>x.email.toLowerCase()===email);if(user)setAccessUser(user);else toast('Could not find that team account.',true)}).catch(e=>toast(e instanceof Error?e.message:'Could not load access.',true));
-      }
-    };
-    document.addEventListener('click',capture,true);return()=>document.removeEventListener('click',capture,true);
-  },[]);
-
+  useEffect(()=>{const capture=(event:MouseEvent)=>{const target=event.target as HTMLElement|null;const button=target?.closest('button');if(!button)return;const text=(button.textContent||'').trim().toLowerCase();if(text==='add user'||text==='add team member'){event.preventDefault();event.stopPropagation();setCreateOpen(true);return}if(text.includes('manage access')){const card=button.closest('article');const email=(card?.querySelector('.il-v4-user-head small')?.textContent||'').trim().toLowerCase();if(!email)return;event.preventDefault();event.stopPropagation();void adminApi<{results:AccessUser[]}>('/api/access/users').then(r=>{const user=(r.results||[]).find(x=>x.email.toLowerCase()===email);if(user)setAccessUser(user);else toast('Could not find that team account.',true)}).catch(e=>toast(e instanceof Error?e.message:'Could not load access.',true))}};document.addEventListener('click',capture,true);return()=>document.removeEventListener('click',capture,true)},[]);
   return <>{createOpen&&<CreateTeamModal onClose={()=>setCreateOpen(false)} onCreated={user=>{setCreateOpen(false);setAccessUser(user);toast(`${user.name} was created. Now choose access.`)}} toast={toast}/>} {accessUser&&<AccessManager user={accessUser} onClose={()=>setAccessUser(null)} onSaved={()=>{toast(`Access saved for ${accessUser.name}.`);setAccessUser(null);window.setTimeout(()=>window.location.reload(),550)}} toast={toast}/>}<div className="il-team-toast-host" aria-live="polite">{toasts.map(t=><div key={t.id} className={`il-team-toast ${t.error?'error':''}`}>{t.text}</div>)}</div></>
 }
 
 function CreateTeamModal({onClose,onCreated,toast}:{onClose:()=>void;onCreated:(u:AccessUser)=>void;toast:(t:string,e?:boolean)=>void}){
-  const[form,setForm]=useState({name:'',email:'',role:'sales' as Exclude<Role,'super_admin'>,password:''});
-  const[showPassword,setShowPassword]=useState(false);const[saving,setSaving]=useState(false);const[error,setError]=useState('');
+  const[form,setForm]=useState({name:'',email:'',role:'sales' as Exclude<Role,'super_admin'>,password:''});const[showPassword,setShowPassword]=useState(false);const[saving,setSaving]=useState(false);const[error,setError]=useState('');
   const valid=form.name.trim().length>=2&&/^\S+@\S+\.\S+$/.test(form.email.trim())&&form.password.length>=8;
   const generate=()=>{const p=passwordValue();setForm(v=>({...v,password:p}));setShowPassword(true)};
-  const copy=async()=>{if(!form.password)return;await navigator.clipboard?.writeText(form.password);toast('Password copied.')};
-  const submit=async(e:React.FormEvent)=>{
-    e.preventDefault();if(!valid){setError('Add a name, a valid email, and a password with at least 8 characters.');return}
-    setSaving(true);setError('');
-    try{
-      await adminApi('/api/users',{method:'POST',body:JSON.stringify({...form,name:form.name.trim(),email:form.email.trim().toLowerCase()})});
-      const result=await adminApi<{results:AccessUser[]}>('/api/access/users');
-      const created=(result.results||[]).find(u=>u.email.toLowerCase()===form.email.trim().toLowerCase());
-      if(!created)throw new Error('Account was created, but access setup could not be opened. Refresh and use Manage access.');
-      onCreated(created);
-    }catch(err){setError(err instanceof Error?err.message:'Could not create this account.');}
-    finally{setSaving(false)}
-  };
-  return <Modal onClose={onClose}><ModalHead title="Add a team member" onClose={onClose}/><div className="il-team-create-guide"><div><strong>Create the login first, then choose exactly what they can access.</strong><small>No guessing. You will be taken straight to client and module permissions after creation.</small></div><div className="il-team-flow"><b>1 Account</b><i>→</i><span>2 Access</span><i>→</i><span>3 Ready</span></div></div><form className="il-v4-form" onSubmit={submit} noValidate><label>Full name *<input autoFocus autoComplete="name" placeholder="e.g. Kashaf Ali" value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></label><label>Email *<input type="email" autoComplete="email" placeholder="name@company.com" value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/></label><label data-role-hint={ROLE_HINTS[form.role]}>Role<select value={form.role} onChange={e=>setForm({...form,role:e.target.value as Exclude<Role,'super_admin'>})}><option value="admin">Admin</option><option value="sales">Sales</option><option value="project_manager">Project manager</option><option value="finance">Finance</option><option value="content">Content</option></select></label><label data-password-hint="Use at least 8 characters. Generate a strong temporary password and share it securely.">Temporary password *<input type={showPassword?'text':'password'} autoComplete="new-password" placeholder="Minimum 8 characters" value={form.password} onChange={e=>setForm({...form,password:e.target.value})}/><span className="il-password-tools"><button type="button" onClick={()=>setShowPassword(v=>!v)}>{showPassword?<><EyeOff size={12}/> Hide</>:<><Eye size={12}/> Show</>}</button><button type="button" onClick={generate}><Sparkles size={12}/> Generate</button><button type="button" disabled={!form.password} onClick={()=>void copy()}><Copy size={12}/> Copy</button></span></label>{error&&<div className="il-team-api-error">{error}</div>}<div className="wide il-v4-modal-actions"><button type="button" className="il-admin-button" onClick={onClose}>Cancel</button><button className="il-admin-button il-admin-primary" disabled={!valid||saving}>{saving?'Creating…':'Create & set access'}</button></div></form></Modal>
+  const copy=async()=>{if(!form.password)return;try{await navigator.clipboard?.writeText(form.password);toast('Password copied.')}catch{toast('Copy was blocked by this browser. Select the password and copy it manually.',true)}};
+  const submit=async(e:React.FormEvent)=>{e.preventDefault();if(!valid){setError('Add a name, a valid email, and a password with at least 8 characters.');return}setSaving(true);setError('');try{await adminApi('/api/users',{method:'POST',body:JSON.stringify({...form,name:form.name.trim(),email:form.email.trim().toLowerCase()})});const result=await adminApi<{results:AccessUser[]}>('/api/access/users');const created=(result.results||[]).find(u=>u.email.toLowerCase()===form.email.trim().toLowerCase());if(!created)throw new Error('Account was created, but access setup could not be opened. Refresh and use Manage access.');onCreated(created)}catch(err){setError(err instanceof Error?err.message:'Could not create this account.')}finally{setSaving(false)}};
+  return <Modal onClose={onClose}><ModalHead title="Add a team member" onClose={onClose}/><div className="il-team-create-guide"><div><strong>Create the login first, then choose exactly what they can access.</strong><small>You will be taken straight to client and module permissions after creation.</small></div><div className="il-team-flow"><b>1 Account</b><i>→</i><span>2 Access</span><i>→</i><span>3 Ready</span></div></div><form className="il-v4-form" onSubmit={submit} noValidate><label>Full name *<input autoFocus autoComplete="name" placeholder="e.g. Kashaf Ali" value={form.name} onChange={e=>setForm({...form,name:e.target.value})}/></label><label>Email *<input type="email" autoComplete="email" placeholder="name@company.com" value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/></label><label data-role-hint={ROLE_HINTS[form.role]}>Role<select value={form.role} onChange={e=>setForm({...form,role:e.target.value as Exclude<Role,'super_admin'>})}><option value="admin">Admin</option><option value="sales">Sales</option><option value="project_manager">Project manager</option><option value="finance">Finance</option><option value="content">Content</option></select></label><label data-password-hint="Use at least 8 characters. Generate a strong temporary password and share it securely.">Temporary password *<input type={showPassword?'text':'password'} autoComplete="new-password" placeholder="Minimum 8 characters" value={form.password} onChange={e=>setForm({...form,password:e.target.value})}/><span className="il-password-tools"><button type="button" onClick={()=>setShowPassword(v=>!v)}>{showPassword?<><EyeOff size={12}/> Hide</>:<><Eye size={12}/> Show</>}</button><button type="button" onClick={generate}><Sparkles size={12}/> Generate</button><button type="button" disabled={!form.password} onClick={()=>void copy()}><Copy size={12}/> Copy</button></span></label>{error&&<div className="il-team-api-error">{error}</div>}<div className="wide il-v4-modal-actions"><button type="button" className="il-admin-button" onClick={onClose}>Cancel</button><button className="il-admin-button il-admin-primary" disabled={!valid||saving}>{saving?'Creating…':'Create & set access'}</button></div></form></Modal>
 }
 
 function AccessManager({user,onClose,onSaved,toast}:{user:AccessUser;onClose:()=>void;onSaved:()=>void;toast:(t:string,e?:boolean)=>void}){
