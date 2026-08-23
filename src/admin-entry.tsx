@@ -14,6 +14,7 @@ import './admin-modules.css';
 import './admin-premium.css';
 import './admin-theme-v7.css';
 import './admin-global-fixes-v9.css';
+import './admin-experience-v10.css';
 
 const ADMIN_EMAIL = 'nawazidealab@gmail.com';
 
