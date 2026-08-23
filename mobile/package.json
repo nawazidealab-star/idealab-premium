@@ -1,6 +1,6 @@
 {
   "name": "idealab-admin-mobile",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -15,7 +15,8 @@
     "expo-secure-store": "~57.0.1",
     "expo-status-bar": "~57.0.1",
     "react": "19.2.3",
-    "react-native": "0.86.2"
+    "react-native": "0.86.2",
+    "react-native-webview": "^13.16.0"
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
