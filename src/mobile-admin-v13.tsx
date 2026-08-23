@@ -37,7 +37,7 @@ export default function MobileAdminV13(){
  const isActive=(to:string)=>to==='/admin'?loc.pathname==='/admin':loc.pathname.startsWith(to);
  const visibleMore=useMemo(()=>moreItems.filter(allowed),[access]);
  if(!mobile)return null;
- const go=(to:string)=>{setMore(false);navigate(to)};
+ const go=(to:string)=>{setMore(false);if(to==='/admin/chat'){window.location.assign('/admin/chat');return}navigate(to)};
  return <>
   <nav className="il-mobile-bottom-v13" aria-label="Mobile admin navigation">
    {primary.filter(allowed).map(item=><button key={item.to} className={isActive(item.to)?'active':''} onClick={()=>go(item.to)}>{item.icon}<span>{item.label}</span>{item.to==='/admin/chat'&&unread>0&&<b>{Math.min(unread,99)}</b>}</button>)}
