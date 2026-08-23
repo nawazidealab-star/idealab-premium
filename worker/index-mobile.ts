@@ -1,4 +1,4 @@
-import app from './index-workflow-v2';
+import app from './index-invoicing-v3';
 
 interface Env {
   DB: D1Database;
