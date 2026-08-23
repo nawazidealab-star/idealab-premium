@@ -7,11 +7,14 @@ import ContentPlannerV8 from './content-planner-v8';
 import ContentExcelAutomation from './content-excel-automation';
 import InvoiceBuilderSupport from './invoice-builder-support';
 import InvoicePdfSupport from './invoice-pdf-support';
+import TasksWorkspaceV9 from './tasks-workspace-v9';
+import TaskBridgeV9 from './task-bridge-v9';
 import { ApiError, adminApi, loginAdmin, type AppUser } from './admin-api';
 import './admin.css';
 import './admin-modules.css';
 import './admin-premium.css';
 import './admin-theme-v7.css';
+import './admin-global-fixes-v9.css';
 
 const ADMIN_EMAIL = 'nawazidealab@gmail.com';
 
@@ -45,7 +48,7 @@ export default function AdminEntry() {
 
   if (checking) return <div className="il-admin-state il-premium-state"><div className="il-admin-state-card"><div className="il-admin-spinner"/><h2>Opening IDEA LAB Admin...</h2><p>Checking your secure session.</p></div></div>;
 
-  if (authenticated) return <><InvoiceBuilderSupport/><InvoicePdfSupport/><ContentExcelAutomation/><AdminChatV4/><AdminControlsV6/><ContentPlannerV8/><AdminAppV4/></>;
+  if (authenticated) return <><InvoiceBuilderSupport/><InvoicePdfSupport/><ContentExcelAutomation/><AdminChatV4/><AdminControlsV6/><ContentPlannerV8/><TasksWorkspaceV9/><TaskBridgeV9/><AdminAppV4/></>;
 
   return <div className="il-admin-state il-premium-state"><div className="il-admin-state-card"><div className="il-admin-kicker">IDEA LAB OPERATIONS</div><h2>Admin command center</h2><p>Sign in with your own IDEA LAB team account.</p><form onSubmit={submit} style={{display:'grid',gap:12,marginTop:22,textAlign:'left'}}><label style={{display:'grid',gap:6,fontSize:12,fontWeight:700,color:'#5e636b'}}>Email<input type="email" required autoComplete="username" value={email} onChange={e=>setEmail(e.target.value)} style={{width:'100%',padding:'12px',border:'1px solid #dfe2e6',borderRadius:10,font:'inherit'}}/></label><label style={{display:'grid',gap:6,fontSize:12,fontWeight:700,color:'#5e636b'}}>Password<input type="password" required autoComplete="current-password" value={password} onChange={e=>setPassword(e.target.value)} style={{width:'100%',padding:'12px',border:'1px solid #dfe2e6',borderRadius:10,font:'inherit'}}/></label>{error&&<div className="il-admin-inline-error">{error}</div>}<button className="il-admin-button il-admin-primary" disabled={submitting}>{submitting?'Signing in...':'Sign in'}</button></form><Link className="il-admin-home-link" to="/">Return to public website</Link></div></div>;
 }
