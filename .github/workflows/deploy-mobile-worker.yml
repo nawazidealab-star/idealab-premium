@@ -12,6 +12,14 @@ on:
       - 'vite.config.*'
       - 'wrangler.toml'
       - '.github/workflows/deploy-mobile-worker.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'worker/**'
+      - 'public/**'
+      - 'wrangler.toml'
+      - '.github/workflows/deploy-mobile-worker.yml'
   workflow_dispatch:
 
 jobs:
@@ -20,7 +28,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - name: Checkout
+      - name: Checkout mobile branch
         uses: actions/checkout@v4
         with:
           ref: native-mobile-admin-mvp
