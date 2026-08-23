@@ -5,17 +5,21 @@ on:
     branches: [native-mobile-admin-mvp]
     paths:
       - 'mobile/**'
+      - 'public/mobile-update.json'
       - '.github/workflows/mobile-apk.yml'
   pull_request:
     branches: [main]
     paths:
       - 'mobile/**'
+      - 'public/mobile-update.json'
       - '.github/workflows/mobile-apk.yml'
   workflow_dispatch:
 
 jobs:
   build-apk:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     defaults:
       run:
         working-directory: mobile
@@ -57,12 +61,24 @@ jobs:
           EXPO_PUBLIC_API_BASE_URL: https://idealab-premium.idealab-2a4.workers.dev
 
       - name: Copy standalone APK
-        run: cp android/app/build/outputs/apk/release/app-release.apk IDEA-LAB-Admin-Standalone.apk
+        run: cp android/app/build/outputs/apk/release/app-release.apk IDEA-LAB-Admin.apk
 
-      - name: Upload standalone APK artifact
+      - name: Upload workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: IDEA-LAB-Admin-Standalone-Android
-          path: mobile/IDEA-LAB-Admin-Standalone.apk
+          path: mobile/IDEA-LAB-Admin.apk
           if-no-files-found: error
           retention-days: 30
+
+      - name: Publish stable in-app update APK
+        if: github.event_name != 'pull_request'
+        working-directory: .
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view mobile-latest >/dev/null 2>&1; then
+            gh release upload mobile-latest mobile/IDEA-LAB-Admin.apk --clobber
+          else
+            gh release create mobile-latest mobile/IDEA-LAB-Admin.apk --title "IDEA LAB Admin Latest" --notes "Stable Android build used by the in-app updater."
+          fi
