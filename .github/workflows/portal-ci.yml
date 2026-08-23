@@ -1,0 +1,37 @@
+name: Validate IDEA LAB Portal
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'worker/**'
+      - 'public/**'
+      - 'package.json'
+      - 'vite.config.*'
+      - 'wrangler.toml'
+      - '.github/workflows/portal-ci.yml'
+  push:
+    branches: [native-mobile-admin-mvp]
+    paths:
+      - 'src/**'
+      - 'worker/**'
+      - 'public/**'
+      - 'package.json'
+      - 'vite.config.*'
+      - 'wrangler.toml'
+      - '.github/workflows/portal-ci.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
+      - name: Build portal and Worker types
+        run: npm run build
