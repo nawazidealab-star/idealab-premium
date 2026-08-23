@@ -19,6 +19,8 @@ jobs:
     defaults:
       run:
         working-directory: mobile
+    env:
+      EXPO_PUBLIC_API_BASE_URL: https://idealab-premium.idealab-2a4.workers.dev
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -52,6 +54,7 @@ jobs:
         working-directory: mobile/android
         env:
           CI: '1'
+          EXPO_PUBLIC_API_BASE_URL: https://idealab-premium.idealab-2a4.workers.dev
 
       - name: Copy standalone APK
         run: cp android/app/build/outputs/apk/release/app-release.apk IDEA-LAB-Admin-Standalone.apk
