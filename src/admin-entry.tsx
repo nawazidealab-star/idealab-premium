@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import AdminAppV4 from './admin-app-v4';
 import AdminChatV11 from './admin-chat-v11';
 import AdminControlsV6 from './admin-controls-v6';
@@ -24,13 +24,14 @@ import './admin-fixes-v11.css';
 const ADMIN_EMAIL = 'nawazidealab@gmail.com';
 
 export default function AdminEntry() {
+  const location = useLocation();
   const [checking, setChecking] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
   const [email, setEmail] = useState(ADMIN_EMAIL);
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const chatRoute = window.location.pathname === '/admin/chat' || window.location.pathname.startsWith('/admin/chat/');
+  const chatRoute = location.pathname === '/admin/chat' || location.pathname.startsWith('/admin/chat/');
 
   useEffect(() => {
     let active = true;
