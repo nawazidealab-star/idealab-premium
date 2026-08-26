@@ -1,4 +1,4 @@
-import app from './index-stability-v14';
+import app from './index-chat-admin-v16';
 
 interface Env {
   DB: D1Database;
