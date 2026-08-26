@@ -1,6 +1,6 @@
 import React,{createContext,useContext,useEffect,useMemo,useState,type ReactNode}from'react';
 import{NavLink,Navigate,Route,Routes,useLocation,useNavigate}from'react-router-dom';
-import{BarChart3,BriefcaseBusiness,CalendarDays,ChevronRight,Command,FileText,LayoutDashboard,LogOut,Menu,MessageSquareText,Moon,ReceiptText,Search,Settings,ShieldCheck,Sun,Target,Users,UserRoundCog,X,KanbanSquare}from'lucide-react';
+import{BarChart3,BriefcaseBusiness,CalendarDays,ChevronRight,FileText,LayoutDashboard,LogOut,Menu,MessageSquareText,Moon,ReceiptText,Search,Settings,ShieldCheck,Sun,Target,Users,UserRoundCog,X,KanbanSquare}from'lucide-react';
 import{adminApi,logoutAdmin,type AppUser,type Role}from'./admin-api';
 import{DashboardPage,LeadsPage,ClientsPage,ProjectsPage,TasksPage,InvoicesPage,ContentPage,ReportsPage,SettingsPage}from'./admin-enterprise-pages-v17';
 import EnterpriseChatV17 from'./admin-enterprise-chat-v17';
@@ -47,7 +47,7 @@ export default function AdminEnterpriseV17(){
  const[theme,setTheme]=useState<'light'|'dark'>(()=>localStorage.getItem('idealab-enterprise-theme')==='dark'?'dark':'light');
  const[toasts,setToasts]=useState<PortalToast[]>([]);
  const notify=(text:string,tone:PortalToast['tone']='success')=>{const id=Date.now()+Math.random();setToasts(v=>[...v,{id,text,tone}]);window.setTimeout(()=>setToasts(v=>v.filter(t=>t.id!==id)),3600)};
- const refreshSession=async()=>{setFatal('');try{const me=await adminApi<{user:AppUser}>('/api/me');let next=roleDefaults(me.user.role);try{const a=await adminApi<{access:AccessMap}>('/api/access/me');next=a.access}catch{/* role defaults are a safe UI fallback; backend remains authoritative */}setUser(me.user);setAccess(next)}catch(e){setFatal(e instanceof Error?e.message:'Unable to load your workspace')}finally{setLoading(false)}};
+ const refreshSession=async()=>{setFatal('');try{const me=await adminApi<{user:AppUser}>('/api/me');let next=roleDefaults(me.user.role);try{const a=await adminApi<{access:AccessMap}>('/api/access/me');next=a.access}catch{/* backend remains authoritative */}setUser(me.user);setAccess(next)}catch(e){setFatal(e instanceof Error?e.message:'Unable to load your workspace')}finally{setLoading(false)}};
  useEffect(()=>{document.body.classList.add('ix-admin-body');return()=>document.body.classList.remove('ix-admin-body')},[]);
  useEffect(()=>{void refreshSession()},[]);
  useEffect(()=>{document.documentElement.dataset.ixTheme=theme;localStorage.setItem('idealab-enterprise-theme',theme)},[theme]);
@@ -59,7 +59,7 @@ export default function AdminEnterpriseV17(){
  if(loading)return <PortalLoading/>;
  if(fatal||!user||!access)return <PortalFailure message={fatal||'Your session is unavailable.'} retry={()=>void refreshSession()}/>;
  const context:PortalContextValue={user,access,isSuper:!!isSuper,notify,refreshSession};
- const signOut=async()=>{try{await logoutAdmin()}finally{location.assign('/admin')}};
+ const signOut=async()=>{try{await logoutAdmin()}finally{window.location.assign('/admin')}};
  const primary=['/admin','/admin/clients','/admin/tasks','/admin/chat'];
  const mobilePrimary=visible.filter(x=>primary.includes(x.to));
  return <PortalContext.Provider value={context}><div className={`ix-root ix-theme-${theme}`}>
