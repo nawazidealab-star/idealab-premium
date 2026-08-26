@@ -2,6 +2,7 @@ import React,{useEffect,useMemo,useRef,useState}from'react';
 import{ArrowLeft,AtSign,Building2,CheckCheck,MessageCircleMore,RefreshCw,Search,Send,Smile,Trash2,Users}from'lucide-react';
 import{adminApi,type AppUser,type D1Result}from'./admin-api';
 import'./chat-center-v12.css';
+import'./chat-admin-v16.css';
 
 type Conv={key:string;type:'general'|'client'|'dm';target_id:number|null;title:string;subtitle:string;avatar:string;last_message:string;last_at:string|null;last_sender:string|null;unread:number};
 type Msg={id:number;user_id:number;client_id:number|null;recipient_user_id:number|null;message:string;created_at:string;user_name:string;user_role:string};
