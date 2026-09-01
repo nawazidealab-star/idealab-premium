@@ -1,0 +1,32 @@
+name: IDEA LAB D1 Schema Diagnostics
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [native-mobile-admin-mvp]
+    paths:
+      - '.github/workflows/d1-schema-diagnostics.yml'
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: native-mobile-admin-mvp
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Wrangler
+        run: npm install
+      - name: Inspect production D1 schema only
+        run: |
+          npx wrangler d1 execute idealab-crm --remote --command "PRAGMA table_info(users);"
+          npx wrangler d1 execute idealab-crm --remote --command "PRAGMA table_info(admin_sessions);"
+          npx wrangler d1 execute idealab-crm --remote --command "PRAGMA table_info(user_access);"
+          npx wrangler d1 execute idealab-crm --remote --command "SELECT type,name,sql FROM sqlite_master WHERE (type='table' AND name IN ('users','admin_sessions','user_access','user_client_access','chat_messages','chat_reads')) OR (type='trigger' AND tbl_name='users') ORDER BY type,name;"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
