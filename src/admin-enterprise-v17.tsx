@@ -8,6 +8,7 @@ import EnterpriseTeamV18 from'./admin-enterprise-team-v18';
 import'./admin-enterprise-v17.css';
 import'./admin-enterprise-v18.css';
 import'./admin-enterprise-v18-brand.css';
+import'./admin-enterprise-v18-polish.css';
 
 export type ModuleKey='leads'|'clients'|'projects'|'tasks'|'invoices'|'content'|'reports'|'settings'|'chat';
 export type AccessMap=Record<ModuleKey,boolean>&{all_clients:boolean};
