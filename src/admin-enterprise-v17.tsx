@@ -2,10 +2,11 @@ import React,{createContext,useContext,useEffect,useMemo,useState,type ReactNode
 import{NavLink,Navigate,Route,Routes,useLocation,useNavigate}from'react-router-dom';
 import{BarChart3,BriefcaseBusiness,CalendarDays,ChevronRight,FileText,LayoutDashboard,LogOut,Menu,MessageSquareText,Moon,ReceiptText,Search,Settings,ShieldCheck,Sun,Target,Users,UserRoundCog,X,KanbanSquare}from'lucide-react';
 import{adminApi,logoutAdmin,type AppUser,type Role}from'./admin-api';
-import{DashboardPage,LeadsPage,ClientsPage,ProjectsPage,TasksPage,InvoicesPage,ContentPage,ReportsPage}from'./admin-enterprise-pages-v17';
+import{DashboardPage,LeadsPage,ClientsPage,ProjectsPage,TasksPage,ContentPage}from'./admin-enterprise-pages-v17';
 import EnterpriseChatV17 from'./admin-enterprise-chat-v17';
 import EnterpriseTeamV18 from'./admin-enterprise-team-v18';
 import EnterpriseSettingsV18 from'./admin-enterprise-settings-v18';
+import{InvoicesPageV18,ReportsPageV18}from'./admin-enterprise-finance-v18';
 import'./admin-enterprise-v17.css';
 import'./admin-enterprise-v18.css';
 import'./admin-enterprise-v18-brand.css';
@@ -84,9 +85,9 @@ export default function AdminEnterpriseV17(){
     <Route path="/admin/projects" element={<ModuleGuard module="projects"><ProjectsPage/></ModuleGuard>}/>
     <Route path="/admin/tasks" element={<ModuleGuard module="tasks"><TasksPage/></ModuleGuard>}/>
     <Route path="/admin/content" element={<ModuleGuard module="content"><ContentPage/></ModuleGuard>}/>
-    <Route path="/admin/invoices" element={<ModuleGuard module="invoices"><InvoicesPage/></ModuleGuard>}/>
+    <Route path="/admin/invoices" element={<ModuleGuard module="invoices"><InvoicesPageV18/></ModuleGuard>}/>
     <Route path="/admin/chat" element={<ModuleGuard module="chat"><EnterpriseChatV17/></ModuleGuard>}/>
-    <Route path="/admin/reports" element={<ModuleGuard module="reports"><ReportsPage/></ModuleGuard>}/>
+    <Route path="/admin/reports" element={<ModuleGuard module="reports"><ReportsPageV18/></ModuleGuard>}/>
     <Route path="/admin/team" element={isSuper?<EnterpriseTeamV18/>:<Restricted/>}/>
     <Route path="/admin/settings" element={<ModuleGuard module="settings"><EnterpriseSettingsV18/></ModuleGuard>}/>
     <Route path="*" element={<Navigate to="/admin" replace/>}/>
