@@ -2,13 +2,15 @@ import React,{createContext,useContext,useEffect,useMemo,useState,type ReactNode
 import{NavLink,Navigate,Route,Routes,useLocation,useNavigate}from'react-router-dom';
 import{BarChart3,BriefcaseBusiness,CalendarDays,ChevronRight,FileText,LayoutDashboard,LogOut,Menu,MessageSquareText,Moon,ReceiptText,Search,Settings,ShieldCheck,Sun,Target,Users,UserRoundCog,X,KanbanSquare}from'lucide-react';
 import{adminApi,logoutAdmin,type AppUser,type Role}from'./admin-api';
-import{DashboardPage,LeadsPage,ClientsPage,ProjectsPage,TasksPage,InvoicesPage,ContentPage,ReportsPage,SettingsPage}from'./admin-enterprise-pages-v17';
+import{DashboardPage,LeadsPage,ClientsPage,ProjectsPage,TasksPage,InvoicesPage,ContentPage,ReportsPage}from'./admin-enterprise-pages-v17';
 import EnterpriseChatV17 from'./admin-enterprise-chat-v17';
 import EnterpriseTeamV18 from'./admin-enterprise-team-v18';
+import EnterpriseSettingsV18 from'./admin-enterprise-settings-v18';
 import'./admin-enterprise-v17.css';
 import'./admin-enterprise-v18.css';
 import'./admin-enterprise-v18-brand.css';
 import'./admin-enterprise-v18-polish.css';
+import'./admin-enterprise-v18-audit.css';
 
 export type ModuleKey='leads'|'clients'|'projects'|'tasks'|'invoices'|'content'|'reports'|'settings'|'chat';
 export type AccessMap=Record<ModuleKey,boolean>&{all_clients:boolean};
@@ -69,7 +71,7 @@ export default function AdminEnterpriseV17(){
   <button className="ix-mobile-menu" onClick={()=>setSidebar(true)} aria-label="Open navigation"><Menu size={20}/></button>
   {sidebar&&<button className="ix-drawer-scrim" onClick={()=>setSidebar(false)} aria-label="Close navigation"/>}
   <aside className={`ix-sidebar ${sidebar?'open':''}`}>
-   <div className="ix-brand"><img src="/idealab-logo.jpg" alt="IDEA LAB"/><div><strong>IDEA LAB</strong><span>Operations OS</span></div><button className="ix-sidebar-close" onClick={()=>setSidebar(false)}><X size={18}/></button></div>
+   <div className="ix-brand"><div><strong>IDEA LAB</strong><span>Operations OS</span></div><button className="ix-sidebar-close" onClick={()=>setSidebar(false)}><X size={18}/></button></div>
    <div className="ix-nav-label">WORKSPACE</div><nav className="ix-nav">{visible.map(item=><NavLink key={item.to} to={item.to} end={item.to==='/admin'}>{item.icon}<span>{item.label}</span><ChevronRight size={14}/></NavLink>)}</nav>
    <div className="ix-sidebar-foot"><div className="ix-role-card"><ShieldCheck size={16}/><div><b>{user.name}</b><span>{user.role.replaceAll('_',' ')}</span></div></div><button onClick={()=>void signOut()}><LogOut size={16}/><span>Sign out</span></button></div>
   </aside>
@@ -86,7 +88,7 @@ export default function AdminEnterpriseV17(){
     <Route path="/admin/chat" element={<ModuleGuard module="chat"><EnterpriseChatV17/></ModuleGuard>}/>
     <Route path="/admin/reports" element={<ModuleGuard module="reports"><ReportsPage/></ModuleGuard>}/>
     <Route path="/admin/team" element={isSuper?<EnterpriseTeamV18/>:<Restricted/>}/>
-    <Route path="/admin/settings" element={<ModuleGuard module="settings"><SettingsPage/></ModuleGuard>}/>
+    <Route path="/admin/settings" element={<ModuleGuard module="settings"><EnterpriseSettingsV18/></ModuleGuard>}/>
     <Route path="*" element={<Navigate to="/admin" replace/>}/>
    </Routes></main>
   </section>
