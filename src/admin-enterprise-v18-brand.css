@@ -1,0 +1,58 @@
+/* V18 brand refinement — crop the source logo correctly and tighten the sidebar header. */
+.ix-brand{
+  height:76px!important;
+  grid-template-columns:42px minmax(0,1fr) auto!important;
+  gap:12px!important;
+  padding:0 16px!important;
+  overflow:hidden!important;
+}
+
+/* The source JPG contains large white margins. Render it as a zoomed background instead
+   of showing the full bitmap inside another white square. */
+.ix-brand img{display:none!important}
+.ix-brand::before{
+  content:"";
+  width:42px;
+  height:42px;
+  display:block;
+  grid-column:1;
+  border-radius:13px;
+  background-color:#fff;
+  background-image:url('/idealab-logo.jpg');
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:178%;
+  border:1px solid rgba(255,255,255,.2);
+  box-shadow:0 8px 24px rgba(109,93,252,.22),inset 0 0 0 1px rgba(20,18,38,.03);
+  transition:transform .22s ease,box-shadow .22s ease;
+}
+.ix-brand:hover::before{
+  transform:translateY(-1px) scale(1.035);
+  box-shadow:0 12px 28px rgba(109,93,252,.29),inset 0 0 0 1px rgba(20,18,38,.03);
+}
+.ix-brand>div{
+  min-width:0;
+  grid-column:2;
+  align-self:center;
+}
+.ix-brand strong{
+  font-size:13px!important;
+  line-height:1.1!important;
+  letter-spacing:.13em!important;
+  font-weight:800!important;
+  white-space:nowrap;
+}
+.ix-brand span{
+  margin-top:5px!important;
+  color:#918ba8!important;
+  font-size:8px!important;
+  line-height:1!important;
+  letter-spacing:.08em!important;
+  white-space:nowrap;
+}
+.ix-sidebar-close{grid-column:3}
+
+@media(max-width:860px){
+  .ix-brand{height:72px!important;padding:0 14px!important}
+  .ix-brand::before{width:40px;height:40px;border-radius:12px;background-size:178%}
+}
