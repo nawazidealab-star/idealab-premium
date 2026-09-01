@@ -7,6 +7,7 @@ import EnterpriseChatV17 from'./admin-enterprise-chat-v17';
 import EnterpriseTeamV17 from'./admin-enterprise-team-v17';
 import'./admin-enterprise-v17.css';
 import'./admin-enterprise-v18.css';
+import'./admin-enterprise-v18-brand.css';
 
 export type ModuleKey='leads'|'clients'|'projects'|'tasks'|'invoices'|'content'|'reports'|'settings'|'chat';
 export type AccessMap=Record<ModuleKey,boolean>&{all_clients:boolean};
