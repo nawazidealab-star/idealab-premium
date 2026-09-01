@@ -1,4 +1,4 @@
-import app from './index-users-delete-v18';
+import app from './index-fx-v18';
 
 interface Env {
   DB: D1Database;
