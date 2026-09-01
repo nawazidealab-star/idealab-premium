@@ -1,0 +1,68 @@
+/* V19 final portal QA: width safety, responsive top bar, and low-cost motion */
+.ix-root,.ix-app,.ix-content,.ix-topbar,.ix-page-top,.ix-v18-team,.ix-v18-summary,.ix-v18-team-toolbar,.ix-v18-team-grid{min-width:0!important;max-width:100%!important;box-sizing:border-box!important}
+.ix-root{overflow:hidden!important}
+.ix-app{width:calc(100% - 276px)!important;flex:1 1 0!important}
+.ix-content{width:100%!important;overflow-x:hidden!important}
+.ix-topbar{width:100%!important;gap:14px!important}
+.ix-page-title{min-width:0!important;flex:1 1 auto!important}
+.ix-page-title h1{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ix-top-actions{min-width:0!important;flex:0 1 auto!important;overflow:visible!important}
+.ix-command-trigger{min-width:0!important;width:clamp(150px,19vw,240px)!important;flex:0 1 auto!important}
+.ix-user-chip{min-width:0!important;max-width:178px!important;flex:0 1 178px!important;overflow:hidden!important}
+.ix-user-chip>span{min-width:0!important;overflow:hidden!important}
+.ix-user-chip b,.ix-user-chip small{display:block!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+.ix-v18-team-head{display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:20px!important;flex-wrap:wrap!important}
+.ix-v18-team-head>div:first-child{min-width:260px;flex:1 1 520px}
+.ix-v18-team-head .ix-page-actions{flex:0 0 auto!important;margin-left:auto!important}
+.ix-v18-summary{width:100%!important;grid-template-columns:repeat(3,minmax(0,1fr))!important}
+.ix-v18-summary article,.ix-v18-member{min-width:0!important;overflow:hidden!important}
+.ix-v18-team-toolbar{width:100%!important;flex-wrap:wrap!important}
+.ix-v18-team-toolbar .ix-search{min-width:240px!important;flex:1 1 420px!important}
+.ix-security-pill{flex:0 0 auto!important}
+.ix-v18-team-grid{width:100%!important}
+.ix-table-card,.ix-finance-table-wrap{max-width:100%!important;overflow:auto!important}
+
+/* Kill decorative continuous animation and expensive overdraw. */
+.ix-root::before,.ix-root::after{animation:none!important;filter:blur(70px)!important;opacity:.10!important}
+.ix-content>*{animation-duration:.18s!important}
+.ix-kpi,.ix-client-card,.ix-team-card,.ix-btn,.ix-nav a,.ix-icon-button{transition-duration:.14s!important}
+.ix-kpi:hover,.ix-client-card:hover,.ix-team-card:hover{transform:translateY(-1px)!important}
+.ix-app,.ix-topbar,.ix-bottom-nav{backdrop-filter:none!important}
+[data-ix-theme="light"] .ix-topbar,[data-ix-theme="light"] .ix-app{background:rgba(255,255,255,.96)!important}
+[data-ix-theme="dark"] .ix-topbar{background:#17182b!important}
+[data-ix-theme="dark"] .ix-app{background:#101120!important}
+
+/* Chat gets its own fixed viewport; don't animate every message on polling. */
+.ix19-chat-shell,.ix19-chat-shell *{animation:none!important}
+.ix19-messages{overscroll-behavior:contain!important;contain:layout paint!important}
+.ix19-msg{contain:layout style!important}
+
+@media(max-width:1240px){
+ .ix-command-trigger{display:none!important}
+ .ix-user-chip{max-width:155px!important;flex-basis:155px!important}
+ .ix-v18-summary{grid-template-columns:repeat(3,minmax(180px,1fr))!important;overflow-x:auto!important;padding-bottom:3px}
+}
+@media(max-width:1050px){
+ .ix-root{padding:7px!important;gap:7px!important}
+ .ix-sidebar{width:218px!important;flex-basis:218px!important}
+ .ix-app{width:calc(100% - 225px)!important}
+ .ix-user-chip{max-width:128px!important;flex-basis:128px!important}
+ .ix-v18-team-grid{grid-template-columns:1fr!important}
+}
+@media(max-width:860px){
+ .ix-root{overflow:visible!important}
+ .ix-app{width:100%!important;max-width:100%!important}
+ .ix-topbar{padding-right:10px!important}
+ .ix-user-chip{max-width:44px!important;flex:0 0 44px!important}
+ .ix-user-chip>span{display:none!important}
+ .ix-v18-summary{grid-template-columns:1fr!important;overflow:visible!important}
+ .ix-v18-team-head .ix-page-actions{width:100%!important;margin-left:0!important}
+ .ix-v18-team-head .ix-page-actions .ix-btn{width:100%!important}
+ .ix-security-pill{display:none!important}
+}
+@media(max-width:520px){
+ .ix-v18-team-head>div:first-child{min-width:0!important}
+ .ix-v18-team-toolbar .ix-search{min-width:0!important;width:100%!important}
+ .ix-topbar{gap:6px!important}
+}
+@media(prefers-reduced-motion:reduce){.ix-root *{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
