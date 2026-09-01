@@ -1,0 +1,35 @@
+/* V18 brand refinement — text-only lockup by request. */
+.ix-brand{
+  height:72px!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:10px!important;
+  padding:0 18px!important;
+  overflow:hidden!important;
+}
+.ix-brand img,.ix-brand::before{display:none!important;content:none!important}
+.ix-brand>div{
+  min-width:0;
+  grid-column:1;
+  align-self:center;
+  padding-left:1px;
+}
+.ix-brand strong{
+  display:block;
+  font-size:14px!important;
+  line-height:1.05!important;
+  letter-spacing:.15em!important;
+  font-weight:820!important;
+  color:#fff!important;
+  white-space:nowrap;
+}
+.ix-brand span{
+  display:block;
+  margin-top:6px!important;
+  color:#918ba8!important;
+  font-size:8px!important;
+  line-height:1!important;
+  letter-spacing:.10em!important;
+  white-space:nowrap;
+}
+.ix-sidebar-close{grid-column:2}
+@media(max-width:860px){.ix-brand{height:68px!important;padding:0 15px!important}}

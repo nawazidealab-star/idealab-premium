@@ -1,0 +1,130 @@
+/* IDEA LAB V15 — portal stability, hierarchy and interaction polish */
+
+:root{
+  --il-v15-radius:18px;
+  --il-v15-radius-sm:12px;
+  --il-v15-shadow:0 10px 30px rgba(15,23,42,.08);
+}
+
+.il-admin-shell,.il-admin-shell *{box-sizing:border-box}
+.il-admin-shell{min-width:0;overflow-x:hidden}
+.il-premium-content{min-width:0;max-width:100vw;overflow-x:hidden}
+.il-premium-content>section,.il-premium-content>div{min-width:0}
+
+/* Cleaner desktop shell */
+@media(min-width:761px){
+  .il-premium-content{padding:0 26px 34px!important}
+  .il-premium-topbar{
+    position:sticky!important;top:0;z-index:120;
+    min-height:70px!important;margin:0 -26px 24px!important;padding:0 26px!important;
+    border-bottom:1px solid color-mix(in srgb,var(--il-border,#dfe4ea) 88%,transparent)!important;
+    background:color-mix(in srgb,var(--il-bg,#fff) 92%,transparent)!important;
+    backdrop-filter:blur(18px) saturate(125%);
+  }
+  .il-premium-sidebar{box-shadow:8px 0 28px rgba(15,23,42,.04)}
+  .il-premium-sidebar nav{padding:4px 10px!important}
+  .il-premium-sidebar nav a{min-height:44px!important;border-radius:12px!important;margin:2px 0!important}
+  .il-premium-sidebar nav a:hover{transform:translateX(2px)}
+}
+
+/* Stronger visual hierarchy */
+.il-premium-title h1{letter-spacing:-.035em!important;font-weight:800!important}
+.il-admin-kicker{letter-spacing:.14em!important;font-weight:850!important}
+.il-v4-hero{
+  border-radius:22px!important;
+  overflow:hidden;
+  box-shadow:0 16px 38px rgba(15,23,42,.06)!important;
+}
+.il-v4-hero h2{letter-spacing:-.045em!important}
+.il-admin-panel,.il-v4-kpi,.il-v4-client-card,.il-v4-workspace{
+  border-radius:var(--il-v15-radius)!important;
+  border-color:color-mix(in srgb,var(--il-border,#dfe4ea) 90%,transparent)!important;
+}
+.il-admin-panel{box-shadow:0 6px 22px rgba(15,23,42,.035)!important}
+.il-v4-kpi,.il-v4-client-card,.il-v4-workspace{transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease!important}
+.il-v4-kpi:hover,.il-v4-client-card:hover,.il-v4-workspace:hover{
+  transform:translateY(-2px);
+  border-color:color-mix(in srgb,var(--il-red,#f34850) 20%,var(--il-border,#dfe4ea))!important;
+  box-shadow:var(--il-v15-shadow)!important;
+}
+
+/* Consistent controls */
+.il-admin-shell button,.il-admin-shell a,.il-admin-shell input,.il-admin-shell select,.il-admin-shell textarea{transition:border-color .15s ease,box-shadow .15s ease,background .15s ease,color .15s ease,transform .15s ease}
+.il-admin-button{border-radius:11px!important;font-weight:750!important;min-height:40px}
+.il-admin-button:active{transform:translateY(1px)}
+.il-admin-shell :is(input,select,textarea):focus{
+  outline:none!important;
+  border-color:color-mix(in srgb,var(--il-red,#f34850) 52%,var(--il-border,#dfe4ea))!important;
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--il-red,#f34850) 10%,transparent)!important;
+}
+.il-admin-shell :is(button,a,input,select,textarea):focus-visible{
+  outline:2px solid color-mix(in srgb,var(--il-red,#f34850) 68%,transparent)!important;
+  outline-offset:2px;
+}
+
+/* List/table readability */
+.il-v4-table-list article,.il-v4-focus-row{
+  border-radius:12px!important;
+  transition:background .15s ease,border-color .15s ease,transform .15s ease!important;
+}
+.il-v4-table-list article:hover,.il-v4-focus-row:hover{
+  background:color-mix(in srgb,var(--il-panel-2,#f7f8fa) 82%,var(--il-red,#f34850) 2%)!important;
+}
+.il-v4-table-list article{min-width:0!important}
+.il-v4-table-list article>div:first-child{min-width:0!important}
+.il-v4-table-list article b,.il-v4-table-list article small{overflow-wrap:anywhere}
+
+/* Page heads and spacing */
+.il-v4-section-head{gap:14px!important}
+.il-v4-section-head h3{letter-spacing:-.03em!important}
+.il-v4-kpi-grid,.il-v4-client-grid,.il-v4-workspace-grid,.il-v4-two-col{gap:14px!important}
+.il-v4-section{margin-top:28px!important}
+
+/* Safer modal behavior across modules */
+.il-v4-modal-backdrop{overscroll-behavior:contain!important}
+.il-v4-modal{border-radius:20px!important;box-shadow:0 28px 90px rgba(15,23,42,.24)!important}
+.il-v4-modal>header{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:16px!important}
+.il-v4-modal>header>div{min-width:0!important}
+.il-v4-modal>header>button{flex:0 0 auto!important}
+.il-v4-modal-actions{gap:10px!important}
+
+/* Resilient rendering fallback */
+.il-admin-error-boundary{
+  min-height:100dvh;display:grid;place-items:center;padding:24px;
+  background:var(--il-bg,#0b0d11);color:var(--il-text,#f8fafc);
+}
+.il-admin-error-boundary>div{
+  width:min(520px,100%);padding:28px;border:1px solid var(--il-border,#2b3038);
+  border-radius:22px;background:var(--il-panel,#11141a);box-shadow:0 24px 70px rgba(0,0,0,.18);text-align:center;
+}
+.il-admin-error-boundary h2{margin:12px 0 8px;font-size:22px;letter-spacing:-.03em}
+.il-admin-error-boundary p{margin:0 0 18px;color:var(--il-muted,#8c94a3);font-size:13px;line-height:1.55}
+
+/* Desktop quick Chat launcher now opens the full Chat Center. */
+.il-chatv11-launch.il-chatv15-launch{
+  right:22px!important;bottom:22px!important;min-height:48px!important;padding:0 15px!important;
+  border-radius:15px!important;box-shadow:0 16px 38px rgba(15,23,42,.18)!important;
+}
+.il-chatv11-launch.il-chatv15-launch span{font-weight:800!important}
+.il-chatv11-launch.il-chatv15-launch small{font-size:8px;opacity:.72}
+
+/* Mobile: one app shell, no desktop leakage */
+@media(max-width:760px){
+  html,body,#root{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
+  .il-premium-content{padding:8px 10px calc(108px + env(safe-area-inset-bottom))!important}
+  .il-premium-content>*{min-width:0!important;max-width:100%!important}
+  .il-v4-hero{border-radius:18px!important;box-shadow:none!important}
+  .il-v4-kpi-grid{gap:8px!important}
+  .il-v4-kpi{min-height:104px!important}
+  .il-v4-client-grid,.il-v4-workspace-grid,.il-v4-two-col{gap:10px!important}
+  .il-admin-panel{border-radius:15px!important;box-shadow:none!important}
+  .il-v4-section{margin-top:20px!important}
+  .il-v4-table-list article{width:100%!important;min-width:0!important;overflow:hidden!important}
+  .il-v4-modal-backdrop{padding:8px!important}
+  .il-v4-modal,.il-team-modal-v12,.il-team-access-modal-v12{width:100%!important;max-width:100%!important}
+  .il-admin-button{min-height:42px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .il-admin-shell *{scroll-behavior:auto!important;transition:none!important;animation-duration:.01ms!important;animation-iteration-count:1!important}
+}

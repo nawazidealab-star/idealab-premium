@@ -1,0 +1,31 @@
+/* Admin-only reset for public-site element styles that leaked into CRM internals. */
+.il-admin-shell footer{
+  padding:0!important;
+  margin:0!important;
+  background:transparent!important;
+  border-top:0!important;
+  color:inherit!important;
+  grid-template-columns:none!important;
+  gap:0!important;
+  min-height:0!important;
+  width:auto!important;
+}
+.il-admin-shell .il-v4-task-board article footer,
+.il-admin-shell .il-v4-content-board article footer{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:8px!important;
+  padding-top:9px!important;
+  margin-top:9px!important;
+  border-top:1px solid var(--il-border)!important;
+  background:transparent!important;
+  color:var(--il-muted)!important;
+}
+.il-admin-shell article,
+.il-admin-shell section,
+.il-admin-shell main,
+.il-admin-shell header,
+.il-admin-shell footer{max-width:100%}
+.il-admin-shell button,.il-admin-shell input,.il-admin-shell select,.il-admin-shell textarea{font-family:inherit}
+.il-admin-shell img{object-fit:cover}

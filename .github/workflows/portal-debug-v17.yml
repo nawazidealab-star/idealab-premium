@@ -1,0 +1,35 @@
+name: IDEA LAB V17 Build Diagnostics
+
+on:
+  push:
+    branches: [native-mobile-admin-mvp]
+    paths:
+      - 'src/**'
+      - 'worker/**'
+      - 'package.json'
+      - 'vite.config.*'
+      - '.github/workflows/portal-debug-v17.yml'
+  workflow_dispatch:
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install
+      - name: Capture portal build
+        run: |
+          set +e
+          npm run build > v17-build.log 2>&1
+          code=$?
+          echo "BUILD_EXIT=$code" >> v17-build.log
+          exit 0
+      - name: Upload build log
+        uses: actions/upload-artifact@v4
+        with:
+          name: v17-build-log
+          path: v17-build.log

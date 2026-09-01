@@ -1,0 +1,44 @@
+/* V11 structural fixes: only one active workspace is visible, and collapsed sidebar stays useful. */
+html.il-cpv8-active .il-premium-content > :not(header):not(.il-cpv8-root),
+html.il-taskv10-active .il-premium-content > :not(header):not(.il-taskv10-root),
+html.il-clientv11-active .il-premium-content > :not(header):not(.il-clientv11-root){
+  display:none!important;
+}
+
+/* The previous sibling-only rule could leave the legacy planner/tasks rendered above the new workspace. */
+html.il-cpv8-active .il-cpv8-root,
+html.il-taskv10-active .il-taskv10-root,
+html.il-clientv11-active .il-clientv11-root{
+  display:block!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+  height:auto!important;
+  overflow:visible!important;
+}
+
+/* Collapsed sidebar: show a clean icon instead of squeezing role text into a tiny card. */
+.il-v4-shell.is-collapsed .il-v4-scope-card{
+  min-height:40px!important;
+  width:40px!important;
+  padding:0!important;
+  margin-inline:auto!important;
+  display:grid!important;
+  place-items:center!important;
+  border-radius:10px!important;
+}
+.il-v4-shell.is-collapsed .il-v4-scope-card>div{display:none!important}
+.il-v4-shell.is-collapsed .il-v4-scope-card>svg{margin:0!important}
+.il-v4-shell.is-collapsed .il-admin-label{display:none!important}
+
+/* Never allow public-site footer/layout primitives to leak into admin widgets. */
+.il-admin-shell footer{background:transparent!important;min-height:0!important;width:auto!important;max-width:100%!important}
+
+/* Better pointer feedback across all admin interactive surfaces. */
+.il-admin-shell button:not(:disabled),
+.il-admin-shell a,
+.il-admin-shell select,
+.il-admin-shell input[type='checkbox']{cursor:pointer}
+
+@media(max-width:760px){
+  .il-v4-shell.is-collapsed .il-v4-scope-card{display:none!important}
+}

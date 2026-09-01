@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
+    "typecheck": "tsc -b",
     "preview": "vite preview",
     "cf:dev": "wrangler dev",
     "cf:deploy": "wrangler deploy"
@@ -18,7 +19,8 @@
     "react": "latest",
     "react-dom": "latest",
     "react-router-dom": "latest",
-    "recharts": "latest"
+    "recharts": "latest",
+    "xlsx": "latest"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "latest",

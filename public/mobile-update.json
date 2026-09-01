@@ -1,0 +1,8 @@
+{
+  "version": "0.3.0",
+  "versionCode": 3,
+  "apkUrl": "https://github.com/nawazidealab-star/idealab-premium/releases/download/mobile-latest/IDEA-LAB-Admin.apk",
+  "required": false,
+  "notes": "Live-sync mobile shell: portal, client workspaces, tasks, content planner, chat and future CRM UI updates now appear automatically without reinstalling the app.",
+  "publishedAt": "2026-08-23T20:25:00+05:00"
+}

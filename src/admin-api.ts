@@ -41,11 +41,13 @@ export type D1Result<T> = {
 
 export class ApiError extends Error {
   status: number;
+  requestId?: string;
 
-  constructor(status: number, message: string) {
+  constructor(status: number, message: string, requestId?: string) {
     super(message);
     this.name = 'ApiError';
     this.status = status;
+    this.requestId = requestId;
   }
 }
 
@@ -61,23 +63,32 @@ export async function adminApi<T>(path: string, init: RequestInit = {}): Promise
     headers.set('content-type', 'application/json');
   }
 
-  const response = await fetch(path, {
-    ...init,
-    headers,
-    credentials: 'same-origin',
-  });
-
-  const contentType = response.headers.get('content-type') || '';
-  if (!contentType.includes('application/json')) {
-    throw new ApiError(response.status, 'Admin API returned an unexpected response.');
+  let response: Response;
+  try {
+    response = await fetch(path, {
+      ...init,
+      headers,
+      credentials: 'same-origin',
+    });
+  } catch {
+    throw new ApiError(0, 'Network connection failed. Check your internet and retry.');
   }
 
-  const payload = await response.json().catch(() => null);
+  const contentType = response.headers.get('content-type') || '';
+  const headerRequestId = response.headers.get('x-idealab-request-id') || undefined;
+  if (!contentType.includes('application/json')) {
+    const suffix = headerRequestId ? ` · Ref ${headerRequestId}` : '';
+    throw new ApiError(response.status, `Admin API returned an unexpected response${suffix}.`, headerRequestId);
+  }
+
+  const payload = await response.json().catch(() => null) as any;
   if (!response.ok) {
-    const message = payload && typeof payload === 'object' && 'error' in payload
-      ? String((payload as { error: unknown }).error)
+    const requestId = typeof payload?.request_id === 'string' ? payload.request_id : headerRequestId;
+    const baseMessage = payload && typeof payload === 'object' && 'error' in payload
+      ? String(payload.error)
       : `Request failed (${response.status})`;
-    throw new ApiError(response.status, message);
+    const message = requestId && !baseMessage.includes(requestId) ? `${baseMessage} · Ref ${requestId}` : baseMessage;
+    throw new ApiError(response.status, message, requestId);
   }
 
   return payload as T;
